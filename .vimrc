@@ -12,59 +12,63 @@ set wildmode=longest:full,full
 set smarttab
 set splitbelow
 set splitright
+set spell spelllang=en_us
 
-" highlight matching brackets/braces/whatever
+" Highlight matching brackets/braces/whatever
 set showmatch
 set matchtime=0
 
-" smart case matching when searching
+" Smart case matching when searching
 set smartcase
 " incremental search
 set incsearch
+" Keybindings for highlighting search results
+nmap <leader>hl :set hlsearch<CR>
+nmap <leader>nhl :set nohlsearch<CR>
 
-" auto-indentation
+" Auto-indentation
 set smartindent
-" use 4 spaces instead of the tabulator when pressing 'tab'
+" Use 4 spaces instead of the tabulator when pressing 'tab'
 set expandtab
-" show existing tab with 4 space width
+" Show existing tab with 4 space width
 set tabstop=4
 " when indenting with '>', use 4 spaces width
 set shiftwidth=4
 
-" automatically set colorcolumn for different files.
+" Automatically set colorcolumn for different files.
 au BufNewFile,BufRead *.py setlocal colorcolumn=80
 au BufNewFile,BufRead *.f90 setlocal colorcolumn=133
 au BufNewFile,BufRead *.f95 setlocal colorcolumn=133
 
-" automatically switch directory to the directory of the current file.
+" Automatically switch directory to the directory of the current file.
 autocmd BufEnter * silent! lcd %:p:h
 
-" add csun_research to path
+" Add csun_research to path
 set path+=/home/mac/csun_research
 
-" generate ctags specifically for the csun project
-"autocmd FileType python nnoremap <buffer> <leader>utc :exec 'silent !cd ~/csun_research && ctags -R -h [".py"] --exclude=.git --exclude=mbl.py --exclude=CompQM*'<CR>
+" Generate ctags specifically for the csun project
 autocmd FileType python nnoremap <buffer> <leader>utc :exec 'silent !cd ~/csun_research && ./update_tags'<CR>
 
-" add parent directories to vim ctags search path
+" Add parent directories to vim ctags search path
 set tags+=./tags;~
+
+" Shortcuts for jumping to tags in a specific mannger.
 map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 
-" tagbar conguration
+" Tagbar configuration
 let g:tagbar_autoclose=1
 let g:tagbar_sort=0
 
-" enables YouCompleteMe Python integration
+" Enables YouCompleteMe Python integration
 let g:ycm_python_binary_path = 'python'
 
-" enables running scripts directly from vim
-"autocmd FileType python nnoremap <buffer> <F5> :exec '!python' shellescape(@%, 1)<cr>
+" Enables running scripts directly from vim
 if has("gui_running")
     autocmd FileType python nnoremap <buffer> <F5> :RunPy<CR>
 endif
 
-" qvim window default settings
+" Qvim window default settings
 if has("gui_running")
     " GUI is running or is about to start.
     " Maximize qvim window.
@@ -78,7 +82,7 @@ endif
 " Autopep8 options
 autocmd FileType python nmap <buffer> <F3> :call Autopep8()<CR>
 
-" syntastic options
+" Syntastic options
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -88,14 +92,14 @@ let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_loc_list_height = 5
 nmap <F6> :SyntasticToggleMode<CR>
-nmap <buffer> <leader>ic :SyntasticCheck<CR>
+nmap <leader>sc :SyntasticCheck<CR>
 
-" airline configuration
+" Airline configuration
 set laststatus=2
 let g:airline_powerline_fonts = 1
 let g:airline_theme='wombat'
 
-" tagbar configuration
+" Tagbar configuration
 nmap <F4> :TagbarToggle<CR>
 
 " NERDCommenter configuration
