@@ -12,7 +12,11 @@ set wildmode=longest:full,full
 set smarttab
 set splitbelow
 set splitright
+
+" Turn on spell-check by default
 set spell spelllang=en_us
+" Add a keybinding for toggling between spell-check and no spell-check
+map <leader>sp :set spell! spelllang=en_us<CR>
 
 " Highlight matching brackets/braces/whatever
 set showmatch
