@@ -3,7 +3,6 @@ execute pathogen#infect()
 filetype plugin indent on
 syntax on
 set t_Co=256
-set number
 set cursorline
 set encoding=utf8
 set autoread
@@ -13,8 +12,13 @@ set smarttab
 set splitbelow
 set splitright
 
+" Turn on numbering by default
+set number
+" Map F7 to toggle relative numbering.
+map <F7> :set relativenumber! number!<CR>
+
 " Turn on spell-check by default
-set spell spelllang=en_us
+set spell spelllang=en_us spellcapcheck
 " Add a keybinding for toggling between spell-check and no spell-check
 map <leader>sp :set spell! spelllang=en_us<CR>
 
