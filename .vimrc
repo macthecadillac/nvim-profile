@@ -11,6 +11,7 @@ set wildmode=longest:full,full
 set smarttab
 set splitbelow
 set splitright
+set breakindent
 
 " Turn on numbering by default
 set number
@@ -18,7 +19,7 @@ set number
 map <F7> :set relativenumber! number!<CR>
 
 " Turn on spell-check by default
-set spell spelllang=en_us spellcapcheck
+set spell spelllang=en_us
 " Add a keybinding for toggling between spell-check and no spell-check
 map <leader>sp :set spell! spelllang=en_us<CR>
 
@@ -81,10 +82,12 @@ if has("gui_running")
     " GUI is running or is about to start.
     " Maximize qvim window.
     set lines=99 columns=104
-    colorscheme codeschool
+    "colorscheme codeschool
+    colorscheme lucius
+    LuciusWhite
 else
     colorscheme lucius
-    LuciusDark
+    LuciusWhite
 endif
 
 " Autopep8 options
@@ -105,7 +108,7 @@ nmap <leader>sc :SyntasticCheck<CR>
 " Airline configuration
 set laststatus=2
 let g:airline_powerline_fonts = 1
-let g:airline_theme='wombat'
+let g:airline_theme='tomorrow'
 
 " Tagbar configuration
 nmap <F4> :TagbarToggle<CR>
