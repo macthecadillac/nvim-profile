@@ -2,8 +2,11 @@ if !has('python')
     finish
 endif
 
-function! RunPythonScript()
-    execute "silent !" . "xterm -e 'bash -c \"/home/mac/anaconda3/bin/python " . bufname("%") . "; echo \'\'; echo \'-----------------------\';read -p \'Finished\'\"'"
+function! RunPythonScriptAnaconda()
+    " Old code
+    "execute "silent !" . "xterm -e 'bash -c \"/home/mac/anaconda3/bin/python " . bufname("%") . "; echo \'\'; echo \'-----------------------\';read -p \'Finished\'\"'"
+
+    execute "silent !" . "$HOME/.vim/plugin/run_py_anaconda " . bufname("%")
 endfunction
 
-command! RunPy call RunPythonScript()
+command! RunPyAnaconda call RunPythonScriptAnaconda()

@@ -1,0 +1,16 @@
+#!/usr/bin/env python
+import subprocess
+import sys
+
+# Set up the environment
+fname = sys.argv[1]
+xterm_title = "Executing " + fname
+
+# Execute the current python file
+bash_command = "/bin/bash -c \"$HOME/anaconda3/bin/python " + fname
+# Message to display at the end of the program
+bash_command += "; echo \'\'; echo \'---------------------------\';"
+bash_command += "echo \'Press RETURN to exit\';"
+bash_command += "read -p \'\'\""
+
+subprocess.Popen(['xterm', "-T", xterm_title, "-e", bash_command])
