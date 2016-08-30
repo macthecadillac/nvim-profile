@@ -1,0 +1,21 @@
+#!/home/mac/anaconda3/bin/python
+import subprocess
+import sys
+
+# Set up the environment
+fname = sys.argv[1]
+ftype = str(fname)[-2:]
+xterm_title = "Executing " + fname
+
+if ftype == 'py':
+    bash_command = "/bin/bash -c \"$HOME/anaconda3/bin/python " + fname
+elif ftype == 'jl':
+    bash_command = "/bin/bash -c \"$HOME/julia/bin/julia " + fname
+
+# bash_command = "/bin/bash -c \"$HOME/anaconda3/bin/python " + fname
+# Message to display at the end of the program
+bash_command += "; echo \'\'; echo \'---------------------------\';"
+bash_command += "echo \'Press RETURN to exit\';"
+bash_command += "read -p \'\'\""
+
+subprocess.Popen(['xterm', "-T", xterm_title, "-e", bash_command])

@@ -74,7 +74,8 @@ let g:ycm_python_binary_path = 'python'
 
 " Enables running scripts directly from vim
 if has("gui_running")
-    autocmd FileType python nnoremap <buffer> <F5> :RunPyAnaconda<CR>
+    autocmd FileType python nnoremap <buffer> <F5> :RunScript<CR>
+    autocmd FileType julia nnoremap <buffer> <F5> :RunScript<CR>
 endif
 
 " Qvim window default settings
