@@ -4,18 +4,18 @@ import sys
 
 # Set up the environment
 fname = sys.argv[1]
-ftype = str(fname)[-2:]
-xterm_title = "Executing " + fname
+ftype = fname[-2:]
+xterm_title = "Execute: " + fname
 
+# Execute the file with the right interpreter/JIT compiler
 if ftype == 'py':
-    bash_command = "/bin/bash -c \"$HOME/anaconda3/bin/python " + fname
+    command = "$HOME/anaconda3/bin/python " + fname
 elif ftype == 'jl':
-    bash_command = "/bin/bash -c \"$HOME/julia/bin/julia " + fname
+    command = "$HOME/julia/bin/julia " + fname
 
-# bash_command = "/bin/bash -c \"$HOME/anaconda3/bin/python " + fname
 # Message to display at the end of the program
-bash_command += "; echo \'\'; echo \'---------------------------\';"
-bash_command += "echo \'Press RETURN to exit\';"
-bash_command += "read -p \'\'\""
+command += "; echo \'\'; echo \'---------------------------\';"
+command += "echo \'Press RETURN to exit\';"
+command += "read -p \'\'"
 
-subprocess.Popen(['xterm', "-T", xterm_title, "-e", bash_command])
+subprocess.Popen(['xterm', "-T", xterm_title, "-e", command])
