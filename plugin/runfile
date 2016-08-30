@@ -9,13 +9,12 @@ xterm_title = "Execute: " + fname
 
 # Execute the file with the right interpreter/JIT compiler
 if ftype == 'py':
-    command = "$HOME/anaconda3/bin/python " + fname
+    command = "$HOME/anaconda3/bin/python " + fname + ";"
 elif ftype == 'jl':
-    command = "$HOME/julia/bin/julia " + fname
+    command = "$HOME/julia/bin/julia " + fname + ";"
 
 # Message to display at the end of the program
-command += "; echo \'\'; echo \'---------------------------\';"
-command += "echo \'Press RETURN to exit\';"
+command += "echo \'\n---------------------------\nPress RETURN to exit\';"
 command += "read -p \'\'"
 
 subprocess.Popen(['xterm', "-T", xterm_title, "-e", command])
