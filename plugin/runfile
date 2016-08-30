@@ -4,13 +4,13 @@ import sys
 
 # Set up the environment
 fname = sys.argv[1]
-ftype = fname[-2:]
+ext = fname[-2:]
 xterm_title = "Execute: " + fname
 
 # Execute the file with the right interpreter/JIT compiler
-if ftype == 'py':
+if ext == 'py':
     command = "$HOME/anaconda3/bin/python " + fname + ";"
-elif ftype == 'jl':
+elif ext == 'jl':
     command = "$HOME/julia/bin/julia " + fname + ";"
 
 # Message to display at the end of the program
