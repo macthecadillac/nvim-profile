@@ -2,8 +2,8 @@ if !has('python')
     finish
 endif
 
-function! RunScript()
+function! RunFile()
     execute "silent !$HOME/.vim/plugin/runfile " . bufname("%")
 endfunction
 
-command! RunScript call RunScript()
+command! RunFile call RunFile()
