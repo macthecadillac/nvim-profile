@@ -1,6 +1,6 @@
-let g:pathogen_blacklist = []
-call add(g:pathogen_blacklist, 'vim-airline')
-call add(g:pathogen_blacklist, 'vim-airline-themes')
+"let g:pathogen_blacklist = []
+"call add(g:pathogen_blacklist, 'vim-airline')
+"call add(g:pathogen_blacklist, 'vim-airline-themes')
 execute pathogen#infect()
 
 filetype plugin indent on
@@ -129,10 +129,13 @@ nmap <F6> :SyntasticToggleMode<CR>
 nmap <leader>sc :SyntasticCheck<CR>
 
 "" Airline configuration
-set laststatus=1
-"let g:airline_powerline_fonts = 1
-"let g:airline_theme='luna'
-"let g:airline_symbols_space="\u3000"
+set laststatus=2
+let g:airline_powerline_fonts = 1
+let g:airline_theme='luna'
+let g:airline_symbols_space="\u3000"
+if has("gui_running")
+    set guifont=DejaVu\ Sans\ Mono\ for\ Powerline
+endif
 
 " Tagbar configuration
 nmap <F4> :TagbarToggle<CR>
