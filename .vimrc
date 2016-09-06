@@ -94,15 +94,18 @@ if has("gui_running")
     " GUI is running or is about to start.
     " Maximize qvim/gvim window.
     set lines=100 columns=104
+    "set background=dark
     colorscheme monokai
     "set guioptions-=m "remove menu bar
     set guioptions-=T "remove toolbar
     "colorscheme lucius
     "LuciusWhite
 elseif has("nvim")
-    colorscheme monokai
     set termguicolors
+    "set background=dark
+    colorscheme monokai
 else
+    "set background=dark
     colorscheme monokai
     "colorscheme lucius
     "LuciusWhite
@@ -131,10 +134,11 @@ nmap <leader>sc :SyntasticCheck<CR>
 "" Airline configuration
 set laststatus=2
 let g:airline_powerline_fonts = 1
-let g:airline_theme='luna'
+let g:airline_theme='zenburn' " bubblegum is another good choice
 let g:airline_symbols_space="\u3000"
-let g:airline#extensions#tabline#enabled = 1
 if has("gui_running")
+    let g:airline#extensions#tabline#enabled = 1
+    let g:airline#extensions#tabline#show_tab_type = 1
     set guifont=DejaVu\ Sans\ Mono\ for\ Powerline
 endif
 
