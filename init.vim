@@ -1,0 +1,1 @@
+/home/mac/.config/nvim/.vimrc

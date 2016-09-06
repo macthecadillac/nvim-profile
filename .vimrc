@@ -1,3 +1,6 @@
+let g:pathogen_blacklist = []
+call add(g:pathogen_blacklist, 'vim-airline')
+call add(g:pathogen_blacklist, 'vim-airline-themes')
 execute pathogen#infect()
 
 filetype plugin indent on
@@ -12,6 +15,7 @@ set smarttab
 set splitbelow
 set splitright
 set breakindent
+set lbr
 
 " Turn on numbering by default
 set number
@@ -45,9 +49,8 @@ set tabstop=4
 set shiftwidth=4
 
 " Automatically set colorcolumn for different files.
-au BufNewFile,BufRead *.py setlocal colorcolumn=80
-au BufNewFile,BufRead *.f90 setlocal colorcolumn=133
-au BufNewFile,BufRead *.f95 setlocal colorcolumn=133
+autocmd FileType python nmap <leader>co :set colorcolumn=80<CR>
+autocmd FileType python nmap <leader>nco :set colorcolumn=<CR>
 
 " Automatically switch directory to the directory of the current file.
 autocmd BufEnter * silent! lcd %:p:h
@@ -81,20 +84,29 @@ endif
 " Qvim window default settings
 if has("gui_running")
     " GUI is running or is about to start.
-    " Maximize qvim window.
-    set lines=99 columns=104
-    "colorscheme codeschool
-    colorscheme lucius
-    LuciusWhite
+    " Maximize qvim/gvim window.
+    set lines=100 columns=104
+    colorscheme monokai
+    "set guioptions-=m "remove menu bar
+    set guioptions-=T "remove toolbar
+    "colorscheme lucius
+    "LuciusWhite
+elseif has("nvim")
+    colorscheme monokai
+    set termguicolors
 else
-    colorscheme lucius
-    LuciusWhite
+    colorscheme monokai
+    "colorscheme lucius
+    "LuciusWhite
 endif
 
 " Autopep8 options
 autocmd FileType python nmap <buffer> <F3> :call Autopep8()<CR>
 
 " Syntastic options
+set statusline=%<%f\      " filename
+set statusline+=%w%h%m%r  " options
+set statusline+=\ [%{getcwd()}]
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -103,13 +115,16 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_loc_list_height = 5
+let g:syntastic_enable_signs=1
+set statusline+=%=%-14.(%l,%c%V%)\ %p%%
 nmap <F6> :SyntasticToggleMode<CR>
 nmap <leader>sc :SyntasticCheck<CR>
 
-" Airline configuration
-set laststatus=2
-let g:airline_powerline_fonts = 1
-let g:airline_theme='tomorrow'
+"" Airline configuration
+set laststatus=1
+"let g:airline_powerline_fonts = 1
+"let g:airline_theme='luna'
+"let g:airline_symbols_space="\u3000"
 
 " Tagbar configuration
 nmap <F4> :TagbarToggle<CR>
@@ -121,3 +136,9 @@ nmap <F4> :TagbarToggle<CR>
 let g:NERDTrimTrailingWhitespace = 1
 " Align line-wise comment delimiters flush left instead of following code indentation
 let g:NERDDefaultAlign = 'left'
+
+" Vim-markdown-preview configuration
+let vim_markdown_preview_github=1
+let vim_markdown_preview_toggle=0
+let vim_markdown_preview_temp_file=1
+let vim_markdown_preview_hotkey='<F5>'
