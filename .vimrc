@@ -15,38 +15,27 @@ set smarttab
 set splitbelow
 set splitright
 set breakindent
-set lbr
+set lbr         " wrap text while respecting words
+set number      " Turn on numbering by default
+set showmatch       " Highlight matching brackets/braces/whatever
+set matchtime=0
+set smartcase       " Smart case matching when search
+set incsearch       " Incremental search
+set smartindent     " Auto-indentation
+set expandtab       " Use 4 spaces instead of the tabulator when pressing 'tab'
+set tabstop=4       " Show existing tab with 4 space width
+set shiftwidth=4    " when indenting with '>', use 4 spaces width
 
-" Turn on numbering by default
-set number
 " Map F7 to toggle relative numbering.
 map <F7> :set relativenumber! number!<CR>
 
-" Turn on spell-check by default
-set spell spelllang=en_us
+set spell spelllang=en_us       "  Turn on spell-check by default
 " Add a keybinding for toggling between spell-check and no spell-check
 map <leader>sp :set spell! spelllang=en_us<CR>
 
-" Highlight matching brackets/braces/whatever
-set showmatch
-set matchtime=0
-
-" Smart case matching when searching
-set smartcase
-" incremental search
-set incsearch
 " Keybindings for highlighting search results
 nmap <leader>hl :set hlsearch<CR>
 nmap <leader>nhl :set nohlsearch<CR>
-
-" Auto-indentation
-set smartindent
-" Use 4 spaces instead of the tabulator when pressing 'tab'
-set expandtab
-" Show existing tab with 4 space width
-set tabstop=4
-" when indenting with '>', use 4 spaces width
-set shiftwidth=4
 
 " Automatically set colorcolumn for different files.
 autocmd FileType python nmap <leader>co :set colorcolumn=80<CR>
@@ -63,6 +52,27 @@ else
     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
 
+" gui window default settings
+if has("gui_running")
+    " GUI is running or is about to start.
+    " Maximize qvim/gvim window.
+    set lines=100 columns=104
+    "set background=dark
+    colorscheme monokai
+    "set guioptions-=m "remove menu bar
+    set guioptions-=T "remove toolbar
+    "colorscheme lucius
+    "LuciusWhite
+elseif has("nvim")
+    set termguicolors
+    "set background=dark
+    colorscheme monokai
+else
+    "set background=dark
+    colorscheme monokai
+    "colorscheme lucius
+    "LuciusWhite
+endif
 " Add csun_research to path
 set path+=/home/mac/csun_research
 
@@ -87,28 +97,6 @@ let g:ycm_python_binary_path = 'python'
 if has("gui_running")
     autocmd FileType python nnoremap <buffer> <F5> :RunFile<CR>
     autocmd FileType julia nnoremap <buffer> <F5> :RunFile<CR>
-endif
-
-" Qvim window default settings
-if has("gui_running")
-    " GUI is running or is about to start.
-    " Maximize qvim/gvim window.
-    set lines=100 columns=104
-    "set background=dark
-    colorscheme monokai
-    "set guioptions-=m "remove menu bar
-    set guioptions-=T "remove toolbar
-    "colorscheme lucius
-    "LuciusWhite
-elseif has("nvim")
-    set termguicolors
-    "set background=dark
-    colorscheme monokai
-else
-    "set background=dark
-    colorscheme monokai
-    "colorscheme lucius
-    "LuciusWhite
 endif
 
 " Autopep8 options
@@ -146,8 +134,6 @@ endif
 nmap <F4> :TagbarToggle<CR>
 
 " NERDCommenter configuration
-" Add spaces after comment delimiters by default
-" let g:NERDSpaceDelims = 1
 " Enable trimming of trailing whitespace when uncommenting
 let g:NERDTrimTrailingWhitespace = 1
 " Align line-wise comment delimiters flush left instead of following code indentation
