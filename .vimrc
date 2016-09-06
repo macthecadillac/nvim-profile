@@ -133,6 +133,7 @@ set laststatus=2
 let g:airline_powerline_fonts = 1
 let g:airline_theme='luna'
 let g:airline_symbols_space="\u3000"
+let g:airline#extensions#tabline#enabled = 1
 if has("gui_running")
     set guifont=DejaVu\ Sans\ Mono\ for\ Powerline
 endif
