@@ -15,7 +15,6 @@ set smarttab
 set splitbelow
 set splitright
 set breakindent
-set lbr         " wrap text while respecting words
 set number      " Turn on numbering by default
 set showmatch       " Highlight matching brackets/braces/whatever
 set matchtime=0
@@ -25,6 +24,8 @@ set smartindent     " Auto-indentation
 set expandtab       " Use 4 spaces instead of the tabulator when pressing 'tab'
 set tabstop=4       " Show existing tab with 4 space width
 set shiftwidth=4    " when indenting with '>', use 4 spaces width
+set foldmethod=manual
+set linebreak         " wrap text while respecting words
 
 " Map F7 to toggle relative numbering.
 map <F7> :set relativenumber! number!<CR>
@@ -144,3 +145,14 @@ let vim_markdown_preview_github=1
 let vim_markdown_preview_toggle=0
 let vim_markdown_preview_temp_file=1
 let vim_markdown_preview_hotkey='<F5>'
+
+" vimtex configuration
+let g:vimtex_echo_ignore_wait = 1
+let g:vimtex_view_method = 'general'
+"let g:vimtex_general_view_viewer = 'qpdfview'
+"let g:vimtex_view_general_options = '--unique @pdf\#src:@tex:@line:@col'
+let g:vimtex_view_general_viewer = 'okular'
+let g:vimtex_view_general_options = '--unique @pdf\#src:@line@tex'
+let g:vimtex_view_general_options_latexmk = '--unique'
+autocmd FileType latex VimtexCompile
+autocmd FileType tex VimtexCompile
