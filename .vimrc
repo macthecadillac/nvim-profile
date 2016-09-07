@@ -124,9 +124,9 @@ set laststatus=2
 let g:airline_powerline_fonts = 1
 let g:airline_theme='zenburn' " bubblegum is another good choice
 let g:airline_symbols_space="\u3000"
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_tab_type = 1
 if has("gui_running")
-    let g:airline#extensions#tabline#enabled = 1
-    let g:airline#extensions#tabline#show_tab_type = 1
     set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 10
 endif
 
