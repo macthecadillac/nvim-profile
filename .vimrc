@@ -156,3 +156,14 @@ let g:vimtex_view_general_options = '--unique @pdf\#src:@line@tex'
 let g:vimtex_view_general_options_latexmk = '--unique'
 autocmd FileType latex VimtexCompile
 autocmd FileType tex VimtexCompile
+
+" CtrlP configuration
+let g:ctrlp_map = '<c-p>'
+" ignore the following types of files
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|o|out|swp|pdf|so|dll)$',
+  \ 'link': '',
+  \ }
+" ignore files in .gitignore
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
