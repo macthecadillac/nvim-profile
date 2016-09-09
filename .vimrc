@@ -1,6 +1,5 @@
-"let g:pathogen_blacklist = []
-"call add(g:pathogen_blacklist, 'vim-airline')
-"call add(g:pathogen_blacklist, 'vim-airline-themes')
+let g:pathogen_blacklist = []
+call add(g:pathogen_blacklist, 'vim-multiple-cursors')
 execute pathogen#infect()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -57,7 +56,7 @@ if has("gui_running")
     autocmd FileType julia nnoremap <buffer> <F5> :RunFile<CR>
 endif
 " Key combo for saving the current session
-map <leader>ss :mksession ~/.session.vim<CR>
+map <leader>ss :mksession! ~/.session.vim<CR>
 map <leader>ls :source ~/.session.vim<CR>
 
 
@@ -178,8 +177,15 @@ let g:ctrlp_map = '<c-p>'
 " ignore the following types of files
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-  \ 'file': '\v\.(exe|o|out|swp|pdf|so|dll)$',
+  \ 'file': '\v\.(exe|o|out|swp|pdf|png|jpg|jar|class|otf|ttf|ods|odt|odp|doc|docx|xls|xlsx|ppt|pptx|tar|gz|zip|rar|deb|rpm|asc|so|dll|pyc|txt)$',
   \ 'link': '',
   \ }
 " ignore files in .gitignore
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+"let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+"let g:ctrlp_user_command = ['.git/..', "cd %s && find -type f -not -regex '.*.png\|.*.pyc\|.*.txt\|.*cache.*\|.*/\..*'"]
+
+
+"CtrlP-funky
+nnoremap <leader>fu : CtrlPFunky<CR>
+nnoremap <leader>FU :execute 'CtrlPFunky ' . expand('<cword>')<CR>
+let g:ctrlp_funky_matchtype = 'path'
