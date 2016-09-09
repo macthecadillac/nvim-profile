@@ -4,7 +4,7 @@
 execute pathogen#infect()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""" General settings """""""""""""""""""""" 
+""""""""""""""""""""" General settings """"""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 filetype plugin indent on
 syntax on
@@ -32,6 +32,7 @@ set linebreak         " wrap text while respecting words
 set spell spelllang=en_us       "  Turn on spell-check by default
 set path+=/home/mac/csun_research   " Add csun_research to path
 set tags+=./tags;~      " Add parent directories to vim ctags search path
+set undofile
 
 
 
@@ -62,7 +63,7 @@ map <leader>ls :source ~/.session.vim<CR>
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""" UI specific settings """""""""""""""""""" 
+"""""""""""""""""" UI specific settings """"""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " gui window default settings
 if has("gui_running")
@@ -97,7 +98,7 @@ endif
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""" Plugin Settings """"""""""""""""""""""""" 
+"""""""""""""""""" Plugin Settings """""""""""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Tagbar configuration
 let g:tagbar_autoclose=1
