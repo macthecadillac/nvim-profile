@@ -194,3 +194,26 @@ let g:ctrlp_custom_ignore = {
 nnoremap <leader>fu : CtrlPFunky<CR>
 nnoremap <leader>FU :execute 'CtrlPFunky ' . expand('<cword>')<CR>
 let g:ctrlp_funky_matchtype = 'path'
+
+" Vim-smooth-scroll configuration
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 10, 1)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 10, 1)<CR>
+noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 5, 1)<CR>
+noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 5, 1)<CR>
+"noremap <silent> } :call smooth_scroll#down(&scroll, 10, 1)<CR>
+
+"function! SmoothN(forward)
+"  let posnow = line('.')
+"  let posto = search(@/, 'n' . (a:forward ? '' : 'b'))
+
+"  if posnow < posto
+"      let dist = posto - posnow
+"      call smooth_scroll#down(dist, 5, 1)<CR>
+"  else
+"      let dist = posnow - posto
+"      call smooth_scroll#up(dist, 5, 1)<CR>
+"  endif
+"endfunction
+
+"nnoremap <silent> n :<C-u>call SmoothN(1)<cr>
+"nnoremap <silent> N :<C-u>call SmoothN(0)<cr>
