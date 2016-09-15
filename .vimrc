@@ -1,5 +1,6 @@
 let g:pathogen_blacklist = []
 call add(g:pathogen_blacklist, 'vim-multiple-cursors')
+call add(g:pathogen_blacklist, 'vim-airline')
 execute pathogen#infect()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -32,6 +33,7 @@ set spell spelllang=en_us       "  Turn on spell-check by default
 set path+=/home/mac/csun_research   " Add csun_research to path
 set tags+=./tags;~      " Add parent directories to vim ctags search path
 set undofile
+set laststatus=2
 
 
 
@@ -86,12 +88,16 @@ else
     "LuciusWhite
 endif
 
-" change the shape of the cursor in different modes in the terminal
+" Statusline color
 if has("gui_running")
+    hi StatusLine guifg=#272822 guibg=#e6e8e3
+    hi StatusLineNC guifg=#272823 guibg=#e6e8e3
+elseif has("nvim")
+    hi StatusLine guifg=#272822 guibg=#e6e8e3
+    hi StatusLineNC guifg=#272823 guibg=#e6e8e3
 else
-    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-    let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+    hi StatusLine ctermfg=233 ctermbg=250
+    hi StatusLineNC ctermfg=234 ctermbg=250
 endif
 
 
@@ -131,15 +137,14 @@ nmap <leader>sc :SyntasticCheck<CR>
 
 
 "" Airline configuration
-set laststatus=2
-let g:airline_powerline_fonts = 1
-let g:airline_theme='zenburn' " bubblegum is another good choice
-let g:airline_symbols_space="\u3000"
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_tab_type = 1
-if has("gui_running")
-    set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 10
-endif
+"let g:airline_powerline_fonts = 1
+"let g:airline_theme='zenburn' " bubblegum is another good choice
+"let g:airline_symbols_space="\u3000"
+"let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#show_tab_type = 1
+"if has("gui_running")
+"    set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 10
+"endif
 
 
 " Tagbar configuration
