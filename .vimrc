@@ -73,7 +73,7 @@ if has("gui_running")
     set lines=100 columns=104
     "set background=dark
     colorscheme monokai
-    "set guioptions-=m "remove menu bar
+    set guioptions-=m "remove menu bar
     set guioptions-=T "remove toolbar
     "colorscheme lucius
     "LuciusWhite
@@ -196,10 +196,11 @@ nnoremap <leader>FU :execute 'CtrlPFunky ' . expand('<cword>')<CR>
 let g:ctrlp_funky_matchtype = 'path'
 
 " Vim-smooth-scroll configuration
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 10, 1)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 10, 1)<CR>
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 5, 1)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 5, 1)<CR>
 noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 5, 1)<CR>
 noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 5, 1)<CR>
+
 "noremap <silent> } :call smooth_scroll#down(&scroll, 10, 1)<CR>
 
 "function! SmoothN(forward)
