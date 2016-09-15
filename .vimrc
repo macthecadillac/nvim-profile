@@ -121,7 +121,7 @@ autocmd FileType python nmap <buffer> <F3> :call Autopep8()<CR>
 " Syntastic options
 set statusline=%<%f\      " filename
 set statusline+=%w%h%m%r  " options
-set statusline+=\ [%{getcwd()}]
+set statusline+=\ %{getcwd()}
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
