@@ -70,11 +70,14 @@ map <leader>ls :source ~/.session.vim<CR>
 if has("gui_running")
     " GUI is running or is about to start.
     " Maximize qvim/gvim window.
-    set lines=100 columns=104
+    set lines=40 columns=85
     "set background=dark
     colorscheme monokai
     set guioptions-=m "remove menu bar
     set guioptions-=T "remove toolbar
+    set guioptions-=l
+    set guioptions-=r
+    set guioptions-=e "remove tabbar
     "colorscheme lucius
     "LuciusWhite
 elseif has("nvim")
@@ -92,9 +95,15 @@ endif
 if has("gui_running")
     hi StatusLine guifg=#272822 guibg=#e6e8e3
     hi StatusLineNC guifg=#272823 guibg=#e6e8e3
+    hi TabLineFill guifg=#272822 guibg=#e6e8e3
+    hi TabLine guifg=#272822 guibg=#e6e8e3
+    hi TabLineSel guifg=#e6e8e3 guibg=#75715e
 elseif has("nvim")
     hi StatusLine guifg=#272822 guibg=#e6e8e3
     hi StatusLineNC guifg=#272823 guibg=#e6e8e3
+    hi TabLineFill guifg=#272822 guibg=#e6e8e3
+    hi TabLine guifg=#272822 guibg=#e6e8e3
+    hi TabLineSel guifg=#e6e8e3 guibg=#75715e
 else
     hi StatusLine ctermfg=233 ctermbg=250
     hi StatusLineNC ctermfg=234 ctermbg=250
@@ -121,7 +130,7 @@ autocmd FileType python nmap <buffer> <F3> :call Autopep8()<CR>
 " Syntastic options
 set statusline=%<%f\      " filename
 set statusline+=%w%h%m%r  " options
-set statusline+=\ %{getcwd()}
+"set statusline+=\ %{getcwd()}
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
