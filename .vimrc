@@ -8,7 +8,6 @@ execute pathogen#infect()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 filetype plugin indent on
 syntax on
-set t_Co=256
 set cursorline
 set encoding=utf8
 set autoread
@@ -34,6 +33,7 @@ set path+=/home/mac/csun_research   " Add csun_research to path
 set tags+=./tags;~      " Add parent directories to vim ctags search path
 set undofile
 set laststatus=2
+set noswapfile
 
 
 
@@ -45,10 +45,12 @@ map <leader>sp :set spell! spelllang=en_us<CR>  " Add a keybinding for toggling 
 nmap <leader>hl :set hlsearch<CR>       " Keybindings for highlighting search results
 nmap <leader>nhl :set nohlsearch<CR>
 autocmd FileType python nmap <leader>co :set colorcolumn=80<CR>     " Automatically set colorcolumn for different files.
+autocmd FileType julia nmap <leader>co :set colorcolumn=81<CR>     " Automatically set colorcolumn for different files.
 autocmd FileType python nmap <leader>nco :set colorcolumn=<CR>
+autocmd FileType julia nmap <leader>nco :set colorcolumn=<CR>
 autocmd BufEnter * silent! lcd %:p:h        " Automatically switch directory to the directory of the current file.
 " Generate ctags specifically for the csun project
-autocmd FileType python nnoremap <buffer> <leader>utc :exec 'silent !cd ~/csun_research && ./update_tags'<CR>
+autocmd FileType python nnoremap <buffer> <leader>utc :exec 'silent !cd ~/csun_python && ./update_tags'<CR>
 " Shortcuts for jumping to tags in a specific mannger.
 map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
@@ -86,6 +88,7 @@ elseif has("nvim")
     colorscheme monokai
 else
     "set background=dark
+    set t_Co=256
     colorscheme monokai
     "colorscheme lucius
     "LuciusWhite
@@ -97,13 +100,13 @@ if has("gui_running")
     hi StatusLineNC guifg=#272823 guibg=#e6e8e3
     hi TabLineFill guifg=#272822 guibg=#e6e8e3
     hi TabLine guifg=#272822 guibg=#e6e8e3
-    hi TabLineSel guifg=#e6e8e3 guibg=#75715e
+    hi TabLineSel guifg=#e6e8e3 guibg=#43453a
 elseif has("nvim")
     hi StatusLine guifg=#272822 guibg=#e6e8e3
     hi StatusLineNC guifg=#272823 guibg=#e6e8e3
     hi TabLineFill guifg=#272822 guibg=#e6e8e3
     hi TabLine guifg=#272822 guibg=#e6e8e3
-    hi TabLineSel guifg=#e6e8e3 guibg=#75715e
+    hi TabLineSel guifg=#e6e8e3 guibg=#43453a
 else
     hi StatusLine ctermfg=233 ctermbg=250
     hi StatusLineNC ctermfg=234 ctermbg=250
@@ -212,18 +215,18 @@ noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 5, 1)<CR>
 
 "noremap <silent> } :call smooth_scroll#down(&scroll, 10, 1)<CR>
 
-"function! SmoothN(forward)
-"  let posnow = line('.')
-"  let posto = search(@/, 'n' . (a:forward ? '' : 'b'))
+"function! SmoothScrollEmptyLine(forward)
+"    let posnow = line('.')
+"    let posto = search('\n\n', 'e' . 'n' . 'W' . (a:forward ? '' : 'b'))
 
-"  if posnow < posto
-"      let dist = posto - posnow
-"      call smooth_scroll#down(dist, 5, 1)<CR>
-"  else
-"      let dist = posnow - posto
-"      call smooth_scroll#up(dist, 5, 1)<CR>
-"  endif
+"    if posnow < posto
+"        let dist = posto - posnow
+"        call smooth_move_cursor#down(dist, 3, 1)
+"    else
+"        let dist = posnow - posto
+"        call smooth_move_cursor#up(dist, 3, 1)
+"    endif
 "endfunction
 
-"nnoremap <silent> n :<C-u>call SmoothN(1)<cr>
-"nnoremap <silent> N :<C-u>call SmoothN(0)<cr>
+"nnoremap } :call SmoothScrollEmptyLine(1)<cr>
+"nnoremap { :call SmoothScrollEmptyLine(0)<cr>
