@@ -10,7 +10,10 @@ ext = re.search(r'(\.[\w]+\b)', fname).groups()[0]
 xterm_title = 'Execute: ' + fname
 
 # Execute the file. Automatically chooses the correct interpreter and/or compiler.
-interpreters = {'.py': '$HOME/anaconda3/bin/python ', '.jl': '$HOME/julia/bin/julia '}
+interpreters = {
+    '.py': '$HOME/anaconda3/bin/python ',
+    '.jl': '$HOME/julia/bin/julia '
+}
 
 if ext in interpreters:
     command = interpreters[ext] + fname + ';'
