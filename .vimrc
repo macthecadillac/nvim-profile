@@ -42,8 +42,7 @@ set noswapfile
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map <F7> :set relativenumber! number!<CR>       " Map F7 to toggle relative numbering.
 map <leader>sp :set spell! spelllang=en_us<CR>  " Add a keybinding for toggling between spell-check and no spell-check
-nmap <leader>hl :set hlsearch<CR>       " Keybindings for highlighting search results
-nmap <leader>nhl :set nohlsearch<CR>
+nmap <leader>hl :set hlsearch!<CR>       " Keybindings for highlighting search results
 autocmd FileType python nmap <leader>co :set colorcolumn=80<CR>     " Automatically set colorcolumn for different files.
 autocmd FileType julia nmap <leader>co :set colorcolumn=81<CR>     " Automatically set colorcolumn for different files.
 autocmd FileType python nmap <leader>nco :set colorcolumn=<CR>
@@ -56,8 +55,10 @@ map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 " Enables running scripts directly from vim
 if has("gui_running")
-    autocmd FileType python nnoremap <buffer> <F5> :RunFile<CR>
-    autocmd FileType julia nnoremap <buffer> <F5> :RunFile<CR>
+    autocmd FileType python nnoremap <buffer> <F5> :QuickRun<CR>
+    autocmd FileType julia nnoremap <buffer> <F5> :QuickRun<CR>
+    autocmd FileType rust nnoremap <buffer> <F5> :QuickRun<CR>
+    autocmd FileType fortran nnoremap <buffer> <F5> :QuickRun<CR>
 endif
 " Key combo for saving the current session
 map <leader>ss :mksession! ~/.session.vim<CR>
@@ -207,26 +208,8 @@ nnoremap <leader>fu : CtrlPFunky<CR>
 nnoremap <leader>FU :execute 'CtrlPFunky ' . expand('<cword>')<CR>
 let g:ctrlp_funky_matchtype = 'path'
 
-" Vim-smooth-scroll configuration
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 5, 1)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 5, 1)<CR>
-noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 5, 1)<CR>
-noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 5, 1)<CR>
-
-"noremap <silent> } :call smooth_scroll#down(&scroll, 10, 1)<CR>
-
-"function! SmoothScrollEmptyLine(forward)
-"    let posnow = line('.')
-"    let posto = search('\n\n', 'e' . 'n' . 'W' . (a:forward ? '' : 'b'))
-
-"    if posnow < posto
-"        let dist = posto - posnow
-"        call smooth_move_cursor#down(dist, 3, 1)
-"    else
-"        let dist = posnow - posto
-"        call smooth_move_cursor#up(dist, 3, 1)
-"    endif
-"endfunction
-
-"nnoremap } :call SmoothScrollEmptyLine(1)<cr>
-"nnoremap { :call SmoothScrollEmptyLine(0)<cr>
+" racer configuration (Rust syntax completion plugin)
+set hidden
+let g:racer_cmd = "/home/mac/.cargo/bin/racer"
+let $RUST_SRC_PATH="/home/mac/.src/rustc-1.12.0/src"
+let g:racer_experimental_completer = 1
