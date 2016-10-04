@@ -2,6 +2,7 @@
 import subprocess
 import sys
 import re
+import os
 
 # Set up the environment
 fname = sys.argv[1]
@@ -10,19 +11,11 @@ xterm_title = 'Execute: ' + fname
 
 # Execute the file. Automatically chooses the correct interpreter and/or compiler.
 interpreters = {'.py': '$HOME/anaconda3/bin/python ', '.jl': '$HOME/julia/bin/julia '}
-compilers = {
-    '.rs': '/usr/local/bin/rustc ',         # Rust
-    '.f': '/usr/bin/gfortran ',             # Fortran
-    '.f90': '/usr/bin/gfortran ',
-    '.f95': '/usr/bin/gfortran '
-}
 
 if ext in interpreters:
     command = interpreters[ext] + fname + ';'
-elif ext in compilers:
-    exename = fname[:-len(ext)]
-    command = compilers[ext] + fname + ' -o ' + exename + '; ./' + exename + ';'
-    command += 'rm ' + exename + ';'
+elif ext == '.rs':
+    command = 'cargo run;'
 
 # Message to display at the end of the program
 command += 'echo \'\n---------------------------\nPress RETURN to exit\';'

@@ -58,7 +58,6 @@ if has("gui_running")
     autocmd FileType python nnoremap <buffer> <F5> :QuickRun<CR>
     autocmd FileType julia nnoremap <buffer> <F5> :QuickRun<CR>
     autocmd FileType rust nnoremap <buffer> <F5> :QuickRun<CR>
-    autocmd FileType fortran nnoremap <buffer> <F5> :QuickRun<CR>
 endif
 " Key combo for saving the current session
 map <leader>ss :mksession! ~/.session.vim<CR>
@@ -213,3 +212,8 @@ set hidden
 let g:racer_cmd = "/home/mac/.cargo/bin/racer"
 let $RUST_SRC_PATH="/home/mac/.src/rustc-1.12.0/src"
 let g:racer_experimental_completer = 1
+
+" deoplete configuration
+if has('nvim')
+    let g:deoplete#enable_at_startup = 1
+endif
