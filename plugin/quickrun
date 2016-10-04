@@ -2,7 +2,6 @@
 import subprocess
 import sys
 import re
-import os
 
 # Set up the environment
 fname = sys.argv[1]
