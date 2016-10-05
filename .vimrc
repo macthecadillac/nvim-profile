@@ -17,6 +17,7 @@ set smarttab
 set splitbelow
 set splitright
 set breakindent
+set nohlsearch
 set number      " Turn on numbering by default
 set showmatch       " Highlight matching brackets/braces/whatever
 set matchtime=0
@@ -123,7 +124,7 @@ let g:tagbar_sort=0
 
 
 " Enables YouCompleteMe Python integration
-let g:ycm_python_binary_path = 'python'
+"let g:ycm_python_binary_path = 'python'
 
 
 " Autopep8 options
@@ -207,13 +208,69 @@ nnoremap <leader>fu : CtrlPFunky<CR>
 nnoremap <leader>FU :execute 'CtrlPFunky ' . expand('<cword>')<CR>
 let g:ctrlp_funky_matchtype = 'path'
 
-" racer configuration (Rust syntax completion plugin)
-set hidden
-let g:racer_cmd = "/home/mac/.cargo/bin/racer"
-let $RUST_SRC_PATH="/home/mac/.src/rustc-1.12.0/src"
-let g:racer_experimental_completer = 1
+
+" neocomplete configuration
+if (has('nvim') == 0)
+    let g:neocomplete#enable_at_startup = 1
+    let g:neocomplete#sources#syntax#min_keyword_length = 2
+    " <TAB>: completion.
+    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+    " Python support
+    autocmd FileType python setlocal omnifunc=jedi#completions
+    let g:jedi#completions_enabled = 1
+    let g:jedi#auto_vim_configuration = 0
+    let g:jedi#smart_auto_mappings = 0
+    " Rust support
+    let g:racer_cmd = '/home/mac/.cargo/bin/racer'
+    let $RUST_SRC_PATH = "/home/mac/.src/rustc-1.12.0/src/"
+    let g:neocomplete#omni_patterns = {}
+    let g:neocomplete#omni_patterns.rust = '[(\.)(::)]'
+    " Vim-tex integration
+    if !exists('g:neocomplete#sources#omni#input_patterns')
+        let g:neocomplete#sources#omni#input_patterns = {}
+    endif
+    let g:neocomplete#sources#omni#input_patterns.tex =
+        \ '\v\\%('
+        \ . '\a*cite\a*%(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+        \ . '|\a*ref%(\s*\{[^}]*|range\s*\{[^,}]*%(}\{)?)'
+        \ . '|hyperref\s*\[[^]]*'
+        \ . '|includegraphics\*?%(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+        \ . '|%(include%(only)?|input)\s*\{[^}]*'
+        \ . '|\a*(gls|Gls|GLS)(pl)?\a*%(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+        \ . '|includepdf%(\s*\[[^]]*\])?\s*\{[^}]*'
+        \ . '|includestandalone%(\s*\[[^]]*\])?\s*\{[^}]*'
+        \ . ')'
+endif
+
 
 " deoplete configuration
 if has('nvim')
     let g:deoplete#enable_at_startup = 1
+    let g:deoplete#sources#syntax#min_keyword_length = 2
+    " <TAB>: completion.
+    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+    " Python support
+    autocmd FileType python setlocal omnifunc=jedi#completions
+    let g:jedi#completions_enabled = 1
+    let g:jedi#auto_vim_configuration = 0
+    let g:jedi#smart_auto_mappings = 0
+    " Rust support
+    let g:racer_cmd = '/home/mac/.cargo/bin/racer'
+    let $RUST_SRC_PATH = "/home/mac/.src/rustc-1.12.0/src/"
+    let g:deoplete#omni_patterns = {}
+    let g:deoplete#omni_patterns.rust = '[(\.)(::)]'
+    " Vim-tex integration
+    if !exists('g:deoplete#omni#input_patterns')
+        let g:deoplete#omni#input_patterns = {}
+    endif
+    let g:deoplete#omni#input_patterns.tex = '\\(?:'
+          \ .  '\w*cite\w*(?:\s*\[[^]]*\]){0,2}\s*{[^}]*'
+          \ . '|\w*ref(?:\s*\{[^}]*|range\s*\{[^,}]*(?:}{)?)'
+          \ . '|hyperref\s*\[[^]]*'
+          \ . '|includegraphics\*?(?:\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+          \ . '|(?:include(?:only)?|input)\s*\{[^}]*'
+          \ . '|\w*(gls|Gls|GLS)(pl)?\w*(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+          \ . '|includepdf(\s*\[[^]]*\])?\s*\{[^}]*'
+          \ . '|includestandalone(\s*\[[^]]*\])?\s*\{[^}]*'
+          \ .')'
 endif
