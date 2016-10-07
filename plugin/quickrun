@@ -2,23 +2,55 @@
 import subprocess
 import sys
 import re
+import os
+
+def find_proj_root():
+    proj_root = curr_dir
+    while True:
+        if os.path.isdir(proj_root + '/.git'):
+            break
+        else:
+            # Search for the .git folder up the directory tree
+            proj_root = ''.join(re.findall(r'(\/[\w]+)', proj_root)[:-1])
+            if len(proj_root) == 0:
+                raise Exception
+    return proj_root
+
 
 # Set up the environment
+envs = {
+    '.py': '/usr/bin/python3 ',
+    '.jl': '/usr/bin/env julia '
+}
+
 fname = sys.argv[1]
 curr_dir = sys.argv[2]
+
+# Filter file types by extension
 try:
     ext = re.search(r'(\.[\w]+\b)', fname).groups()[0]
 except:
     sys.exit()
 
-# Execute the file. Automatically chooses the correct interpreter and/or compiler.
-interpreters = {
-    '.py': '$HOME/anaconda3/bin/python ',
-    '.jl': '$HOME/julia/bin/julia '
-}
+# Find the interpreter config file in the project root dir. The interpreter
+#  config file should only contain one line--the path to the interpreter.
+#  The interpreter config file is optional and only works for interpreted/JIT
+#  compiled languages. It will fall back to the default interpreter if one is
+#  not found.
+try:
+    proj_root = find_proj_root()
+    if os.path.isfile(proj_root + '/.env'):
+        p = open(proj_root + '/.env')
+        env = p.read()[:-1] + ' '     # When reading files '\n' is appended
+        p.close()
+    else:
+        env = envs[ext]
+except:
+    env = envs[ext]
 
-if ext in interpreters:
-    run_script = interpreters[ext] + fname + '\n'
+# Choose the right runtime/compiler
+if ext in envs:
+    run_script = env + fname + '\n'
 elif ext == '.rs':
     run_script = 'cargo run\n'
 
@@ -29,5 +61,5 @@ with open('/tmp/run', 'w') as cmd:
     cmd.writelines(run_script)
 
 # Execute the script through a python wrapper script
-subprocess.Popen(['chmod', '+x', '/tmp/run'])
+subprocess.Popen(['chmod', '+x', '/tmp/run']).wait()
 subprocess.Popen(['x-terminal-emulator', '-e', '$HOME/.vim/plugin/wrap'])
