@@ -62,4 +62,5 @@ with open('/tmp/run', 'w') as cmd:
 
 # Execute the script through a python wrapper script
 subprocess.Popen(['chmod', '+x', '/tmp/run']).wait()
-subprocess.Popen(['x-terminal-emulator', '-e', '$HOME/.vim/plugin/wrap'])
+subprocess.Popen(['x-terminal-emulator', '-e', '$HOME/.vim/plugin/wrap'],
+                 stdout=subprocess.PIPE).wait()
