@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 import subprocess
+import sys
 
 
 def exit():
-    print('\n')
+    print('')
     print('------------------------------')
     print('')
     print('Press RETURN to exit')
@@ -12,6 +13,8 @@ def exit():
 
 try:
     subprocess.Popen(['/tmp/run']).wait()
-    exit()
 except:
     exit()
+    sys.exit()
+
+exit()
