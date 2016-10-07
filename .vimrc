@@ -35,6 +35,9 @@ set tags+=./tags;~      " Add parent directories to vim ctags search path
 set undofile
 set laststatus=2
 set noswapfile
+if ((has('nvim')) && (has('gui_running') == 0))
+    let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+endif
 
 
 
@@ -55,11 +58,9 @@ autocmd FileType python nnoremap <buffer> <leader>utc :exec 'silent !cd ~/csun_p
 map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 " Enables running scripts directly from vim
-if has("gui_running")
-    autocmd FileType python nnoremap <buffer> <F5> :QuickRun<CR>
-    autocmd FileType julia nnoremap <buffer> <F5> :QuickRun<CR>
-    autocmd FileType rust nnoremap <buffer> <F5> :QuickRun<CR>
-endif
+autocmd FileType python nnoremap <buffer> <F5> :QuickRun<CR>
+autocmd FileType julia nnoremap <buffer> <F5> :QuickRun<CR>
+autocmd FileType rust nnoremap <buffer> <F5> :QuickRun<CR>
 " Key combo for saving the current session
 map <leader>ss :mksession! ~/.session.vim<CR>
 map <leader>ls :source ~/.session.vim<CR>
