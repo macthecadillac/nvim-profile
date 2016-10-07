@@ -4,7 +4,6 @@ endif
 
 function! QuickRun()
     let currdir = getcwd()
-    execute "silent !export DISPLAY=:0.0"
     execute "silent !$HOME/.vim/plugin/quickrun " . bufname("%") . " " . currdir
 endfunction
 

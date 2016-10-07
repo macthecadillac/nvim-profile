@@ -18,21 +18,16 @@ interpreters = {
 }
 
 if ext in interpreters:
-    script = interpreters[ext] + fname + '\n'
+    run_script = interpreters[ext] + fname + '\n'
 elif ext == '.rs':
-    script = 'cargo run\n'
+    run_script = 'cargo run\n'
 
-# Message to be displayed at the end of the job
-script += 'echo "------------------------------"\n'
-script += 'echo ""\n'
-script += 'echo "Press RETURN to exit"\n'
-script += 'read -p ""\n'
-
+# Create a shell script in the /tmp directory
 with open('/tmp/run', 'w') as cmd:
     cmd.write('#!/bin/bash\n')
     cmd.write('cd ' + curr_dir + '\n')
-    cmd.writelines(script)
+    cmd.writelines(run_script)
 
-# print(command)
+# Execute the script through a python wrapper script
 subprocess.Popen(['chmod', '+x', '/tmp/run'])
-subprocess.Popen(['/usr/bin/x-terminal-emulator', '-e', '/tmp/run'])
+subprocess.Popen(['x-terminal-emulator', '-e', '$HOME/.vim/plugin/wrap'])
