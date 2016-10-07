@@ -4,10 +4,8 @@ import sys
 
 
 def exit():
-    print('')
-    print('------------------------------')
-    print('')
-    print('Press RETURN to exit')
+    print('\n------------------------------')
+    print('\nPress RETURN to exit')
     input()
 
 
