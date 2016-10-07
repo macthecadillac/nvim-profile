@@ -3,7 +3,9 @@ if !has('python')
 endif
 
 function! QuickRun()
-    execute "silent !$HOME/.vim/plugin/quickrun " . bufname("%")
+    let currdir = getcwd()
+    execute "silent !export DISPLAY=:0.0"
+    execute "silent !$HOME/.vim/plugin/quickrun " . bufname("%") . " " . currdir
 endfunction
 
 command! QuickRun call QuickRun()

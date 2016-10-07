@@ -5,8 +5,11 @@ import re
 
 # Set up the environment
 fname = sys.argv[1]
-ext = re.search(r'(\.[\w]+\b)', fname).groups()[0]
-xterm_title = 'Execute: ' + fname
+curr_dir = sys.argv[2]
+try:
+    ext = re.search(r'(\.[\w]+\b)', fname).groups()[0]
+except:
+    sys.exit()
 
 # Execute the file. Automatically chooses the correct interpreter and/or compiler.
 interpreters = {
@@ -15,12 +18,21 @@ interpreters = {
 }
 
 if ext in interpreters:
-    command = interpreters[ext] + fname + ';'
+    script = interpreters[ext] + fname + '\n'
 elif ext == '.rs':
-    command = 'cargo run;'
+    script = 'cargo run\n'
 
-# Message to display at the end of the program
-command += 'echo \'\n---------------------------\nPress RETURN to exit\';'
-command += 'read -p \'\''
+# Message to be displayed at the end of the job
+script += 'echo "------------------------------"\n'
+script += 'echo ""\n'
+script += 'echo "Press RETURN to exit"\n'
+script += 'read -p ""\n'
 
-subprocess.Popen(['xterm', '-T', xterm_title, '-e', command])
+with open('/tmp/run', 'w') as cmd:
+    cmd.write('#!/bin/bash\n')
+    cmd.write('cd ' + curr_dir + '\n')
+    cmd.writelines(script)
+
+# print(command)
+subprocess.Popen(['chmod', '+x', '/tmp/run'])
+subprocess.Popen(['/usr/bin/x-terminal-emulator', '-e', '/tmp/run'])
