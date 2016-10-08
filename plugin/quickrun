@@ -43,6 +43,10 @@ try:
         p = open(proj_root + '/.env')
         env = p.read()[:-1] + ' '     # When reading files '\n' is appended
         p.close()
+    elif os.path.isfile(curr_dir + '/.env'):
+        p = open(curr_dir + '/.env')
+        env = p.read()[:-1] + ' '     # When reading files '\n' is appended
+        p.close()
     else:
         env = envs[ext]
 except:
