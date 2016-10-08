@@ -39,21 +39,22 @@ except:
 #  The interpreter config file should only contain one line--the path to the
 #  interpreter. The interpreter config file is optional and only works for
 #  interpreted/JIT compiled languages.
-if os.path.isfile(curr_dir + '/.env'):
-    p = open(curr_dir + '/.env')
-    env = p.read()[:-1] + ' '
-    p.close()
-else:
-    try:
-        proj_root = find_proj_root()
-        if os.path.isfile(proj_root + '/.env'):
-            p = open(proj_root + '/.env')
-            env = p.read()[:-1] + ' '     # When reading files '\n' is appended
-            p.close()
-        else:
+if ext in envs:
+    if os.path.isfile(curr_dir + '/.env'):
+        p = open(curr_dir + '/.env')
+        env = p.read()[:-1] + ' '
+        p.close()
+    else:
+        try:
+            proj_root = find_proj_root()
+            if os.path.isfile(proj_root + '/.env'):
+                p = open(proj_root + '/.env')
+                env = p.read()[:-1] + ' '     # When reading files '\n' is appended
+                p.close()
+            else:
+                env = envs[ext]
+        except:
             env = envs[ext]
-    except:
-        env = envs[ext]
 
 # Choose the right runtime/compiler
 if ext in envs:
