@@ -1,0 +1,2 @@
+#!/bin/bash 
+x-terminal-emulator &> /dev/null -e $HOME/.vim/plugin/external-tools.vim/Execute

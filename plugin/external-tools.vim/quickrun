@@ -4,6 +4,7 @@ import sys
 import re
 import os
 
+
 def find_proj_root():
     proj_root = curr_dir
     while True:
@@ -32,25 +33,27 @@ try:
 except:
     sys.exit()
 
-# Find the interpreter config file in the project root dir. The interpreter
-#  config file should only contain one line--the path to the interpreter.
-#  The interpreter config file is optional and only works for interpreted/JIT
-#  compiled languages. It will fall back to the default interpreter if one is
-#  not found.
-try:
-    proj_root = find_proj_root()
-    if os.path.isfile(proj_root + '/.env'):
-        p = open(proj_root + '/.env')
-        env = p.read()[:-1] + ' '     # When reading files '\n' is appended
-        p.close()
-    elif os.path.isfile(curr_dir + '/.env'):
-        p = open(curr_dir + '/.env')
-        env = p.read()[:-1] + ' '     # When reading files '\n' is appended
-        p.close()
-    else:
+# Find the interpreter config file in the current directory. If none was found,
+#  proceed to search for the file in the project root dir. Fall back to
+#  the default interpreter if one is not found.
+#  The interpreter config file should only contain one line--the path to the
+#  interpreter. The interpreter config file is optional and only works for
+#  interpreted/JIT compiled languages.
+if os.path.isfile(curr_dir + '/.env'):
+    p = open(curr_dir + '/.env')
+    env = p.read()[:-1] + ' '
+    p.close()
+else:
+    try:
+        proj_root = find_proj_root()
+        if os.path.isfile(proj_root + '/.env'):
+            p = open(proj_root + '/.env')
+            env = p.read()[:-1] + ' '     # When reading files '\n' is appended
+            p.close()
+        else:
+            env = envs[ext]
+    except:
         env = envs[ext]
-except:
-    env = envs[ext]
 
 # Choose the right runtime/compiler
 if ext in envs:
@@ -63,8 +66,8 @@ with open('/tmp/run', 'w') as cmd:
     cmd.write('#!/bin/bash\n')
     cmd.write('cd ' + curr_dir + '\n')
     cmd.writelines(run_script)
-
-# Execute the script through a python wrapper script
 subprocess.Popen(['chmod', '+x', '/tmp/run']).wait()
-subprocess.Popen(['x-terminal-emulator', '-e', '$HOME/.vim/plugin/wrap'],
-                 stdout=subprocess.PIPE).wait()
+
+# Execute the script through a wrapper script
+exttools_dir = os.getenv('HOME') + '/.vim/plugin/external-tools.vim/'
+subprocess.Popen([exttools_dir + 'open-term'])

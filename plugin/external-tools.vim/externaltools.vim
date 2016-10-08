@@ -4,8 +4,7 @@ endif
 
 function! QuickRun()
     let currdir = getcwd()
-    execute "silent !$HOME/.vim/plugin/quickrun " . bufname("%") . " " . currdir
-    execute "redraw!"
+    execute "silent !$HOME/.vim/plugin/external-tools.vim/quickrun " . bufname("%") . " " . currdir
 endfunction
 
 command! QuickRun call QuickRun()
