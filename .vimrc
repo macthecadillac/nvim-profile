@@ -23,7 +23,6 @@ set showmatch       " Highlight matching brackets/braces/whatever
 set matchtime=0
 set smartcase       " Smart case matching when search
 set incsearch       " Incremental search
-set smartindent     " Auto-indentation
 set expandtab       " Use 4 spaces instead of the tabulator when pressing 'tab'
 set tabstop=4       " Show existing tab with 4 space width
 set shiftwidth=4    " when indenting with '>', use 4 spaces width

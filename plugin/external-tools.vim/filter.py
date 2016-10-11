@@ -70,14 +70,15 @@ else:
 if ext == '.rs':
     run_script = 'cargo run\n'
 else:
-    run_script = env + fname + '\n'
+    run_script = env + './' + fname + '\n'
 
 # Create a shell script in the /tmp directory
 with open('/tmp/run', 'w') as cmd:
     cmd.write('#!/bin/bash\n')
     cmd.write('cd ' + curr_dir + '\n')
     cmd.writelines(run_script)
-subprocess.Popen(['chmod', '+x', '/tmp/run']).wait()
+st = os.stat('/tmp/run')
+os.chmod('/tmp/run', st.st_mode | stat.S_IEXEC)     # Make script executable
 
 # Execute the script through a wrapper script
 exttools_dir = os.getenv('HOME') + '/.vim/plugin/external-tools.vim/'
