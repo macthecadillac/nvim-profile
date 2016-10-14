@@ -81,6 +81,12 @@ st = os.stat('/tmp/run')
 os.chmod('/tmp/run', st.st_mode | stat.S_IEXEC)     # Make script executable
 
 # Execute the script through a wrapper script
-exttools_dir = os.getenv('HOME') + '/.vim/plugin/external-tools.vim/'
-term_title = 'Execute: ' + fname
-subprocess.Popen([exttools_dir + 'open-term.sh', term_title])
+try:
+    if sys.argv[3] == '--term':
+        exttools_dir = os.getenv('HOME') + '/.vim/plugin/external-tools.vim/'
+        term_title = 'Execute: ' + fname
+        subprocess.Popen([exttools_dir + 'open-term.sh', term_title])
+    else:
+        raise Exception
+except:
+    subprocess.Popen(['/tmp/run'])

@@ -57,11 +57,12 @@ autocmd FileType python nnoremap <buffer> <leader>utc :exec 'silent !cd ~/csun_p
 map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 " Enables running scripts directly from vim
-if has("nvim") || has("gui_running")
-    autocmd FileType python nnoremap <buffer> <F5> :QuickRun<CR>
-    autocmd FileType julia nnoremap <buffer> <F5> :QuickRun<CR>
-    autocmd FileType rust nnoremap <buffer> <F5> :QuickRun<CR>
-endif
+autocmd FileType python nnoremap <buffer> <F5> :QuickRun<CR>
+autocmd FileType julia nnoremap <buffer> <F5> :QuickRun<CR>
+autocmd FileType rust nnoremap <buffer> <F5> :QuickRun<CR>
+autocmd FileType python nnoremap <buffer> <S-F5> :QuickRunBackground<CR>
+autocmd FileType julia nnoremap <buffer> <S-F5> :QuickRunBackground<CR>
+autocmd FileType rust nnoremap <buffer> <S-F5> :QuickRunBackground<CR>
 " Key combo for saving the current session
 map <leader>ss :mksession! ~/.session.vim<CR>
 map <leader>ls :source ~/.session.vim<CR>
