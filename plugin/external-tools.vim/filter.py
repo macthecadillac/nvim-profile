@@ -15,12 +15,13 @@ def find_proj_root():
             # Search for the .git folder up the directory tree
             proj_root = ''.join(re.findall(r'(\/[\w]+)', proj_root)[:-1])
             if len(proj_root) == 0:
-                raise Exception
+                raise FileNotFoundError
     return proj_root
 
 
-def choose_env_from_ext():
-    if os.path.isfile(curr_dir + '/.env'):      # Look for .env in curr dir
+def choose_env_from_ext(ext):
+    # Look for .env in curr dir
+    if os.path.isfile(curr_dir + '/.env'):
         with open(curr_dir + '/.env') as p:
             env = p.read()[:-1] + ' '
     else:
@@ -31,15 +32,56 @@ def choose_env_from_ext():
                 with open(proj_root + '/.env') as p:
                     env = p.read()[:-1] + ' '
             else:
-                # If none is found in root, use default interpreter
                 env = envs[ext]
-        except:
-            # If no root directory found, use default interpreter
+        except FileNotFoundError or KeyError:
             env = envs[ext]
     return env
 
 
-# Set up the environment
+def set_env():
+    with open('./' + fname) as f:
+        shebang = f.readlines()[0][:-1]
+
+    if shebang[:2] == "#!":
+        env = ''
+        st = os.stat('./' + fname)
+        os.chmod('./' + fname, st.st_mode | stat.S_IEXEC)
+    else:
+        try:
+            ext = re.search(r'(\.[\w]+\b)', fname).groups()[0]
+        except AttributeError:
+            sys.exit()
+        if ext in envs:
+            env = choose_env_from_ext(ext)
+    return env
+
+
+def compose_cmd(env):
+    if ext == '.rs':
+        script_content = 'cargo run\n'
+    else:
+        script_content = env + './' + fname + '\n'
+    return script_content
+
+
+def write_script(script_content):
+    with open('/tmp/run', 'w') as cmd:
+        cmd.write('#!/bin/bash\n')
+        cmd.write('cd ' + curr_dir.replace(' ', '\ ') + '\n')
+        cmd.writelines(script_content)
+    st = os.stat('/tmp/run')
+    os.chmod('/tmp/run', st.st_mode | stat.S_IEXEC)
+
+
+def execute():
+    if in_term:
+        exttools_dir = os.getenv('HOME') + '/.vim/plugin/external-tools.vim/'
+        term_title = 'Execute: ' + fname
+        subprocess.Popen([exttools_dir + 'open-term.sh', term_title])
+    else:
+        subprocess.Popen(['/tmp/run'])
+
+
 envs = {
     '.py': '/usr/bin/python3 ',
     '.jl': '/usr/bin/env julia ',
@@ -49,44 +91,16 @@ envs = {
 fname = sys.argv[1]
 curr_dir = sys.argv[2]
 ext = ''
-
-# Filter file types
-with open('./' + fname) as f:
-    shebang = f.readlines()[0][:-1]
-
-if shebang[:2] == "#!":
-    env = ''
-    st = os.stat('./' + fname)
-    os.chmod('./' + fname, st.st_mode | stat.S_IEXEC)    # Make executable
-else:
-    try:
-        ext = re.search(r'(\.[\w]+\b)', fname).groups()[0]
-    except:
-        sys.exit()
-    if ext in envs:
-        env = choose_env_from_ext()
-
-# Choose the right runtime/compiler
-if ext == '.rs':
-    run_script = 'cargo run\n'
-else:
-    run_script = env + './' + fname + '\n'
-
-# Create a shell script in the /tmp directory
-with open('/tmp/run', 'w') as cmd:
-    cmd.write('#!/bin/bash\n')
-    cmd.write('cd ' + curr_dir + '\n')
-    cmd.writelines(run_script)
-st = os.stat('/tmp/run')
-os.chmod('/tmp/run', st.st_mode | stat.S_IEXEC)     # Make script executable
-
-# Execute the script through a wrapper script
+in_term = False
 try:
     if sys.argv[3] == '--term':
-        exttools_dir = os.getenv('HOME') + '/.vim/plugin/external-tools.vim/'
-        term_title = 'Execute: ' + fname
-        subprocess.Popen([exttools_dir + 'open-term.sh', term_title])
-    else:
-        raise Exception
-except:
-    subprocess.Popen(['/tmp/run'])
+        in_term = True
+except IndexError:
+    pass
+
+
+if __name__ == '__main__':
+    env = set_env()
+    script_content = compose_cmd(env)
+    write_script(script_content)
+    execute()

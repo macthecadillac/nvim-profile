@@ -3,7 +3,7 @@ if !has('python')
 endif
 
 function! QuickRun()
-    let currdir = getcwd()
+    let currdir = '"' . getcwd() . '"'
     execute "silent !$HOME/.vim/plugin/external-tools.vim/filter.py " . bufname("%") . " " . currdir . " --term"
 endfunction
 
