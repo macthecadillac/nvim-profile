@@ -76,7 +76,7 @@ map <leader>ls :source ~/.session.vim<CR>
 if has("gui_running")
     " GUI is running or is about to start.
     " Maximize qvim/gvim window.
-    set lines=40 columns=85
+    set lines=40 columns=90
     "set background=dark
     colorscheme monokai
     set guioptions-=m "remove menu bar
