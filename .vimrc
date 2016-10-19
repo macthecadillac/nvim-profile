@@ -78,7 +78,7 @@ if has("gui_running")
     " Maximize qvim/gvim window.
     set lines=40 columns=90
     "set background=dark
-    colorscheme monokai
+    colorscheme lucario
     set guioptions-=m "remove menu bar
     set guioptions-=T "remove toolbar
     set guioptions-=l
@@ -89,32 +89,32 @@ if has("gui_running")
 elseif has("nvim")
     set termguicolors
     "set background=dark
-    colorscheme monokai
+    colorscheme lucario
 else
     "set background=dark
     set t_Co=256
-    colorscheme monokai
+    colorscheme lucario
     "colorscheme lucius
     "LuciusWhite
 endif
 
 " Statusline color
-if has("gui_running")
-    hi StatusLine guifg=#272822 guibg=#e6e8e3
-    hi StatusLineNC guifg=#272823 guibg=#e6e8e3
-    hi TabLineFill guifg=#272822 guibg=#e6e8e3
-    hi TabLine guifg=#272822 guibg=#e6e8e3
-    hi TabLineSel guifg=#e6e8e3 guibg=#43453a
-elseif has("nvim")
-    hi StatusLine guifg=#272822 guibg=#e6e8e3
-    hi StatusLineNC guifg=#272823 guibg=#e6e8e3
-    hi TabLineFill guifg=#272822 guibg=#e6e8e3
-    hi TabLine guifg=#272822 guibg=#e6e8e3
-    hi TabLineSel guifg=#e6e8e3 guibg=#43453a
-else
-    hi StatusLine ctermfg=233 ctermbg=250
-    hi StatusLineNC ctermfg=234 ctermbg=250
-endif
+"if has("gui_running")
+"    hi StatusLine guifg=#272822 guibg=#e6e8e3
+"    hi StatusLineNC guifg=#272823 guibg=#e6e8e3
+"    hi TabLineFill guifg=#272822 guibg=#e6e8e3
+"    hi TabLine guifg=#272822 guibg=#e6e8e3
+"    hi TabLineSel guifg=#e6e8e3 guibg=#43453a
+"elseif has("nvim")
+"    hi StatusLine guifg=#272822 guibg=#e6e8e3
+"    hi StatusLineNC guifg=#272823 guibg=#e6e8e3
+"    hi TabLineFill guifg=#272822 guibg=#e6e8e3
+"    hi TabLine guifg=#272822 guibg=#e6e8e3
+"    hi TabLineSel guifg=#e6e8e3 guibg=#43453a
+"else
+"    hi StatusLine ctermfg=233 ctermbg=250
+"    hi StatusLineNC ctermfg=234 ctermbg=250
+"endif
 
 
 
