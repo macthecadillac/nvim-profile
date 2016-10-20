@@ -30,6 +30,7 @@ hi IncSearch    ctermfg=23 ctermbg=186 cterm=NONE guifg=#2b3e50 guibg=#e6db74 gu
 hi Search       ctermfg=23 ctermbg=186 cterm=NONE guifg=#2b3e50 guibg=#e6db74 gui=NONE
 hi Directory    ctermfg=177 ctermbg=NONE cterm=NONE guifg=#ca94ff guibg=NONE gui=NONE
 hi Folded       ctermfg=68 ctermbg=23 cterm=NONE guifg=#5c98cd guibg=#2b3e50 gui=NONE
+hi SignColumn   ctermfg=74 ctermbg=NONE cterm=NONE guifg=#61bbc8 guibg=#2b3e50 gui=NONE
 "hi StatusLine   ctermfg=231 ctermbg=60 cterm=bold guifg=#f8f8f2 guibg=#66747f gui=bold
 "hi StatusLineNC ctermfg=231 ctermbg=60 cterm=NONE guifg=#f8f8f2 guibg=#66747f gui=NONE
 "hi Search       ctermfg=NONE ctermbg=NONE cterm=underline guifg=NONE guibg=NONE gui=underline
@@ -135,3 +136,8 @@ hi cssBraces        ctermfg=NONE ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE g
 " Python
 hi pythonStatement ctermfg=81 ctermbg=NONE cterm=NONE guifg=#66d9ef guibg=NONE gui=italic
 hi pythonBuiltin   ctermfg=81 ctermbg=NONE cterm=NONE guifg=#66d9ef guibg=NONE gui=italic
+
+" Syntastic
+hi SyntasticErrorSign     ctermfg=231 ctermbg=197 cterm=NONE guifg=#f92b2e guibg=#2b3e50 gui=NONE
+hi Error            ctermfg=231 ctermbg=197 cterm=NONE guifg=#f92b2e guibg=#2b3e50 gui=NONE
+
