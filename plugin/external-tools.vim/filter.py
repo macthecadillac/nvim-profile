@@ -15,7 +15,7 @@ def find_proj_root():
             # Search for the .git folder up the directory tree
             proj_root = ''.join(re.findall(r'(\/[\w]+)', proj_root)[:-1])
             if len(proj_root) == 0:
-                raise FileNotFoundError
+                raise IOError
     return proj_root
 
 
@@ -23,19 +23,20 @@ def choose_env_from_ext(ext):
     # Look for .env in curr dir
     if os.path.isfile(curr_dir + '/.env'):
         with open(curr_dir + '/.env') as p:
-            env = p.read()[:-1] + ' '
+            return p.read()[:-1] + ' '
     else:
         try:
             proj_root = find_proj_root()
             # Find .env in project root directory
             if os.path.isfile(proj_root + '/.env'):
                 with open(proj_root + '/.env') as p:
-                    env = p.read()[:-1] + ' '
+                    return p.read()[:-1] + ' '
             else:
-                env = envs[ext]
-        except FileNotFoundError or KeyError:
-            env = envs[ext]
-    return env
+                return envs[ext]
+        except IOError:
+            return envs[ext]
+        except KeyError:
+            return envs[ext]
 
 
 def set_env():
