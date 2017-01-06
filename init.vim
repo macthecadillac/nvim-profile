@@ -1,3 +1,6 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""" Pathogen Plugins """""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:pathogen_blacklist = []
 call add(g:pathogen_blacklist, 'vim-multiple-cursors')
 call add(g:pathogen_blacklist, 'vim-airline')
@@ -5,6 +8,8 @@ call add(g:pathogen_blacklist, 'julia-vim')
 call add(g:pathogen_blacklist, 'deoplete-julia')
 call add(g:pathogen_blacklist, 'syntastic')
 execute pathogen#infect()
+
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""""""" General settings """"""""""""""""""""""
@@ -36,6 +41,10 @@ set tags+=./tags;~      " Add parent directories to vim ctags search path
 set undofile
 set laststatus=2
 set noswapfile
+set statusline=%<%f\      " filename
+set statusline+=%w%h%m%r  " options
+set statusline+=\ %{getcwd()}
+set statusline+=%=%(line\ %l\ of\ %L,\ col\ %c%)\ \ \ %p%%
 if ((has('nvim')) && (has('gui_running') == 0))
     let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 endif
