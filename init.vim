@@ -76,7 +76,7 @@ if has("gui_running")
     " Maximize qvim/gvim window.
     set lines=40 columns=90
     "set background=dark
-    colorscheme lucario
+    colorscheme quantum
     "set guioptions-=m "remove menu bar
     set guioptions-=T "remove toolbar
     set guioptions-=l
@@ -87,11 +87,11 @@ if has("gui_running")
 elseif has("nvim")
     set termguicolors
     "set background=dark
-    colorscheme lucario
+    colorscheme quantum
 else
     "set background=dark
     set t_Co=256
-    colorscheme lucario
+    colorscheme quantum
     "colorscheme lucius
     "LuciusWhite
 endif
