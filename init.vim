@@ -44,7 +44,7 @@ set noswapfile
 set statusline=%<%f\      " filename
 set statusline+=%w%h%m%r  " options
 set statusline+=\ %{getcwd()}
-set statusline+=%=%(line\ %l\ of\ %L,\ col\ %c%)\ \ \ %p%%
+set statusline+=%=%(\ \ \ line\ %l\ of\ %L,\ col\ %c%)\ \ \ %p%%
 if ((has('nvim')) && (has('gui_running') == 0))
     let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 endif

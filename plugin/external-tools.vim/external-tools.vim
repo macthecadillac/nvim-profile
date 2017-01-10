@@ -9,7 +9,7 @@ endfunction
 
 function! QuickRunBackground()
     let currdir = getcwd()
-    execute "silent !$HOME/.vim/plugin/external-tools.vim/filter.py " . bufname("%") . " " . currdir
+    execute "silent !$HOME/.vim/plugin/external-tools.vim/filter.py " . bufname("%") . " '" . currdir . "'"
 endfunction
 
 command! QuickRun call QuickRun()
