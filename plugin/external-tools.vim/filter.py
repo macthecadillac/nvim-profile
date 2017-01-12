@@ -13,7 +13,7 @@ def find_proj_root():
             break
         else:
             # Search for the .git folder up the directory tree
-            proj_root = ''.join(re.findall(r'(\/[\w]+)', proj_root)[:-1])
+            proj_root = ''.join(re.findall(r'(\/[\w ]+)', proj_root)[:-1])
             if len(proj_root) == 0:
                 raise IOError
     return proj_root
