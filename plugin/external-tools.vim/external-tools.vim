@@ -4,12 +4,13 @@ endif
 
 function! QuickRun()
     let currdir = '"' . getcwd() . '"'
-    execute "silent !$HOME/.vim/plugin/external-tools.vim/filter.py " . bufname("%") . " " . currdir . " --term"
+    let vimdir = $HOME
+    execute "silent !" . vimdir . "/.config/nvim/plugin/external-tools.vim/filter.py " . bufname("%") . " " . currdir . " --term"
 endfunction
 
 function! QuickRunBackground()
     let currdir = getcwd()
-    execute "silent !$HOME/.vim/plugin/external-tools.vim/filter.py " . bufname("%") . " '" . currdir . "'"
+    execute "silent !" . vimdir . "/.config/nvim/plugin/external-tools.vim/filter.py " . bufname("%") . " '" . currdir . "'"
 endfunction
 
 command! QuickRun call QuickRun()
