@@ -61,7 +61,7 @@ autocmd FileType python nmap <leader>co :set colorcolumn=80<CR>     " Automatica
 autocmd FileType julia nmap <leader>co :set colorcolumn=81<CR>     " Automatically set colorcolumn for different files.
 autocmd FileType python nmap <leader>nco :set colorcolumn=<CR>
 autocmd FileType julia nmap <leader>nco :set colorcolumn=<CR>
-"autocmd BufEnter * silent! lcd %:p:h        " Automatically switch directory to the directory of the current file.
+autocmd BufEnter * silent! lcd %:p:h        " Automatically switch directory to the directory of the current file.
 " Generate ctags specifically for the csun project
 autocmd FileType python nnoremap <buffer> <leader>utc :exec 'silent !cd ~/csun_python && ./update_tags'<CR>
 " Shortcuts for jumping to tags in a specific mannger.
