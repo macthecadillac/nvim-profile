@@ -8,5 +8,6 @@ function exit() {
 }
 
 trap : INT      # Catches Ctrl-C and exits gracefully
+echo "Executing "$1":"
 /tmp/run
 exit

@@ -78,7 +78,8 @@ def execute():
     if in_term:
         exttools_dir = os.getenv('HOME') + '/.vim/plugin/external-tools.vim/'
         term_title = 'Execute: ' + fname
-        subprocess.Popen([exttools_dir + 'open-term.sh', term_title])
+        subprocess.Popen([exttools_dir + 'open-term.sh', term_title,
+                          '{}/{}'.format(curr_dir, fname)])
     else:
         subprocess.Popen(['/tmp/run'])
 
