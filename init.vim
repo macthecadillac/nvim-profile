@@ -41,6 +41,7 @@ set tags+=./tags;~      " Add parent directories to vim ctags search path
 set undofile
 set laststatus=2
 set noswapfile
+set fillchars=""    " fill characters of vertical splits
 set statusline=%<%f\      " filename
 set statusline+=%w%h%m%r  " options
 set statusline+=\ %{getcwd()}
@@ -63,7 +64,7 @@ autocmd FileType python nmap <leader>nco :set colorcolumn=<CR>
 autocmd FileType julia nmap <leader>nco :set colorcolumn=<CR>
 autocmd BufEnter * silent! lcd %:p:h        " Automatically switch directory to the directory of the current file.
 " Generate ctags specifically for the csun project
-autocmd FileType python nnoremap <buffer> <leader>utc :exec 'silent !cd ~/csun_python && ./update_tags'<CR>
+"autocmd FileType python nnoremap <buffer> <leader>utc :exec 'silent !cd ~/csun_python && ./update_tags'<CR>
 " Shortcuts for jumping to tags in a specific mannger.
 map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
@@ -186,11 +187,10 @@ let vim_markdown_preview_hotkey='<F5>'
 " vimtex configuration
 let g:vimtex_echo_ignore_wait = 1
 let g:vimtex_view_method = 'general'
-"let g:vimtex_general_view_viewer = 'qpdfview'
-"let g:vimtex_view_general_options = '--unique @pdf\#src:@tex:@line:@col'
 let g:vimtex_view_general_viewer = 'okular'
 let g:vimtex_view_general_options = '--unique @pdf\#src:@line@tex'
 let g:vimtex_view_general_options_latexmk = '--unique'
+let g:vimtex_latexmk_options = '-dvi'
 autocmd FileType latex VimtexCompile
 autocmd FileType tex VimtexCompile
 autocmd FileType latex set shiftwidth=2
