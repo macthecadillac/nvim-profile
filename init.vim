@@ -147,6 +147,7 @@ autocmd FileType python nmap <buffer> <F3> :call Autopep8()<CR>
 
 autocmd! BufWritePost * Neomake
 let g:neomake_python_enabled_makers = ['flake8']
+let g:neomake_tex_enabled_makers = ['chktex']
 let g:neomake_list_height = 5
 let g:neomake_highlight_columns = 0
 let g:neomake_highlight_lines = 0
@@ -195,7 +196,17 @@ autocmd FileType latex VimtexCompile
 autocmd FileType tex VimtexCompile
 autocmd FileType latex set shiftwidth=2
 autocmd FileType tex set shiftwidth=2
+autocmd FileType latex set textwidth=80
+autocmd FileType tex set textwidth=80
 
+" vim-textobj-sentence configuration
+augroup textobj_sentence
+    autocmd!
+    autocmd FileType markdown call textobj#sentence#init()
+    autocmd FileType textile call textobj#sentence#init()
+    autocmd FileType tex call textobj#sentence#init()
+    autocmd FileType latex call textobj#sentence#init()
+augroup END
 
 " CtrlP configuration
 let g:ctrlp_map = '<c-p>'
