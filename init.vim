@@ -203,9 +203,19 @@ autocmd FileType tex set textwidth=80
 augroup textobj_sentence
     autocmd!
     autocmd FileType markdown call textobj#sentence#init()
-    autocmd FileType textile call textobj#sentence#init()
+    autocmd FileType text call textobj#sentence#init()
     autocmd FileType tex call textobj#sentence#init()
     autocmd FileType latex call textobj#sentence#init()
+augroup END
+
+" vim-pencil configuration
+let g:pencil#conceallevel = 0
+augroup pencil
+    autocmd!
+    autocmd FileType markdown call pencil#init()
+    autocmd FileType tex call pencil#init()
+    autocmd FileType latex call pencil#init()
+    autocmd FileType text call pencil#init()
 augroup END
 
 " CtrlP configuration
