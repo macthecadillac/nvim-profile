@@ -2,23 +2,18 @@
 """""""""""""""""""""" Pathogen Plugins """""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:pathogen_blacklist = []
-call add(g:pathogen_blacklist, 'vim-multiple-cursors')
-call add(g:pathogen_blacklist, 'vim-airline')
 call add(g:pathogen_blacklist, 'julia-vim')
 call add(g:pathogen_blacklist, 'deoplete-julia')
-call add(g:pathogen_blacklist, 'syntastic')
 execute pathogen#infect()
 
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""" General settings """"""""""""""""""""""
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""" General settings """"""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 filetype plugin indent on
 syntax on
-set cursorline
 set encoding=utf8
-set autoread
 set wildmenu
 set wildmode=longest:full,full
 set smarttab
@@ -36,7 +31,6 @@ set tabstop=4       " Show existing tab with 4 space width
 set shiftwidth=4    " when indenting with '>', use 4 spaces width
 set foldmethod=manual
 set linebreak         " wrap text while respecting words
-set path+=/home/mac/csun_research   " Add csun_research to path
 set tags+=./tags;~      " Add parent directories to vim ctags search path
 set undofile
 set laststatus=2
@@ -49,28 +43,41 @@ set statusline+=%=%(\ \ \ line\ %l\ of\ %L,\ col\ %c%)\ \ \ %p%%
 if ((has('nvim')) && (has('gui_running') == 0))
     let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 endif
+"set cursorline
 
 
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""""" Custom Keybinding """""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <F7> :set relativenumber! number!<CR>       " Map F7 to toggle relative numbering.
-map <leader>sp :set spell! spelllang=en_us<CR>  " Add a keybinding for toggling between spell-check and no spell-check
-nmap <leader>hl :set hlsearch!<CR>       " Keybindings for highlighting search results
-autocmd FileType python nmap <leader>co :set colorcolumn=80<CR>     " Automatically set colorcolumn for different files.
-autocmd FileType julia nmap <leader>co :set colorcolumn=81<CR>     " Automatically set colorcolumn for different files.
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""" Custom Keybinding """""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Map F7 to toggle relative numbering.
+map <F7> :set relativenumber! number!<CR>
+
+" Add a keybinding for toggling between spell-check and no spell-check
+map <leader>sp :set spell! spelllang=en_us<CR>
+
+" Keybindings for highlighting search results
+nmap <leader>hl :set hlsearch!<CR>
+
+" Automatically set colorcolumn for different files.
+autocmd FileType python nmap <leader>co :set colorcolumn=80<CR>
+
+" Automatically set colorcolumn for different files.
+autocmd FileType julia nmap <leader>co :set colorcolumn=81<CR>
 autocmd FileType python nmap <leader>nco :set colorcolumn=<CR>
 autocmd FileType julia nmap <leader>nco :set colorcolumn=<CR>
-autocmd BufEnter * silent! lcd %:p:h        " Automatically switch directory to the directory of the current file.
-" Generate ctags specifically for the csun project
-"autocmd FileType python nnoremap <buffer> <leader>utc :exec 'silent !cd ~/csun_python && ./update_tags'<CR>
+
+" Automatically switch directory to the directory of the current file.
+autocmd BufEnter * silent! lcd %:p:h
+
 " Shortcuts for jumping to tags in a specific mannger.
 map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+
 " Enables running scripts directly from vim
 nnoremap <buffer> <F5> :QuickRun<CR>
 nnoremap <buffer> <F2> :QuickRunBackground<CR>
+
 " Key combo for saving the current session
 map <leader>ss :mksession! ~/.session.vim<CR>
 map <leader>ls :source ~/.session.vim<CR>
@@ -91,29 +98,11 @@ else
     colorscheme quantum
 endif
 
-" Statusline color
-"if has("gui_running")
-"    hi StatusLine guifg=#272822 guibg=#e6e8e3
-"    hi StatusLineNC guifg=#272823 guibg=#e6e8e3
-"    hi TabLineFill guifg=#272822 guibg=#e6e8e3
-"    hi TabLine guifg=#272822 guibg=#e6e8e3
-"    hi TabLineSel guifg=#e6e8e3 guibg=#43453a
-"elseif has("nvim")
-"    hi StatusLine guifg=#272822 guibg=#e6e8e3
-"    hi StatusLineNC guifg=#272823 guibg=#e6e8e3
-"    hi TabLineFill guifg=#272822 guibg=#e6e8e3
-"    hi TabLine guifg=#272822 guibg=#e6e8e3
-"    hi TabLineSel guifg=#e6e8e3 guibg=#43453a
-"else
-"    hi StatusLine ctermfg=233 ctermbg=250
-"    hi StatusLineNC ctermfg=234 ctermbg=250
-"endif
 
 
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""" Plugin Settings """""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""" Plugin Settings """""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Tagbar configuration
 let g:tagbar_autoclose=1
 let g:tagbar_sort=0
@@ -127,44 +116,12 @@ let g:tagbar_sort=0
 autocmd FileType python nmap <buffer> <F3> :call Autopep8()<CR>
 
 
-" " Syntastic options
-" set statusline=%<%f\      " filename
-" set statusline+=%w%h%m%r  " options
-" "set statusline+=\ %{getcwd()}
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 0
-" let g:syntastic_check_on_wq = 0
-" let g:syntastic_loc_list_height = 5
-" let g:syntastic_enable_signs=1
-" let g:syntastic_python_checkers = ['python', 'flake8']
-" set statusline+=%=%-14.(%l,%c%V%)\ %p%%
-" nmap <F6> :SyntasticToggleMode<CR>
-" nmap <leader>sc :SyntasticCheck<CR>
-
 autocmd! BufWritePost * Neomake
 let g:neomake_python_enabled_makers = ['flake8']
 let g:neomake_tex_enabled_makers = ['chktex']
 let g:neomake_list_height = 5
 let g:neomake_highlight_columns = 0
 let g:neomake_highlight_lines = 0
-"let g:neomake_error_sign = {
-"    \ 'text': 'E>',
-"    \ 'texthl': 'ErrorMsg',
-"    \}
-
-"" Airline configuration
-"let g:airline_powerline_fonts = 1
-"let g:airline_theme='zenburn' " bubblegum is another good choice
-"let g:airline_symbols_space="\u3000"
-"let g:airline#extensions#tabline#enabled = 1
-"let g:airline#extensions#tabline#show_tab_type = 1
-"if has("gui_running")
-"    set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 10
-"endif
 
 
 " Tagbar configuration
@@ -199,7 +156,10 @@ autocmd FileType tex set shiftwidth=2
 autocmd FileType latex set textwidth=80
 autocmd FileType tex set textwidth=80
 
+
 " vim-textobj-sentence configuration
+let g:textobj#sentence#move_n = ')'
+let g:textobj#sentence#move_p = '('
 augroup textobj_sentence
     autocmd!
     autocmd FileType markdown call textobj#sentence#init()
@@ -208,15 +168,16 @@ augroup textobj_sentence
     autocmd FileType latex call textobj#sentence#init()
 augroup END
 
+
 " vim-pencil configuration
 let g:pencil#conceallevel = 0
+let g:pencil#cursorwrap = 1
 augroup pencil
     autocmd!
     autocmd FileType markdown call pencil#init()
-    autocmd FileType tex call pencil#init()
-    autocmd FileType latex call pencil#init()
     autocmd FileType text call pencil#init()
 augroup END
+
 
 " CtrlP configuration
 let g:ctrlp_map = '<c-p>'
