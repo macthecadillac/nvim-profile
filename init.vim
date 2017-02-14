@@ -129,13 +129,6 @@ let g:neomake_highlight_lines = 0
 nmap <F4> :TagbarToggle<CR>
 
 
-" NERDCommenter configuration
-" Enable trimming of trailing whitespace when uncommenting
-let g:NERDTrimTrailingWhitespace = 1
-" Align line-wise comment delimiters flush left instead of following code indentation
-let g:NERDDefaultAlign = 'left'
-
-
 " Vim-markdown-preview configuration
 let vim_markdown_preview_github=1
 let vim_markdown_preview_toggle=0
@@ -199,6 +192,14 @@ nnoremap <leader>FU :execute 'CtrlPFunky ' . expand('<cword>')<CR>
 let g:ctrlp_funky_matchtype = 'path'
 
 
+" jedi-vim configuration
+autocmd FileType python setlocal omnifunc=jedi#completions
+let g:jedi#completions_enabled = 1
+let g:jedi#show_call_signatures = "0"
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#smart_auto_mappings = 0
+
+
 " deoplete configuration
 if has('nvim')
     let g:deoplete#enable_at_startup = 1
@@ -206,10 +207,8 @@ if has('nvim')
     " <TAB>: completion.
     inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
     " Python support
-    autocmd FileType python setlocal omnifunc=jedi#completions
-    let g:jedi#completions_enabled = 1
-    let g:jedi#auto_vim_configuration = 0
-    let g:jedi#smart_auto_mappings = 0
+    " let g:deoplete#sources#jedi#show_docstring = 1
+    " let g:deoplete#sources#jedi#python_path = '/home/mac/anaconda3/bin/python'
     " Rust support
     let g:racer_cmd = '/home/mac/.cargo/bin/racer'
     let $RUST_SRC_PATH = "/home/mac/.src/rustc-1.12.0/src/"
