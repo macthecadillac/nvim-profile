@@ -14,6 +14,7 @@ execute pathogen#infect()
 filetype plugin indent on
 syntax on
 set encoding=utf8
+set nrformats=      " treat all numeral as decimal
 set wildmenu
 set wildmode=longest:full,full
 set smarttab
