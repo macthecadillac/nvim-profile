@@ -158,8 +158,6 @@ augroup textobj_sentence
     autocmd!
     autocmd FileType markdown call textobj#sentence#init()
     autocmd FileType text call textobj#sentence#init()
-    autocmd FileType tex call textobj#sentence#init()
-    autocmd FileType latex call textobj#sentence#init()
 augroup END
 
 
