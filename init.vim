@@ -204,7 +204,6 @@ if has('nvim')
     let g:deoplete#enable_at_startup = 1
     let g:deoplete#sources#syntax#min_keyword_length = 2
     let g:deoplete#max_list = 20
-    let g:deoplete#max_menu_width = 40
     let g:deoplete#max_abbr_width = 30
     let g:deoplete#auto_complete_delay = 0
     let g:deoplete#enable_refresh_always = 1
