@@ -39,3 +39,8 @@
 /bundle/deoplete-jedi/rplugin/python3/deoplete/sources/deoplete_jedi/__pycache__/worker.cpython-34.pyc
 /bundle/deoplete-jedi/rplugin/python3/deoplete/sources/deoplete_jedi/__pycache__/__init__.cpython-35.pyc
 /bundle/deoplete-jedi/rplugin/python3/deoplete/sources/deoplete_jedi/__pycache__/utils.cpython-35.pyc
+/bundle/deoplete-jedi/rplugin/python3/deoplete/sources/__pycache__/deoplete_jedi.cpython-35.pyc
+/bundle/deoplete-jedi/rplugin/python3/deoplete/sources/deoplete_jedi/__pycache__/cache.cpython-35.pyc
+/bundle/deoplete-jedi/rplugin/python3/deoplete/sources/deoplete_jedi/__pycache__/profiler.cpython-35.pyc
+/bundle/deoplete-jedi/rplugin/python3/deoplete/sources/deoplete_jedi/__pycache__/server.cpython-35.pyc
+/bundle/deoplete-jedi/rplugin/python3/deoplete/sources/deoplete_jedi/__pycache__/worker.cpython-35.pyc
