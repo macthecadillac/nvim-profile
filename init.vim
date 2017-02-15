@@ -2,8 +2,8 @@
 """""""""""""""""""""" Pathogen Plugins """""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:pathogen_blacklist = []
-call add(g:pathogen_blacklist, 'julia-vim')
 call add(g:pathogen_blacklist, 'deoplete-julia')
+call add(g:pathogen_blacklist, 'julia-vim')
 execute pathogen#infect()
 
 
@@ -25,6 +25,7 @@ set nohlsearch
 set number      " Turn on numbering by default
 set showmatch       " Highlight matching brackets/braces/whatever
 set matchtime=0
+set ignorecase
 set smartcase       " Smart case matching when search
 set incsearch       " Incremental search
 set expandtab       " Use 4 spaces instead of the tabulator when pressing 'tab'
@@ -41,6 +42,8 @@ set statusline=%<%f\      " filename
 set statusline+=%w%h%m%r  " options
 set statusline+=\ %{getcwd()}
 set statusline+=%=%(\ \ \ line\ %l\ of\ %L,\ col\ %c%)\ \ \ %p%%
+set dictionary+=/usr/share/dict/words       " for dictionary completion
+set dictionary+=~/.config/nvim/spell/en.utf-8.add
 if ((has('nvim')) && (has('gui_running') == 0))
     let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 endif
@@ -109,10 +112,6 @@ let g:tagbar_autoclose=1
 let g:tagbar_sort=0
 
 
-" Enables YouCompleteMe Python integration
-"let g:ycm_python_binary_path = 'python'
-
-
 " Autopep8 options
 autocmd FileType python nmap <buffer> <F3> :call Autopep8()<CR>
 
@@ -149,6 +148,16 @@ autocmd FileType latex set shiftwidth=2
 autocmd FileType tex set shiftwidth=2
 autocmd FileType latex set textwidth=80
 autocmd FileType tex set textwidth=80
+
+
+" vim-operator-surround
+" operator mappings
+map <silent>sa <Plug>(operator-surround-append)
+map <silent>sd <Plug>(operator-surround-delete)
+map <silent>sr <Plug>(operator-surround-replace)
+" vim-textobj-between
+nmap <silent>sdb <Plug>(operator-surround-delete)<Plug>(textobj-between-a)
+nmap <silent>srb <Plug>(operator-surround-replace)<Plug>(textobj-between-a)
 
 
 " vim-textobj-sentence configuration
@@ -190,23 +199,21 @@ nnoremap <leader>FU :execute 'CtrlPFunky ' . expand('<cword>')<CR>
 let g:ctrlp_funky_matchtype = 'path'
 
 
-" jedi-vim configuration
-autocmd FileType python setlocal omnifunc=jedi#completions
-let g:jedi#completions_enabled = 1
-let g:jedi#show_call_signatures = "0"
-let g:jedi#auto_vim_configuration = 0
-let g:jedi#smart_auto_mappings = 0
-
-
 " deoplete configuration
 if has('nvim')
     let g:deoplete#enable_at_startup = 1
     let g:deoplete#sources#syntax#min_keyword_length = 2
+    let g:deoplete#max_list = 20
+    let g:deoplete#max_menu_width = 40
+    let g:deoplete#max_abbr_width = 30
+    let g:deoplete#auto_complete_delay = 0
+    let g:deoplete#enable_refresh_always = 1
+    let g:deoplete#auto_refresh_delay = 0
     " <TAB>: completion.
     inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
     " Python support
-    " let g:deoplete#sources#jedi#show_docstring = 1
-    " let g:deoplete#sources#jedi#python_path = '/home/mac/anaconda3/bin/python'
+    let g:deoplete#sources#jedi#show_docstring = 1
+    let g:deoplete#sources#jedi#python_path = '/home/mac/anaconda3/bin/python'
     " Rust support
     let g:racer_cmd = '/home/mac/.cargo/bin/racer'
     let $RUST_SRC_PATH = "/home/mac/.src/rustc-1.12.0/src/"
