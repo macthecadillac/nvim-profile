@@ -49,6 +49,18 @@ if ((has('nvim')) && (has('gui_running') == 0))
 endif
 "set cursorline
 
+" Filetype specific options
+autocmd FileType markdown set shiftwidth=2
+autocmd FileType markdown set textwidth=80
+autocmd FileType markdown set spell spelllang=en_us
+
+autocmd FileType latex set shiftwidth=2
+autocmd FileType latex set textwidth=80
+autocmd FileType latex set spell spelllang=en_us
+
+autocmd FileType tex set shiftwidth=2
+autocmd FileType tex set textwidth=80
+autocmd FileType tex set spell spelllang=en_us
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -144,10 +156,6 @@ let g:vimtex_view_general_options_latexmk = '--unique'
 let g:vimtex_latexmk_options = '-dvi'
 autocmd FileType latex VimtexCompile
 autocmd FileType tex VimtexCompile
-autocmd FileType latex set shiftwidth=2
-autocmd FileType tex set shiftwidth=2
-autocmd FileType latex set textwidth=80
-autocmd FileType tex set textwidth=80
 
 
 " vim-operator-surround
