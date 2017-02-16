@@ -22,14 +22,12 @@ Plug 'reedes/vim-pencil', { 'for': ['text', 'markdown'] }
 " Language support
 Plug 'neomake/neomake'
 Plug 'tell-k/vim-autopep8', { 'for': 'python' }
-Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
 
 " Deoplete & co.
 Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/neco-vim', { 'for': 'vim' }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
-Plug 'sebastianmarkow/deoplete-rust', { 'for': 'rust' }
 
 " Operators
 Plug 'kana/vim-operator-user'
@@ -258,9 +256,6 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " Python support
 let g:deoplete#sources#jedi#show_docstring = 1
 let g:deoplete#sources#jedi#python_path = '/home/mac/anaconda3/bin/python'
-" Rust support
-let g:deoplete#sources#rust#racer_binary='/home/mac/.cargo/bin'
-let g:deoplete#sources#rust#rust_sources_path='/home/mac/.src/rustc-1.12.0/src'
 " Vim-tex integration
 if !exists('g:deoplete#omni#input_patterns')
     let g:deoplete#omni#input_patterns = {}
