@@ -22,7 +22,7 @@ Plug 'reedes/vim-pencil', { 'for': ['text', 'markdown'] }
 " Language support
 Plug 'neomake/neomake'
 Plug 'tell-k/vim-autopep8', { 'for': 'python' }
-Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
+Plug 'lervag/vimtex', { 'for': ['plaintex', 'tex'] }
 
 " Deoplete & co.
 Plug 'Shougo/deoplete.nvim'
@@ -38,7 +38,7 @@ Plug 'kana/vim-textobj-user'
 Plug 'thinca/vim-textobj-between'
 Plug 'glts/vim-textobj-comment'
 Plug 'kana/vim-textobj-indent'
-" Plug 'rbonvall/vim-textobj-latex', { 'for': ['tex', 'latex'] }
+" Plug 'rbonvall/vim-textobj-latex', { 'for': ['plaintex', 'tex'] }
 Plug 'reedes/vim-textobj-sentence'
 call plug#end()
 
@@ -90,13 +90,13 @@ autocmd FileType markdown set shiftwidth=2
 autocmd FileType markdown set textwidth=80
 autocmd FileType markdown set spell spelllang=en_us
 
-autocmd FileType latex set shiftwidth=2
-autocmd FileType latex set textwidth=80
-autocmd FileType latex set spell spelllang=en_us
-
 autocmd FileType tex set shiftwidth=2
 autocmd FileType tex set textwidth=80
 autocmd FileType tex set spell spelllang=en_us
+
+autocmd FileType plaintex set shiftwidth=2
+autocmd FileType plaintex set textwidth=80
+autocmd FileType plaintex set spell spelllang=en_us
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -127,8 +127,9 @@ map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 
 " Enables running scripts directly from vim
-nnoremap <buffer> <F5> :QuickRun<CR>
-nnoremap <buffer> <F2> :QuickRunBackground<CR>
+autocmd FileType python nnoremap <buffer> <F5> :QuickRun<CR>
+autocmd FileType python nnoremap <buffer> <F2> :QuickRunBackground<CR>
+autocmd FileType sh nnoremap <buffer> <F5> :QuickRun<CR>
 
 " Key combo for saving the current session
 map <leader>ss :mksession! ~/.session.vim<CR>
@@ -189,8 +190,9 @@ let g:vimtex_view_method = 'general'
 let g:vimtex_view_general_viewer = 'okular'
 let g:vimtex_view_general_options = '--unique @pdf\#src:@line@tex'
 let g:vimtex_view_general_options_latexmk = '--unique'
-let g:vimtex_latexmk_options = '-dvi -view=none'
-autocmd FileType latex VimtexCompile
+let g:vimtex_view_automatic = 0
+let g:vimtex_latexmk_options = ''   " needed to make latexmk read from .latexmkrc
+autocmd FileType tex nnoremap <F5> :VimtexView<CR>
 autocmd FileType tex VimtexCompile
 
 
