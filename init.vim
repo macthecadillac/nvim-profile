@@ -40,7 +40,7 @@ Plug 'kana/vim-textobj-user'
 Plug 'thinca/vim-textobj-between'
 Plug 'glts/vim-textobj-comment'
 Plug 'kana/vim-textobj-indent'
-Plug 'rbonvall/vim-textobj-latex', { 'for': ['tex', 'latex'] }
+" Plug 'rbonvall/vim-textobj-latex', { 'for': ['tex', 'latex'] }
 Plug 'reedes/vim-textobj-sentence'
 call plug#end()
 
@@ -191,7 +191,7 @@ let g:vimtex_view_method = 'general'
 let g:vimtex_view_general_viewer = 'okular'
 let g:vimtex_view_general_options = '--unique @pdf\#src:@line@tex'
 let g:vimtex_view_general_options_latexmk = '--unique'
-let g:vimtex_latexmk_options = '-dvi'
+let g:vimtex_latexmk_options = '-dvi -view=none'
 autocmd FileType latex VimtexCompile
 autocmd FileType tex VimtexCompile
 
