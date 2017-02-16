@@ -37,6 +37,7 @@ set tags+=./tags;~      " Add parent directories to vim ctags search path
 set undofile
 set laststatus=2
 set noswapfile
+set complete+=k
 set fillchars=""    " fill characters of vertical splits
 set statusline=%<%f\      " filename
 set statusline+=%w%h%m%r  " options
@@ -208,36 +209,34 @@ let g:ctrlp_funky_matchtype = 'path'
 
 
 " deoplete configuration
-if has('nvim')
-    let g:deoplete#enable_at_startup = 1
-    let g:deoplete#sources#syntax#min_keyword_length = 2
-    let g:deoplete#max_list = 20
-    let g:deoplete#max_abbr_width = 30
-    let g:deoplete#auto_complete_delay = 0
-    let g:deoplete#enable_refresh_always = 1
-    let g:deoplete#auto_refresh_delay = 0
-    " <TAB>: completion.
-    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-    " Python support
-    let g:deoplete#sources#jedi#show_docstring = 1
-    let g:deoplete#sources#jedi#python_path = '/home/mac/anaconda3/bin/python'
-    " Rust support
-    let g:racer_cmd = '/home/mac/.cargo/bin/racer'
-    let $RUST_SRC_PATH = "/home/mac/.src/rustc-1.12.0/src/"
-    let g:deoplete#omni_patterns = {}
-    let g:deoplete#omni_patterns.rust = '[(\.)(::)]'
-    " Vim-tex integration
-    if !exists('g:deoplete#omni#input_patterns')
-        let g:deoplete#omni#input_patterns = {}
-    endif
-    let g:deoplete#omni#input_patterns.tex = '\\(?:'
-          \ .  '\w*cite\w*(?:\s*\[[^]]*\]){0,2}\s*{[^}]*'
-          \ . '|\w*ref(?:\s*\{[^}]*|range\s*\{[^,}]*(?:}{)?)'
-          \ . '|hyperref\s*\[[^]]*'
-          \ . '|includegraphics\*?(?:\s*\[[^]]*\]){0,2}\s*\{[^}]*'
-          \ . '|(?:include(?:only)?|input)\s*\{[^}]*'
-          \ . '|\w*(gls|Gls|GLS)(pl)?\w*(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
-          \ . '|includepdf(\s*\[[^]]*\])?\s*\{[^}]*'
-          \ . '|includestandalone(\s*\[[^]]*\])?\s*\{[^}]*'
-          \ .')'
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#sources#syntax#min_keyword_length = 2
+let g:deoplete#max_list = 20
+let g:deoplete#max_abbr_width = 30
+let g:deoplete#auto_complete_delay = 0
+let g:deoplete#enable_refresh_always = 1
+let g:deoplete#auto_refresh_delay = 0
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" Python support
+let g:deoplete#sources#jedi#show_docstring = 1
+let g:deoplete#sources#jedi#python_path = '/home/mac/anaconda3/bin/python'
+" Rust support
+let g:racer_cmd = '/home/mac/.cargo/bin/racer'
+let $RUST_SRC_PATH = "/home/mac/.src/rustc-1.12.0/src/"
+let g:deoplete#omni_patterns = {}
+let g:deoplete#omni_patterns.rust = '[(\.)(::)]'
+" Vim-tex integration
+if !exists('g:deoplete#omni#input_patterns')
+    let g:deoplete#omni#input_patterns = {}
 endif
+let g:deoplete#omni#input_patterns.tex = '\\(?:'
+      \ .  '\w*cite\w*(?:\s*\[[^]]*\]){0,2}\s*{[^}]*'
+      \ . '|\w*ref(?:\s*\{[^}]*|range\s*\{[^,}]*(?:}{)?)'
+      \ . '|hyperref\s*\[[^]]*'
+      \ . '|includegraphics\*?(?:\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+      \ . '|(?:include(?:only)?|input)\s*\{[^}]*'
+      \ . '|\w*(gls|Gls|GLS)(pl)?\w*(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+      \ . '|includepdf(\s*\[[^]]*\])?\s*\{[^}]*'
+      \ . '|includestandalone(\s*\[[^]]*\])?\s*\{[^}]*'
+      \ .')'
