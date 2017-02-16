@@ -1,11 +1,48 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""" Pathogen Plugins """""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:pathogen_blacklist = []
-call add(g:pathogen_blacklist, 'deoplete-julia')
-call add(g:pathogen_blacklist, 'julia-vim')
-execute pathogen#infect()
+" let g:pathogen_blacklist = []
+" call add(g:pathogen_blacklist, 'deoplete-julia')
+" call add(g:pathogen_blacklist, 'julia-vim')
+" execute pathogen#infect()
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""" Vim-Plug Plugins """""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+call plug#begin('~/.config/nvim/plugged')
+" Tools
+Plug 'kien/ctrlp.vim'
+Plug 'tacahiroy/ctrlp-funky'
+Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
+Plug 'tpope/vim-commentary'
+Plug 'JamshedVesuna/vim-markdown-preview', { 'for': 'markdown' }
+Plug 'reedes/vim-pencil', { 'for': ['text', 'markdown'] }
+
+" Language support
+Plug 'neomake/neomake'
+Plug 'tell-k/vim-autopep8', { 'for': 'python' }
+Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
+
+" Deoplete & co.
+Plug 'Shougo/deoplete.nvim'
+Plug 'Shougo/neco-vim', { 'for': 'vim' }
+Plug 'zchee/deoplete-jedi', { 'for': 'python' }
+Plug 'sebastianmarkow/deoplete-rust', { 'for': 'rust' }
+
+" Operators
+Plug 'kana/vim-operator-user'
+Plug 'rhysd/vim-operator-surround'
+
+" Text objects
+Plug 'kana/vim-textobj-user'
+Plug 'thinca/vim-textobj-between'
+Plug 'glts/vim-textobj-comment'
+Plug 'kana/vim-textobj-indent'
+Plug 'rbonvall/vim-textobj-latex', { 'for': ['tex', 'latex'] }
+Plug 'reedes/vim-textobj-sentence'
+call plug#end()
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -222,10 +259,8 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 let g:deoplete#sources#jedi#show_docstring = 1
 let g:deoplete#sources#jedi#python_path = '/home/mac/anaconda3/bin/python'
 " Rust support
-let g:racer_cmd = '/home/mac/.cargo/bin/racer'
-let $RUST_SRC_PATH = "/home/mac/.src/rustc-1.12.0/src/"
-let g:deoplete#omni_patterns = {}
-let g:deoplete#omni_patterns.rust = '[(\.)(::)]'
+let g:deoplete#sources#rust#racer_binary='/home/mac/.cargo/bin'
+let g:deoplete#sources#rust#rust_sources_path='/home/mac/.src/rustc-1.12.0/src'
 " Vim-tex integration
 if !exists('g:deoplete#omni#input_patterns')
     let g:deoplete#omni#input_patterns = {}
