@@ -84,6 +84,7 @@ if ((has('nvim')) && (has('gui_running') == 0))
     let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 endif
 "set cursorline
+set sh=fish           " default shell set to /usr/bin/fish
 
 " Filetype specific options
 autocmd FileType markdown set shiftwidth=2
@@ -246,18 +247,18 @@ let g:ctrlp_funky_matchtype = 'path'
 
 
 " deoplete configuration
-set completeopt+=noinsert
+set completeopt+=noselect
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#syntax#min_keyword_length = 2
-let g:deoplete#max_list = 20
+let g:deoplete#max_list = 0
 let g:deoplete#max_abbr_width = 30
 let g:deoplete#auto_complete_delay = 0
-let g:deoplete#enable_refresh_always = 1
 let g:deoplete#auto_refresh_delay = 0
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " Python support
-let g:deoplete#sources#jedi#show_docstring = 1
+" let g:deoplete#sources#jedi#show_docstring = 1
+let g:deoplete#sources#jedi#statement_length = 30
 let g:deoplete#sources#jedi#python_path = '/home/mac/anaconda3/bin/python'
 " Vim-tex integration
 if !exists('g:deoplete#omni#input_patterns')
