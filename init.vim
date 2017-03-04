@@ -1,13 +1,4 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""""""" Pathogen Plugins """""""""""""""""""""
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" let g:pathogen_blacklist = []
-" call add(g:pathogen_blacklist, 'deoplete-julia')
-" call add(g:pathogen_blacklist, 'julia-vim')
-" execute pathogen#infect()
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""" Vim-Plug Plugins """""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.config/nvim/plugged')
@@ -112,11 +103,7 @@ nmap <leader>hl :set hlsearch!<CR>
 
 " Automatically set colorcolumn for different files.
 autocmd FileType python nmap <leader>co :set colorcolumn=80<CR>
-
-" Automatically set colorcolumn for different files.
-autocmd FileType julia nmap <leader>co :set colorcolumn=81<CR>
 autocmd FileType python nmap <leader>nco :set colorcolumn=<CR>
-autocmd FileType julia nmap <leader>nco :set colorcolumn=<CR>
 
 " Automatically switch directory to the directory of the current file.
 autocmd BufEnter * silent! lcd %:p:h
