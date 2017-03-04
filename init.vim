@@ -80,11 +80,9 @@ set statusline+=\ %{getcwd()}
 set statusline+=%=%(\ \ \ line\ %l\ of\ %L,\ col\ %c%)\ \ \ %p%%
 set dictionary+=/usr/share/dict/words       " for dictionary completion
 set dictionary+=~/.config/nvim/spell/en.utf-8.add
-if ((has('nvim')) && (has('gui_running') == 0))
-    let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-endif
 "set cursorline
 set sh=fish           " default shell set to /usr/bin/fish
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE=2
 
 " Filetype specific options
 autocmd FileType markdown set shiftwidth=2
