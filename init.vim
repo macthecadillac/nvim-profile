@@ -9,6 +9,7 @@ Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 Plug 'tpope/vim-commentary'
 Plug 'JamshedVesuna/vim-markdown-preview', { 'for': 'markdown' }
 Plug 'reedes/vim-pencil', { 'for': ['text', 'markdown'] }
+Plug 'equalsraf/neovim-gui-shim'    " documentation for neovim gui commands
 
 " Language support
 Plug 'neomake/neomake'
