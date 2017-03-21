@@ -20,6 +20,7 @@ Plug 'lervag/vimtex', { 'for': ['plaintex', 'tex'] }
 Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/neco-vim', { 'for': 'vim' }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
+Plug 'tweekmonster/deoplete-clang2', { 'for': ['cpp', 'c'] }
 
 " Operators
 Plug 'kana/vim-operator-user'
@@ -55,7 +56,6 @@ set matchtime=0
 set ignorecase
 set smartcase       " Smart case matching when search
 set incsearch       " Incremental search
-set expandtab       " Use 4 spaces instead of the tabulator when pressing 'tab'
 set tabstop=4       " Show existing tab with 4 space width
 set shiftwidth=4    " when indenting with '>', use 4 spaces width
 set foldmethod=manual
@@ -89,6 +89,14 @@ autocmd FileType plaintex set shiftwidth=2
 autocmd FileType plaintex set textwidth=80
 autocmd FileType plaintex set spell spelllang=en_us
 
+autocmd FileType python set expandtab       " Use 4 spaces instead of the tabulator when pressing 'tab'
+autocmd FileType c set expandtab
+autocmd FileType cpp set expandtab
+autocmd FileType sh set expandtab
+autocmd FileType tex set expandtab
+autocmd FileType plaintex set expandtab
+autocmd FileType markdown set expandtab
+autocmd FileType text set expandtab
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""""""" Custom Keybinding """""""""""""""""""""
@@ -179,6 +187,7 @@ let g:vimtex_view_general_options = '--unique @pdf\#src:@line@tex'
 let g:vimtex_view_general_options_latexmk = '--unique'
 let g:vimtex_view_automatic = 0
 let g:vimtex_latexmk_options = ''   " needed to make latexmk read from .latexmkrc
+let g:vimtex_latexmk_progname = 'nvr'   " neovim-remote path for callback
 autocmd FileType tex nnoremap <F5> :VimtexView<CR>
 autocmd FileType tex VimtexCompile
 
