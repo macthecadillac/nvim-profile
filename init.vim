@@ -140,10 +140,12 @@ if has("gui_running")
     " GUI is running or is about to start.
     " Maximize qvim/gvim window.
     set lines=40 columns=90
-    colorscheme quantum
+    " colorscheme quantum
+    colorscheme codeschool
 else
     set termguicolors
-    colorscheme quantum
+    " colorscheme quantum
+    colorscheme codeschool
 endif
 
 
