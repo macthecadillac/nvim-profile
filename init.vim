@@ -77,6 +77,7 @@ set statusline+=%=%(\ \ \ line\ %l\ of\ %L,\ col\ %c%)\ \ \ %p%%
 set dictionary+=/usr/share/dict/words       " for dictionary completion
 set dictionary+=~/.config/nvim/spell/en.utf-8.add
 set cursorline
+set lazyredraw
 set sh=fish           " default shell set to /usr/bin/fish
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=2
 
