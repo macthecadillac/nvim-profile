@@ -13,10 +13,11 @@ Plug 'equalsraf/neovim-gui-shim'    " documentation for neovim gui commands
 
 " Language support
 Plug 'neomake/neomake'
-Plug 'tell-k/vim-autopep8', { 'for': 'python' }
+" Plug 'tell-k/vim-autopep8', { 'for': 'python' }
 Plug 'lervag/vimtex', { 'for': ['plaintex', 'tex'] }
 Plug 'dag/vim-fish'
 Plug 'JuliaEditorSupport/julia-vim'
+Plug 'python-mode/python-mode', { 'for': 'python' }
 
 " Deoplete & co.
 Plug 'Shougo/deoplete.nvim'
@@ -152,6 +153,14 @@ let g:latex_to_unicode_eager = 0
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""""" Plugin Settings """""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Pymode configuration
+let g:pymode_folding = 0
+let g:pymode_python = 'python3'
+let g:pymode_rope_completion = 0
+let g:pymode_rope_completion_on_dot = 0
+let g:pymode_rope_autoimport = 0
+
+
 " Tagbar configuration
 let g:tagbar_autoclose=1
 let g:tagbar_sort=0
