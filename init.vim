@@ -94,13 +94,16 @@ autocmd FileType plaintex set shiftwidth=2
 autocmd FileType plaintex set textwidth=80
 autocmd FileType plaintex set spell spelllang=en_us
 
-autocmd FileType python set expandtab       " Use 4 spaces instead of the tabulator when pressing 'tab'
+" Use 4 spaces instead of the tabulator when pressing 'tab'
 autocmd FileType c set expandtab
 autocmd FileType cpp set expandtab
+autocmd FileType fish set expandtab
+autocmd FileType julia set expandtab
+autocmd FileType markdown set expandtab
+autocmd FileType plaintex set expandtab
+autocmd FileType python set expandtab
 autocmd FileType sh set expandtab
 autocmd FileType tex set expandtab
-autocmd FileType plaintex set expandtab
-autocmd FileType markdown set expandtab
 autocmd FileType text set expandtab
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -149,8 +152,6 @@ colorscheme ayu
 " colorscheme two-firewatch
 
 
-let g:latex_to_unicode_eager = 0
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""""" Plugin Settings """""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -160,6 +161,11 @@ let g:pymode_python = 'python3'
 let g:pymode_rope_completion = 0
 let g:pymode_rope_completion_on_dot = 0
 let g:pymode_rope_autoimport = 0
+
+
+" Julia-vim configuration
+let g:latex_to_unicode_tab = 0
+let g:latex_to_unicode_auto = 1
 
 
 " Tagbar configuration
