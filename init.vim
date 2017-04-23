@@ -15,12 +15,15 @@ Plug 'equalsraf/neovim-gui-shim'    " documentation for neovim gui commands
 Plug 'neomake/neomake'
 Plug 'tell-k/vim-autopep8', { 'for': 'python' }
 Plug 'lervag/vimtex', { 'for': ['plaintex', 'tex'] }
+Plug 'dag/vim-fish'
+Plug 'JuliaEditorSupport/julia-vim'
 
 " Deoplete & co.
 Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/neco-vim', { 'for': 'vim' }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 Plug 'tweekmonster/deoplete-clang2', { 'for': ['cpp', 'c'] }
+Plug 'JuliaEditorSupport/deoplete-julia', { 'for': 'julia'}
 
 " Operators
 Plug 'kana/vim-operator-user'
@@ -72,7 +75,7 @@ set statusline+=\ %{getcwd()}
 set statusline+=%=%(\ \ \ line\ %l\ of\ %L,\ col\ %c%)\ \ \ %p%%
 set dictionary+=/usr/share/dict/words       " for dictionary completion
 set dictionary+=~/.config/nvim/spell/en.utf-8.add
-"set cursorline
+set cursorline
 set sh=fish           " default shell set to /usr/bin/fish
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=2
 
@@ -135,20 +138,16 @@ map <leader>ls :source ~/.session.vim<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""" UI specific settings """"""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" gui window default settings
-if has("gui_running")
-    " GUI is running or is about to start.
-    " Maximize qvim/gvim window.
-    set lines=40 columns=90
-    " colorscheme quantum
-    colorscheme codeschool
-else
-    set termguicolors
-    " colorscheme quantum
-    colorscheme codeschool
-endif
+" Color settings
+set termguicolors
+let ayucolor = 'mirage'
+colorscheme ayu
+" let g:two_firewatch_italics=1
+" set background=dark
+" colorscheme two-firewatch
 
 
+let g:latex_to_unicode_eager = 0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""""" Plugin Settings """""""""""""""""""""""""
