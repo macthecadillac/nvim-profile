@@ -170,6 +170,11 @@ let g:latex_to_unicode_tab = 0
 let g:latex_to_unicode_auto = 1
 
 
+" Merlin (OCaml) configuration
+let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+execute "set rtp+=" . g:opamshare . "/merlin/vim"
+
+
 " Tagbar configuration
 let g:tagbar_autoclose=1
 let g:tagbar_sort=0
