@@ -162,6 +162,7 @@ let g:pymode_rope_completion = 0
 let g:pymode_rope_completion_on_dot = 0
 let g:pymode_rope_autoimport = 0
 let g:pymode_options_colorcolumn = 0
+let g:pymode_lint = 0
 
 
 " Julia-vim configuration
