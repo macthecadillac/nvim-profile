@@ -170,9 +170,14 @@ let g:latex_to_unicode_tab = 0
 let g:latex_to_unicode_auto = 1
 
 
-" Merlin (OCaml) configuration
-let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-execute "set rtp+=" . g:opamshare . "/merlin/vim"
+" OCaml specific configuration
+function OCaml_settings()
+	let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+	execute "set rtp+=" . g:opamshare . "/merlin/vim"
+	" For vim-commentary since the plugin doesn't know comment syntax of OCaml
+	set commentstring=(*\ %s\ *)
+endfun
+autocmd FileType ocaml call OCaml_settings()
 
 
 " Tagbar configuration
