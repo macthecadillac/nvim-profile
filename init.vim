@@ -174,13 +174,11 @@ let g:latex_to_unicode_auto = 1
 
 
 " OCaml specific configuration
-function OCaml_settings()
-	let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-	execute "set rtp+=" . g:opamshare . "/merlin/vim"
-	" For vim-commentary since the plugin doesn't know comment syntax of OCaml
-	set commentstring=(*\ %s\ *)
-endfun
-autocmd FileType ocaml call OCaml_settings()
+let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+execute "set rtp+=" . g:opamshare . "/merlin/vim"
+let g:merlin_disable_default_keybindings = 1
+" For vim-commentary since the plugin doesn't know comment syntax of OCaml
+autocmd Filetype ocaml set commentstring=(*\ %s\ *)
 
 
 " Tagbar configuration
@@ -195,6 +193,7 @@ autocmd FileType python nmap <buffer> <F3> :call Autopep8()<CR>
 autocmd! BufWritePost * Neomake
 let g:neomake_python_enabled_makers = ['flake8']
 let g:neomake_tex_enabled_makers = ['chktex']
+let g:neomake_ocaml_makers = ['merlin']
 let g:neomake_list_height = 5
 let g:neomake_highlight_columns = 0
 let g:neomake_highlight_lines = 0
@@ -281,16 +280,18 @@ let g:deoplete#max_list = 0
 let g:deoplete#max_abbr_width = 30
 let g:deoplete#auto_complete_delay = 0
 let g:deoplete#auto_refresh_delay = 0
+if !exists('g:deoplete#omni#input_patterns')
+    let g:deoplete#omni#input_patterns = {}
+endif
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " Python support
 " let g:deoplete#sources#jedi#show_docstring = 1
 let g:deoplete#sources#jedi#statement_length = 30
 let g:deoplete#sources#jedi#python_path = '/home/mac/anaconda3/bin/python'
+" OCaml support
+let g:deoplete#omni#input_patterns.ocaml = '[.\w]+'
 " Vim-tex integration
-if !exists('g:deoplete#omni#input_patterns')
-    let g:deoplete#omni#input_patterns = {}
-endif
 let g:deoplete#omni#input_patterns.tex = '\\(?:'
       \ .  '\w*cite\w*(?:\s*\[[^]]*\]){0,2}\s*{[^}]*'
       \ . '|\w*ref(?:\s*\{[^}]*|range\s*\{[^,}]*(?:}{)?)'
