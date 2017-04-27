@@ -94,12 +94,15 @@ autocmd FileType plaintex set shiftwidth=2
 autocmd FileType plaintex set textwidth=80
 autocmd FileType plaintex set spell spelllang=en_us
 
+autocmd Filetype ocaml set shiftwidth=2
+
 " Use 4 spaces instead of the tabulator when pressing 'tab'
 autocmd FileType c set expandtab
 autocmd FileType cpp set expandtab
 autocmd FileType fish set expandtab
 autocmd FileType julia set expandtab
 autocmd FileType markdown set expandtab
+autocmd Filetype ocaml set expandtab
 autocmd FileType plaintex set expandtab
 autocmd FileType python set expandtab
 autocmd FileType sh set expandtab
