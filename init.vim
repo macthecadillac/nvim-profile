@@ -79,6 +79,8 @@ set dictionary+=~/.config/nvim/spell/en.utf-8.add
 set cursorline
 set lazyredraw
 set sh=fish           " default shell set to /usr/bin/fish
+set mouse=a
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE=2
 
 " Filetype specific options
 autocmd FileType markdown set shiftwidth=2
