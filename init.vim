@@ -13,8 +13,6 @@ Plug 'brooth/far.vim'
 
 " Language support
 Plug 'neomake/neomake'
-" Plug 'tell-k/vim-autopep8', { 'for': 'python' }
-Plug 'lervag/vimtex', { 'for': ['plaintex', 'tex'] }
 Plug 'dag/vim-fish'
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'python-mode/python-mode', { 'for': 'python' }
@@ -78,37 +76,31 @@ set dictionary+=/usr/share/dict/words       " for dictionary completion
 set dictionary+=~/.config/nvim/spell/en.utf-8.add
 set cursorline
 set lazyredraw
+set ttyfast
 set sh=fish           " default shell set to /usr/bin/fish
 set mouse=a
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=2
 
 " Filetype specific options
-autocmd FileType markdown set shiftwidth=2
-autocmd FileType markdown set textwidth=80
-autocmd FileType markdown set spell spelllang=en_us
+function! MiscSettings()
+    set shiftwidth=2
+    set textwidth=80
+    set spell spelllang=en_us
+    nmap <leader>co :set colorcolumn=80<CR>
+    nmap <leader>nco :set colorcolumn=<CR>
+endfunction
 
-autocmd FileType tex set shiftwidth=2
-autocmd FileType tex set textwidth=80
-autocmd FileType tex set spell spelllang=en_us
+augroup basic_filetype_settings
+    autocmd!
+    autocmd Filetype markdown, tex, plaintex call MiscSettings()
+    autocmd Filetype ocaml set shiftwidth=2
+    " For vim-commentary
+    autocmd Filetype ocaml set commentstring=(*\ %s\ *)
+    " Use 4 spaces instead of the tabulator when pressing 'tab'
+    autocmd Filetype c, cpp, fish, julia, markdown, ocaml, plaintex, python,
+        \ sh, tex, text, vim set expandtab
+augroup END
 
-autocmd FileType plaintex set shiftwidth=2
-autocmd FileType plaintex set textwidth=80
-autocmd FileType plaintex set spell spelllang=en_us
-
-autocmd Filetype ocaml set shiftwidth=2
-
-" Use 4 spaces instead of the tabulator when pressing 'tab'
-autocmd FileType c set expandtab
-autocmd FileType cpp set expandtab
-autocmd FileType fish set expandtab
-autocmd FileType julia set expandtab
-autocmd FileType markdown set expandtab
-autocmd Filetype ocaml set expandtab
-autocmd FileType plaintex set expandtab
-autocmd FileType python set expandtab
-autocmd FileType sh set expandtab
-autocmd FileType tex set expandtab
-autocmd FileType text set expandtab
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""""""" Custom Keybinding """""""""""""""""""""
@@ -122,21 +114,22 @@ map <leader>sp :set spell! spelllang=en_us<CR>
 " Keybindings for highlighting search results
 nmap <leader>hl :set hlsearch!<CR>
 
-" Automatically set colorcolumn for different files.
-autocmd FileType python nmap <leader>co :set colorcolumn=80<CR>
-autocmd FileType python nmap <leader>nco :set colorcolumn=<CR>
-
 " Automatically switch directory to the directory of the current file.
-autocmd BufEnter * silent! lcd %:p:h
+augroup bufwrite
+    autocmd!
+    autocmd BufEnter * silent! lcd %:p:h
+augroup END
 
 " Shortcuts for jumping to tags in a specific mannger.
 map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 
 " Enables running scripts directly from vim
-autocmd FileType python nnoremap <buffer> <F5> :QuickRun<CR>
-autocmd FileType python nnoremap <buffer> <F2> :QuickRunBackground<CR>
-autocmd FileType sh nnoremap <buffer> <F5> :QuickRun<CR>
+augroup enable_quickrun
+    autocmd!
+    autocmd FileType python, julia, sh nnoremap <buffer> <F5> :QuickRun<CR>
+    autocmd FileType python nnoremap <buffer> <F2> :QuickRunBackground<CR>
+augroup END
 
 " Key combo for saving the current session
 map <leader>ss :mksession! ~/.session.vim<CR>
@@ -178,17 +171,11 @@ let g:latex_to_unicode_auto = 1
 let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
 execute "set rtp+=" . g:opamshare . "/merlin/vim"
 let g:merlin_disable_default_keybindings = 1
-" For vim-commentary since the plugin doesn't know comment syntax of OCaml
-autocmd Filetype ocaml set commentstring=(*\ %s\ *)
 
 
 " Tagbar configuration
 let g:tagbar_autoclose=1
 let g:tagbar_sort=0
-
-
-" Autopep8 options
-autocmd FileType python nmap <buffer> <F3> :call Autopep8()<CR>
 
 
 autocmd! BufWritePost * Neomake
@@ -209,19 +196,6 @@ let vim_markdown_preview_github=1
 let vim_markdown_preview_toggle=0
 let vim_markdown_preview_temp_file=1
 let vim_markdown_preview_hotkey='<F5>'
-
-
-" vimtex configuration
-let g:vimtex_echo_ignore_wait = 1
-let g:vimtex_view_method = 'general'
-let g:vimtex_view_general_viewer = 'okular'
-let g:vimtex_view_general_options = '--unique @pdf\#src:@line@tex'
-let g:vimtex_view_general_options_latexmk = '--unique'
-let g:vimtex_view_automatic = 0
-let g:vimtex_latexmk_options = ''   " needed to make latexmk read from .latexmkrc
-let g:vimtex_latexmk_progname = 'nvr'   " neovim-remote path for callback
-autocmd FileType tex nnoremap <F5> :VimtexView<CR>
-autocmd FileType tex VimtexCompile
 
 
 " vim-operator-surround
