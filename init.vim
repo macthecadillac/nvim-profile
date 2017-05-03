@@ -92,13 +92,25 @@ endfunction
 
 augroup basic_filetype_settings
     autocmd!
-    autocmd Filetype markdown, tex, plaintex call MiscSettings()
+    autocmd Filetype markdown call MiscSettings()
+    autocmd Filetype tex call MiscSettings()
+    autocmd Filetype plaintex call MiscSettings()
     autocmd Filetype ocaml set shiftwidth=2
     " For vim-commentary
     autocmd Filetype ocaml set commentstring=(*\ %s\ *)
     " Use 4 spaces instead of the tabulator when pressing 'tab'
-    autocmd Filetype c, cpp, fish, julia, markdown, ocaml, plaintex, python,
-        \ sh, tex, text, vim set expandtab
+    autocmd Filetype c set expandtab
+	autocmd Filetype cpp set expandtab
+	autocmd Filetype fish set expandtab
+	autocmd Filetype julia set expandtab
+	autocmd Filetype markdown set expandtab
+	autocmd Filetype ocaml set expandtab
+	autocmd Filetype plaintex set expandtab
+	autocmd Filetype python set expandtab
+	autocmd Filetype sh set expandtab
+	autocmd Filetype tex set expandtab
+	autocmd Filetype text set expandtab
+	autocmd Filetype vim set expandtab
 augroup END
 
 
@@ -127,7 +139,9 @@ map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 " Enables running scripts directly from vim
 augroup enable_quickrun
     autocmd!
-    autocmd FileType python, julia, sh nnoremap <buffer> <F5> :QuickRun<CR>
+    autocmd FileType julia nnoremap <buffer> <F5> :QuickRun<CR>
+    autocmd FileType python nnoremap <buffer> <F5> :QuickRun<CR>
+    autocmd FileType sh nnoremap <buffer> <F5> :QuickRun<CR>
     autocmd FileType python nnoremap <buffer> <F2> :QuickRunBackground<CR>
 augroup END
 
