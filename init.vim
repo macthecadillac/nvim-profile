@@ -10,9 +10,11 @@ Plug 'tpope/vim-commentary'
 Plug 'JamshedVesuna/vim-markdown-preview', { 'for': 'markdown' }
 Plug 'reedes/vim-pencil', { 'for': ['text', 'markdown'] }
 Plug 'brooth/far.vim'
+" Plug 'neomake/neomake'
+Plug 'w0rp/ale'
+Plug 'kassio/neoterm'
 
 " Language support
-Plug 'neomake/neomake'
 Plug 'dag/vim-fish'
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'python-mode/python-mode', { 'for': 'python' }
@@ -193,13 +195,26 @@ let g:tagbar_autoclose=1
 let g:tagbar_sort=0
 
 
-autocmd! BufWritePost * Neomake
-let g:neomake_python_enabled_makers = ['flake8']
-let g:neomake_tex_enabled_makers = ['chktex']
-let g:neomake_ocaml_makers = ['merlin']
-let g:neomake_list_height = 5
-let g:neomake_highlight_columns = 0
-let g:neomake_highlight_lines = 0
+" autocmd! BufWritePost * Neomake
+" let g:neomake_python_enabled_makers = ['flake8']
+" let g:neomake_tex_enabled_makers = ['chktex']
+" let g:neomake_ocaml_makers = ['merlin']
+" let g:neomake_list_height = 5
+" let g:neomake_highlight_columns = 0
+" let g:neomake_highlight_lines = 0
+
+
+" Ale configurations
+let g:ale_linters = {
+    \   'python': ['flake8'],
+    \   'latex': ['chktex'],
+    \}
+let g:ale_lint_delay = 1000
+let g:ale_set_highlights = 0
+let g:ale_sign_error = '⨉'
+let g:ale_sign_warning = '⚠️'
+highlight clear ALEErrorSign
+" highlight clear ALEWarningSign
 
 
 " Tagbar configuration
