@@ -184,12 +184,6 @@ let g:latex_to_unicode_tab = 0
 let g:latex_to_unicode_auto = 1
 
 
-" OCaml specific configuration
-let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-execute "set rtp+=" . g:opamshare . "/merlin/vim"
-let g:merlin_disable_default_keybindings = 1
-
-
 " Tagbar configuration
 let g:tagbar_autoclose=1
 let g:tagbar_sort=0
