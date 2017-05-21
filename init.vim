@@ -185,9 +185,15 @@ let g:latex_to_unicode_auto = 1
 
 
 " OCaml specific configuration
-let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-execute "set rtp+=" . g:opamshare . "/merlin/vim"
-let g:merlin_disable_default_keybindings = 1
+function! Ocaml()
+    let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+    execute "set rtp+=" . g:opamshare . "/merlin/vim"
+    let g:merlin_disable_default_keybindings = 1
+endfunction
+augroup ocaml
+    autocmd!
+    autocmd FileType ocaml call Ocaml()
+augroup END
 
 
 " Tagbar configuration
