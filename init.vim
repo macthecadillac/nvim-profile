@@ -13,6 +13,7 @@ Plug 'brooth/far.vim'
 " Plug 'neomake/neomake'
 Plug 'w0rp/ale'
 Plug 'kassio/neoterm'
+Plug 'equalsraf/neovim-gui-shim'
 
 " Language support
 Plug 'dag/vim-fish'
