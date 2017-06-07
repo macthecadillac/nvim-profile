@@ -86,19 +86,22 @@ set mouse=a
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=2
 
 " Filetype specific options
-function! MiscSettings()
-    set shiftwidth=2
+function! MiscSettings(tabsize, ...)
+    let &l:shiftwidth=a:tabsize
     set textwidth=80
-    set spell spelllang=en_us
+    if a:0 == 1
+        set spell spelllang=en_us
+    endif
     nmap <leader>co :set colorcolumn=80<CR>
     nmap <leader>nco :set colorcolumn=<CR>
 endfunction
 
 augroup basic_filetype_settings
     autocmd!
-    autocmd Filetype markdown call MiscSettings()
-    autocmd Filetype tex call MiscSettings()
-    autocmd Filetype plaintex call MiscSettings()
+    autocmd Filetype markdown call MiscSettings(2, 1)
+    autocmd Filetype tex call MiscSettings(2, 1)
+    autocmd Filetype plaintex call MiscSettings(2, 1)
+    autocmd Filetype python call MiscSettings(4)
     autocmd Filetype ocaml set shiftwidth=2
     " For vim-commentary
     autocmd Filetype ocaml set commentstring=(*\ %s\ *)
