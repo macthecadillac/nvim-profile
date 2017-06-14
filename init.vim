@@ -300,6 +300,8 @@ if !exists('g:deoplete#omni#input_patterns')
 endif
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" autoclose preview window
+autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
 " Python support
 " let g:deoplete#sources#jedi#show_docstring = 1
 let g:deoplete#sources#jedi#statement_length = 30
