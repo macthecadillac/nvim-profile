@@ -303,19 +303,19 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " autoclose preview window
 autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
 " Python support
-" let g:deoplete#sources#jedi#show_docstring = 1
+let g:deoplete#sources#jedi#show_docstring = 1
 let g:deoplete#sources#jedi#statement_length = 30
 let g:deoplete#sources#jedi#python_path = '/home/mac/anaconda3/bin/python'
 " OCaml support
 let g:deoplete#omni#input_patterns.ocaml = '[.\w]+'
 " Vim-tex integration
-let g:deoplete#omni#input_patterns.tex = '\\(?:'
-      \ .  '\w*cite\w*(?:\s*\[[^]]*\]){0,2}\s*{[^}]*'
-      \ . '|\w*ref(?:\s*\{[^}]*|range\s*\{[^,}]*(?:}{)?)'
-      \ . '|hyperref\s*\[[^]]*'
-      \ . '|includegraphics\*?(?:\s*\[[^]]*\]){0,2}\s*\{[^}]*'
-      \ . '|(?:include(?:only)?|input)\s*\{[^}]*'
-      \ . '|\w*(gls|Gls|GLS)(pl)?\w*(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
-      \ . '|includepdf(\s*\[[^]]*\])?\s*\{[^}]*'
-      \ . '|includestandalone(\s*\[[^]]*\])?\s*\{[^}]*'
-      \ .')'
+" let g:deoplete#omni#input_patterns.tex = '\\(?:'
+"       \ .  '\w*cite\w*(?:\s*\[[^]]*\]){0,2}\s*{[^}]*'
+"       \ . '|\w*ref(?:\s*\{[^}]*|range\s*\{[^,}]*(?:}{)?)'
+"       \ . '|hyperref\s*\[[^]]*'
+"       \ . '|includegraphics\*?(?:\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+"       \ . '|(?:include(?:only)?|input)\s*\{[^}]*'
+"       \ . '|\w*(gls|Gls|GLS)(pl)?\w*(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+"       \ . '|includepdf(\s*\[[^]]*\])?\s*\{[^}]*'
+"       \ . '|includestandalone(\s*\[[^]]*\])?\s*\{[^}]*'
+"       \ .')'
