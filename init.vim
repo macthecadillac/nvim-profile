@@ -5,14 +5,13 @@ call plug#begin('~/.config/nvim/plugged')
 " Tools
 Plug 'kien/ctrlp.vim'
 Plug 'tacahiroy/ctrlp-funky'
+Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 Plug 'tpope/vim-commentary'
 Plug 'JamshedVesuna/vim-markdown-preview', { 'for': 'markdown' }
 Plug 'reedes/vim-pencil', { 'for': ['text', 'markdown'] }
 Plug 'brooth/far.vim'
-" Plug 'neomake/neomake'
 Plug 'w0rp/ale'
-Plug 'kassio/neoterm'
 Plug 'equalsraf/neovim-gui-shim'
 
 " Language support
@@ -22,6 +21,7 @@ Plug 'python-mode/python-mode', { 'for': 'python' }
 
 " Deoplete & co.
 Plug 'Shougo/deoplete.nvim'
+Plug 'Shougo/neco-syntax'
 Plug 'Shougo/neco-vim', { 'for': 'vim' }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 Plug 'tweekmonster/deoplete-clang2', { 'for': ['cpp', 'c'] }
@@ -203,15 +203,7 @@ augroup END
 " Tagbar configuration
 let g:tagbar_autoclose=1
 let g:tagbar_sort=0
-
-
-" autocmd! BufWritePost * Neomake
-" let g:neomake_python_enabled_makers = ['flake8']
-" let g:neomake_tex_enabled_makers = ['chktex']
-" let g:neomake_ocaml_makers = ['merlin']
-" let g:neomake_list_height = 5
-" let g:neomake_highlight_columns = 0
-" let g:neomake_highlight_lines = 0
+nmap <F4> :TagbarToggle<CR>
 
 
 " Ale configurations
@@ -225,10 +217,6 @@ let g:ale_sign_error = '⨉'
 let g:ale_sign_warning = '⚠️'
 highlight clear ALEErrorSign
 " highlight clear ALEWarningSign
-
-
-" Tagbar configuration
-nmap <F4> :TagbarToggle<CR>
 
 
 " Vim-markdown-preview configuration
@@ -268,8 +256,9 @@ augroup pencil
 augroup END
 
 
-" CtrlP configuration
+" " CtrlP configuration
 let g:ctrlp_map = '<c-p>'
+let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 " ignore the following types of files
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn)$',
@@ -277,8 +266,8 @@ let g:ctrlp_custom_ignore = {
   \ 'link': '',
   \ }
 " ignore files in .gitignore
-"let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
-"let g:ctrlp_user_command = ['.git/..', "cd %s && find -type f -not -regex '.*.png\|.*.pyc\|.*.txt\|.*cache.*\|.*/\..*'"]
+let g:ctrlp_user_command = ['.git', 'cd %s; git ls-files -co --exclude-standard']
+let g:ctrlp_user_command = ['.git/..', "cd %s; find -type f -not -regex '.*.png\|.*.pyc\|.*.txt\|.*cache.*\|.*/\..*'"]
 
 
 "CtrlP-funky
