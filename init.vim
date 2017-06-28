@@ -18,12 +18,13 @@ Plug 'equalsraf/neovim-gui-shim'
 Plug 'dag/vim-fish'
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'python-mode/python-mode', { 'for': 'python' }
+Plug 'othree/csscomplete.vim'
 
 " Deoplete & co.
 Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/neco-syntax'
 Plug 'Shougo/neco-vim', { 'for': 'vim' }
-Plug 'zchee/deoplete-jedi', { 'for': 'python' }
+" Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 Plug 'tweekmonster/deoplete-clang2', { 'for': ['cpp', 'c'] }
 Plug 'JuliaEditorSupport/deoplete-julia', { 'for': 'julia'}
 
@@ -83,6 +84,7 @@ set lazyredraw
 set ttyfast
 set sh=fish           " default shell set to /usr/bin/fish
 set mouse=a
+set omnifunc=syntaxcomplete#Complete    " enable omnicomplete for languages supported by vim ootb
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=2
 
 " Filetype specific options
@@ -297,14 +299,3 @@ let g:deoplete#sources#jedi#statement_length = 30
 let g:deoplete#sources#jedi#python_path = '/home/mac/anaconda3/bin/python'
 " OCaml support
 let g:deoplete#omni#input_patterns.ocaml = '[.\w]+'
-" Vim-tex integration
-" let g:deoplete#omni#input_patterns.tex = '\\(?:'
-"       \ .  '\w*cite\w*(?:\s*\[[^]]*\]){0,2}\s*{[^}]*'
-"       \ . '|\w*ref(?:\s*\{[^}]*|range\s*\{[^,}]*(?:}{)?)'
-"       \ . '|hyperref\s*\[[^]]*'
-"       \ . '|includegraphics\*?(?:\s*\[[^]]*\]){0,2}\s*\{[^}]*'
-"       \ . '|(?:include(?:only)?|input)\s*\{[^}]*'
-"       \ . '|\w*(gls|Gls|GLS)(pl)?\w*(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
-"       \ . '|includepdf(\s*\[[^]]*\])?\s*\{[^}]*'
-"       \ . '|includestandalone(\s*\[[^]]*\])?\s*\{[^}]*'
-"       \ .')'
