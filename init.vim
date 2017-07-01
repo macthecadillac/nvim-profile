@@ -24,7 +24,7 @@ Plug 'othree/csscomplete.vim'
 Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/neco-syntax'
 Plug 'Shougo/neco-vim', { 'for': 'vim' }
-" Plug 'zchee/deoplete-jedi', { 'for': 'python' }
+Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 Plug 'tweekmonster/deoplete-clang2', { 'for': ['cpp', 'c'] }
 Plug 'JuliaEditorSupport/deoplete-julia', { 'for': 'julia'}
 
