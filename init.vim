@@ -167,9 +167,11 @@ map <leader>ls :source ~/.session.vim<CR>
 set termguicolors
 let ayucolor = 'mirage'
 colorscheme ayu
-" let g:two_firewatch_italics=1
-" set background=dark
-" colorscheme two-firewatch
+augroup custom_colorscheme
+    autocmd Filetype tex,plaintex let g:two_firewatch_italics=1
+    autocmd Filetype tex,plaintex set background=dark
+    autocmd Filetype tex,plaintex colorscheme two-firewatch
+augroup END
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -178,6 +180,7 @@ colorscheme ayu
 " Pymode configuration
 let g:pymode_folding = 0
 let g:pymode_python = 'python3'
+let g:pymode_rope = 0
 let g:pymode_rope_completion = 0
 let g:pymode_rope_completion_on_dot = 0
 let g:pymode_rope_autoimport = 0
@@ -296,6 +299,6 @@ autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
 " Python support
 let g:deoplete#sources#jedi#show_docstring = 1
 let g:deoplete#sources#jedi#statement_length = 30
-let g:deoplete#sources#jedi#python_path = '/home/mac/anaconda3/bin/python'
+let g:deoplete#sources#jedi#python_path = '/usr/bin/python3'
 " OCaml support
 let g:deoplete#omni#input_patterns.ocaml = '[.\w]+'

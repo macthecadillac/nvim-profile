@@ -3,3 +3,4 @@
 /..vimrc.un~
 **/*.pyc
 /autoload/plug.vim.old
+**/.ropeproject/*
