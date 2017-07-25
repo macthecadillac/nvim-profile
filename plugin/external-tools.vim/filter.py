@@ -79,13 +79,13 @@ def execute():
         exttools_dir = os.getenv('HOME') + '/.config/nvim/plugin/external-tools.vim/'
         term_title = 'Execute: ' + fname
         subprocess.Popen([exttools_dir + 'open-term.sh', term_title,
-                          '{}/{}'.format(curr_dir, fname)])
+                          "{}/{}".format(curr_dir, fname)])
     else:
         subprocess.Popen(['/tmp/run'])
 
 
 envs = {
-    '.py': '/usr/bin/python3 ',
+    '.py': '/usr/bin/env python ',
     '.jl': '/usr/bin/env julia ',
     '.sh': '/usr/bin/bash'
 }
