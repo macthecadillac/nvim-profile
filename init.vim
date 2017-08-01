@@ -108,18 +108,7 @@ augroup basic_filetype_settings
     " For vim-commentary
     autocmd Filetype ocaml set commentstring=(*\ %s\ *)
     " Use 4 spaces instead of the tabulator when pressing 'tab'
-    autocmd Filetype c set expandtab
-	autocmd Filetype cpp set expandtab
-	autocmd Filetype fish set expandtab
-	autocmd Filetype julia set expandtab
-	autocmd Filetype markdown set expandtab
-	autocmd Filetype ocaml set expandtab
-	autocmd Filetype plaintex set expandtab
-	autocmd Filetype python set expandtab
-	autocmd Filetype sh set expandtab
-	autocmd Filetype tex set expandtab
-	autocmd Filetype text set expandtab
-	autocmd Filetype vim set expandtab
+    autocmd Filetype c,cpp,fish,julia,markdown,ocaml,plaintex,python,sh,tex,text,vim set expandtab
 augroup END
 
 
