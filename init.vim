@@ -9,7 +9,7 @@ Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 Plug 'tpope/vim-commentary'
 Plug 'JamshedVesuna/vim-markdown-preview', { 'for': 'markdown' }
-Plug 'reedes/vim-pencil', { 'for': ['text', 'markdown'] }
+Plug 'reedes/vim-pencil', { 'for': 'markdown' }
 Plug 'brooth/far.vim'
 Plug 'w0rp/ale'
 Plug 'equalsraf/neovim-gui-shim'
@@ -246,7 +246,6 @@ let g:pencil#cursorwrap = 1
 augroup pencil
     autocmd!
     autocmd FileType markdown call pencil#init()
-    autocmd FileType text call pencil#init()
 augroup END
 
 
