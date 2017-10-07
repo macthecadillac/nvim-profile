@@ -16,9 +16,9 @@ Plug 'equalsraf/neovim-gui-shim'
 
 " Language support
 Plug 'dag/vim-fish'
-Plug 'JuliaEditorSupport/julia-vim'
 Plug 'python-mode/python-mode', { 'for': 'python' }
 Plug 'othree/csscomplete.vim'
+Plug 'rust-lang/rust.vim'
 
 " Deoplete & co.
 Plug 'Shougo/deoplete.nvim'
@@ -26,7 +26,7 @@ Plug 'Shougo/neco-syntax'
 Plug 'Shougo/neco-vim', { 'for': 'vim' }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 Plug 'tweekmonster/deoplete-clang2', { 'for': ['cpp', 'c'] }
-Plug 'JuliaEditorSupport/deoplete-julia', { 'for': 'julia'}
+Plug 'sebastianmarkow/deoplete-rust', { 'for': 'rust' }
 
 " Operators
 Plug 'kana/vim-operator-user'
@@ -108,7 +108,7 @@ augroup basic_filetype_settings
     " For vim-commentary
     autocmd Filetype ocaml set commentstring=(*\ %s\ *)
     " Use 4 spaces instead of the tabulator when pressing 'tab'
-    autocmd Filetype c,cpp,fish,julia,markdown,ocaml,plaintex,python,sh,tex,text,vim set expandtab
+    autocmd Filetype c,cpp,fish,markdown,ocaml,plaintex,python,sh,tex,text,vim set expandtab
 augroup END
 
 
@@ -137,7 +137,6 @@ map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 " Enables running scripts directly from vim
 augroup enable_quickrun
     autocmd!
-    autocmd FileType julia nnoremap <buffer> <F5> :QuickRun<CR>
     autocmd FileType python nnoremap <buffer> <F5> :QuickRun<CR>
     autocmd FileType sh nnoremap <buffer> <F5> :QuickRun<CR>
     autocmd FileType python nnoremap <buffer> <F2> :QuickRunBackground<CR>
@@ -175,11 +174,6 @@ let g:pymode_rope_completion_on_dot = 0
 let g:pymode_rope_autoimport = 0
 let g:pymode_options_colorcolumn = 0
 let g:pymode_lint = 0
-
-
-" Julia-vim configuration
-let g:latex_to_unicode_tab = 0
-let g:latex_to_unicode_auto = 1
 
 
 " OCaml specific configuration
@@ -290,3 +284,8 @@ let g:deoplete#sources#jedi#statement_length = 30
 let g:deoplete#sources#jedi#python_path = '/usr/bin/python3'
 " OCaml support
 let g:deoplete#omni#input_patterns.ocaml = '[.\w]+'
+" Rust support
+let g:deoplete#sources#rust#racer_binary = '~/.cargo/bin/racer'
+let g:deoplete#sources#rust#rust_source_path = '~/.rustsrc/src'
+let g:deoplete#sources#rust#show_duplicates = 1
+let g:deoplete#sources#rust#documentation_max_height = 20
