@@ -10,7 +10,7 @@ Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 Plug 'tpope/vim-commentary'
 Plug 'JamshedVesuna/vim-markdown-preview', { 'for': 'markdown' }
 Plug 'reedes/vim-pencil', { 'for': 'markdown' }
-Plug 'brooth/far.vim'
+Plug 'brooth/far.vim', { 'on': ['Far', 'Farp', 'Fardo', 'Refar', 'Rarundo', 'F'] }
 Plug 'w0rp/ale'
 Plug 'equalsraf/neovim-gui-shim'
 
@@ -148,7 +148,6 @@ map <leader>ss :mksession! ~/.session.vim<CR>
 map <leader>ls :source ~/.session.vim<CR>
 
 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""" UI specific settings """"""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -178,51 +177,10 @@ let g:pymode_lint = 0
 
 
 " OCaml specific configuration
-function! Ocaml()
-    " let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-    " execute "set rtp+=" . g:opamshare . "/merlin/vim"
-    " let s:ocamlmerlin = substitute(system('opam config var share'), '\n$', '', '''') . "/ocamlmerlin"
-    " execute "set rtp+=".s:ocamlmerlin."/vim"
-    " execute "set rtp+=".s:ocamlmerlin."/vimbufsync"
-    " let g:merlin_disable_default_keybindings = 1
-
-    " ## added by OPAM user-setup for vim / base ## 93ee63e278bdfc07d1139a748ed3fff2 ## you can edit, but keep this line
-    let s:opam_share_dir = system("opam config var share")
-    let s:opam_share_dir = substitute(s:opam_share_dir, '[\r\n]*$', '', '')
-
-    let s:opam_configuration = {}
-
-    function! OpamConfOcpIndent()
-      execute "set rtp^=" . s:opam_share_dir . "/ocp-indent/vim"
-    endfunction
-    let s:opam_configuration['ocp-indent'] = function('OpamConfOcpIndent')
-
-    function! OpamConfOcpIndex()
-      execute "set rtp+=" . s:opam_share_dir . "/ocp-index/vim"
-    endfunction
-    let s:opam_configuration['ocp-index'] = function('OpamConfOcpIndex')
-
-    function! OpamConfMerlin()
-      let l:dir = s:opam_share_dir . "/merlin/vim"
-      execute "set rtp+=" . l:dir
-    endfunction
-    let s:opam_configuration['merlin'] = function('OpamConfMerlin')
-
-    let s:opam_packages = ["ocp-indent", "ocp-index", "merlin"]
-    let s:opam_check_cmdline = ["opam list --installed --short --safe --color=never"] + s:opam_packages
-    let s:opam_available_tools = split(system(join(s:opam_check_cmdline)))
-    for tool in s:opam_packages
-      " Respect package order (merlin should be after ocp-index)
-      if count(s:opam_available_tools, tool) > 0
-        call s:opam_configuration[tool]()
-      endif
-    endfor
-    " ## end of OPAM user-setup addition for vim / base ## keep this line
-endfunction
-augroup ocaml
-    autocmd!
-    autocmd FileType ocaml call Ocaml()
-augroup END
+let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+execute "set rtp+=" . g:opamshare . "/merlin/vim"
+execute "set rtp+=" . g:opamshare . "/ocp-index/vim"
+execute "set rtp^=" . g:opamshare . "/ocp-indent/vim"
 
 
 " Tagbar configuration
@@ -301,12 +259,12 @@ let g:ctrlp_funky_matchtype = 'path'
 
 
 " Vim-racer configuration
-let g:racer_cmd = '$HOME/.cargo/bin/racer'
+let g:racer_cmd = system('echo $HOME') . '/.cargo/bin/racer'
 
 " deoplete configuration
 set completeopt+=noselect
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#sources#syntax#min_keyword_length = 2
+let g:deoplete#sources#syntax#min_keyword_length = 0
 let g:deoplete#max_list = 0
 let g:deoplete#max_abbr_width = 30
 let g:deoplete#auto_complete_delay = 0
@@ -329,6 +287,7 @@ let g:deoplete#omni#input_patterns.ocaml = '[.\w]+'
 " let g:deoplete#sources#rust#rust_source_path = '/home/mac/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src'
 " let g:deoplete#sources#rust#show_duplicates = 1
 " let g:deoplete#sources#rust#documentation_max_height = 20
+
 
 " execute at the end to avoid conflicts of shell commands above
 set sh=fish           " default shell set to /usr/bin/fish
