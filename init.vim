@@ -86,7 +86,7 @@ set ttyfast
 set mouse=a
 set omnifunc=syntaxcomplete#Complete    " enable omnicomplete for languages supported by vim ootb
 set hidden            " no force save bufer when going to definition
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=2
+set guicursor=n:blinkon1        " fix neovim 2 blinking cursor
 
 " Filetype specific options
 function! MiscSettings(tabsize, ...)
