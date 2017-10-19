@@ -241,6 +241,7 @@ augroup END
 
 " " CtrlP configuration
 let g:ctrlp_map = '<c-p>'
+map <C-S> :CtrlPTag<CR>
 if executable('rg')
   set grepprg=rg\ --color=never
   let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
