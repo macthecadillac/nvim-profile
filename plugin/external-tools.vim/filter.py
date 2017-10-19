@@ -6,16 +6,16 @@ import os
 import stat
 
 
-def find_proj_root():
+def find_proj_root(curr_dir):
     proj_root = curr_dir
     while True:
         if os.path.isdir(proj_root + '/.git'):
             break
         else:
             # Search for the .git folder up the directory tree
-            proj_root = ''.join(re.findall(r'(\/[\w ]+)', proj_root)[:-1])
+            proj_root = ''.join(re.findall(r'(\/[^/]+)', proj_root)[:-1])
             if len(proj_root) == 0:
-                raise IOError
+                raise IOError("Reached filesystem boundary")
     return proj_root
 
 
@@ -26,7 +26,7 @@ def choose_env_from_ext(ext):
             return p.read()[:-1] + ' '
     else:
         try:
-            proj_root = find_proj_root()
+            proj_root = find_proj_root(curr_dir)
             # Find .env in project root directory
             if os.path.isfile(proj_root + '/.env'):
                 with open(proj_root + '/.env') as p:
@@ -84,24 +84,23 @@ def execute():
         subprocess.Popen(['/tmp/run'])
 
 
-envs = {
-    '.py': '/usr/bin/env python ',
-    '.jl': '/usr/bin/env julia ',
-    '.sh': '/usr/bin/bash'
-}
-
-fname = sys.argv[1]
-curr_dir = sys.argv[2]
-ext = ''
-in_term = False
-try:
-    if sys.argv[3] == '--term':
-        in_term = True
-except IndexError:
-    pass
-
-
 if __name__ == '__main__':
+    envs = {
+        '.py': '/usr/bin/env python ',
+        '.jl': '/usr/bin/env julia ',
+        '.sh': '/usr/bin/bash'
+    }
+
+    fname = sys.argv[1]
+    curr_dir = sys.argv[2]
+    ext = ''
+    in_term = False
+    try:
+        if sys.argv[3] == '--term':
+            in_term = True
+    except IndexError:
+        pass
+
     env = set_env()
     script_content = compose_cmd(env)
     write_script(script_content)

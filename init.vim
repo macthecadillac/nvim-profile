@@ -4,8 +4,6 @@
 call plug#begin('~/.config/nvim/plugged')
 " Tools
 Plug 'kien/ctrlp.vim'
-Plug 'tacahiroy/ctrlp-funky'
-Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 Plug 'tpope/vim-commentary'
 Plug 'JamshedVesuna/vim-markdown-preview', { 'for': 'markdown' }
@@ -133,15 +131,18 @@ augroup END
 
 " Shortcuts for jumping to tags in a specific mannger.
 map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
-map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+map <A-[> :sp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 " Enables running scripts directly from vim
 augroup enable_quickrun
     autocmd!
-    autocmd FileType python nnoremap <buffer> <F5> :QuickRun<CR>
-    autocmd FileType sh nnoremap <buffer> <F5> :QuickRun<CR>
-    autocmd FileType python nnoremap <buffer> <F2> :QuickRunBackground<CR>
+    autocmd FileType python nnoremap <buffer> <A-r> :QuickRun<CR>
+    autocmd FileType sh nnoremap <buffer> <A-r> :QuickRun<CR>
+    autocmd FileType python nnoremap <buffer> <A-b> :QuickRunBackground<CR>
 augroup END
+
+" Mapping for my custom UpdateCTags function
+map <A-u> :UpdateCTags<CR>
 
 " Key combo for saving the current session
 map <leader>ss :mksession! ~/.session.vim<CR>
@@ -240,19 +241,11 @@ augroup END
 
 " " CtrlP configuration
 let g:ctrlp_map = '<c-p>'
-let g:ctrlp_show_hidden = 0
-" ignore the following types of files
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-  \ 'file': '\v[\/]\.(pyc)$',
-  \ 'link': '',
-  \ }
-
-
-"CtrlP-funky
-nnoremap <leader>fu : CtrlPFunky<CR>
-nnoremap <leader>FU :execute 'CtrlPFunky ' . expand('<cword>')<CR>
-let g:ctrlp_funky_matchtype = 'path'
+if executable('rg')
+  set grepprg=rg\ --color=never
+  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+  let g:ctrlp_use_caching = 0
+endif
 
 
 " Vim-racer configuration
