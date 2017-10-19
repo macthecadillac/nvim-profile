@@ -240,16 +240,13 @@ augroup END
 
 " " CtrlP configuration
 let g:ctrlp_map = '<c-p>'
-let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+let g:ctrlp_show_hidden = 0
 " ignore the following types of files
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-  \ 'file': '\v\.(exe|o|out|swp|pdf|png|jpg|jar|class|otf|ttf|ods|odt|odp|doc|docx|xls|xlsx|ppt|pptx|tar|gz|zip|rar|deb|rpm|asc|key|so|dll|pyc|txt|mp3|flac|mp4|avi|mkv|ini|ipynb)$',
+  \ 'file': '\v[\/]\.(pyc)$',
   \ 'link': '',
   \ }
-" ignore files in .gitignore
-let g:ctrlp_user_command = ['.git', 'cd %s; git ls-files -co --exclude-standard']
-let g:ctrlp_user_command = ['.git/..', "cd %s; find -type f -not -regex '.*.png\|.*.pyc\|.*.txt\|.*cache.*\|.*/\..*'"]
 
 
 "CtrlP-funky
