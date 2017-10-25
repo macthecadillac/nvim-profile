@@ -137,6 +137,7 @@ map <A-[> :sp <CR>:exec("tag ".expand("<cword>"))<CR>
 augroup enable_quickrun
     autocmd!
     autocmd FileType python nnoremap <buffer> <A-r> :QuickRun<CR>
+    autocmd FileType ocaml nnoremap <buffer> <A-r> :QuickRun<CR>
     autocmd FileType sh nnoremap <buffer> <A-r> :QuickRun<CR>
     autocmd FileType python nnoremap <buffer> <A-b> :QuickRunBackground<CR>
 augroup END

@@ -87,8 +87,8 @@ def execute():
 if __name__ == '__main__':
     envs = {
         '.py': '/usr/bin/env python ',
-        '.jl': '/usr/bin/env julia ',
-        '.sh': '/usr/bin/bash'
+        '.ml': '/usr/bin/env ocaml -g ',
+        '.sh': '/usr/bin/bash '
     }
 
     fname = sys.argv[1]
