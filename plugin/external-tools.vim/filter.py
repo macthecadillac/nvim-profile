@@ -87,7 +87,7 @@ def execute():
 if __name__ == '__main__':
     envs = {
         '.py': '/usr/bin/env python ',
-        '.ml': '/usr/bin/env ocaml -g ',
+        '.ml': '/usr/bin/env ocaml ',
         '.sh': '/usr/bin/bash '
     }
 

@@ -84,7 +84,7 @@ set ttyfast
 set mouse=a
 set omnifunc=syntaxcomplete#Complete    " enable omnicomplete for languages supported by vim ootb
 set hidden            " no force save bufer when going to definition
-set guicursor=n:blinkon1        " fix neovim 2 blinking cursor
+set guicursor=n:blinkon0        " fix neovim 2 blinking cursor
 
 " Filetype specific options
 function! MiscSettings(tabsize, ...)
@@ -108,7 +108,7 @@ augroup basic_filetype_settings
     " For vim-commentary
     autocmd Filetype ocaml set commentstring=(*\ %s\ *)
     " Use 4 spaces instead of the tabulator when pressing 'tab'
-    autocmd Filetype c,cpp,fish,markdown,ocaml,plaintex,python,sh,tex,text,vim set expandtab
+    autocmd Filetype c,cpp,fish,markdown,ocaml,plaintex,python,sh,tex,text,vim,html,css set expandtab
 augroup END
 
 
