@@ -84,6 +84,7 @@ set ttyfast
 set mouse=a
 set omnifunc=syntaxcomplete#Complete    " enable omnicomplete for languages supported by vim ootb
 set hidden            " no force save bufer when going to definition
+set scrolloff=5      " starts scrolling when cursor is 10 lines away from screen edge
 
 " Filetype specific options
 function! MiscSettings(tabsize, ...)
