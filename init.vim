@@ -17,7 +17,6 @@ Plug 'dag/vim-fish'
 Plug 'python-mode/python-mode', { 'for': 'python' }
 Plug 'othree/csscomplete.vim'
 Plug 'rust-lang/rust.vim'
-Plug 'racer-rust/vim-racer', { 'for': 'rust'}
 
 " Deoplete & co.
 Plug 'Shougo/deoplete.nvim'
@@ -25,7 +24,7 @@ Plug 'Shougo/neco-syntax'
 Plug 'Shougo/neco-vim', { 'for': 'vim' }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 Plug 'tweekmonster/deoplete-clang2', { 'for': ['cpp', 'c'] }
-" Plug 'sebastianmarkow/deoplete-rust', { 'for': 'rust' }
+Plug 'sebastianmarkow/deoplete-rust', { 'for': 'rust' }
 
 " Operators
 Plug 'kana/vim-operator-user'
@@ -93,7 +92,7 @@ function! MiscSettings(tabsize, ...)
     if a:0 == 1
         set spell spelllang=en_us
     endif
-    nmap <leader>co :set colorcolumn=80<CR>
+    nmap <leader>co :set colorcolumn=81<CR>
     nmap <leader>nco :set colorcolumn=<CR>
 endfunction
 
@@ -179,11 +178,11 @@ let g:pymode_options_colorcolumn = 0
 let g:pymode_lint = 0
 
 
-" OCaml specific configuration
-let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-execute "set rtp+=" . g:opamshare . "/merlin/vim"
-execute "set rtp+=" . g:opamshare . "/ocp-index/vim"
-execute "set rtp^=" . g:opamshare . "/ocp-indent/vim"
+" " OCaml specific configuration
+" let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+" execute "set rtp+=" . g:opamshare . "/merlin/vim"
+" execute "set rtp+=" . g:opamshare . "/ocp-index/vim"
+" execute "set rtp^=" . g:opamshare . "/ocp-indent/vim"
 
 
 " Tagbar configuration
@@ -196,6 +195,7 @@ nmap <F4> :TagbarToggle<CR>
 let g:ale_linters = {
     \   'python': ['flake8'],
     \   'latex': ['chktex'],
+    \   'rust': ['cargo'],
     \}
 let g:ale_lint_delay = 1000
 let g:ale_set_highlights = 0
@@ -255,9 +255,6 @@ if executable('rg')
 endif
 
 
-" Vim-racer configuration
-let g:racer_cmd = system('echo $HOME') . '/.cargo/bin/racer'
-
 " deoplete configuration
 set completeopt+=noselect
 let g:deoplete#enable_at_startup = 1
@@ -280,10 +277,10 @@ let g:deoplete#sources#jedi#python_path = '/usr/bin/python3'
 " OCaml support
 let g:deoplete#omni#input_patterns.ocaml = '[.\w]+'
 " " Rust support
-" let g:deoplete#sources#rust#racer_binary = '~/.cargo/bin/racer'
-" let g:deoplete#sources#rust#rust_source_path = '/home/mac/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src'
-" let g:deoplete#sources#rust#show_duplicates = 1
-" let g:deoplete#sources#rust#documentation_max_height = 20
+let g:deoplete#sources#rust#racer_binary = '/home/mac/.cargo/bin/racer'
+let g:deoplete#sources#rust#rust_source_path = '/home/mac/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src'
+let g:deoplete#sources#rust#show_duplicates = 1
+let g:deoplete#sources#rust#documentation_max_height = 20
 
 
 " execute at the end to avoid conflicts of shell commands above
