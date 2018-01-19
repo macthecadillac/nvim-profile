@@ -88,7 +88,8 @@ if __name__ == '__main__':
     envs = {
         '.py': '/usr/bin/env python ',
         '.ml': '/usr/bin/env ocaml ',
-        '.sh': '/usr/bin/bash '
+        '.sh': '/usr/bin/bash ',
+        '.tex': '/usr/bin/latexmk ',
     }
 
     fname = sys.argv[1]

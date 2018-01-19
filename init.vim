@@ -37,6 +37,9 @@ Plug 'glts/vim-textobj-comment'
 Plug 'kana/vim-textobj-indent'
 Plug 'rbonvall/vim-textobj-latex', { 'for': ['plaintex', 'tex'] }
 Plug 'reedes/vim-textobj-sentence'
+
+" Color themes
+Plug 'rakr/vim-one'
 call plug#end()
 
 
@@ -139,7 +142,9 @@ augroup enable_quickrun
     autocmd FileType python nnoremap <buffer> <A-r> :QuickRun<CR>
     autocmd FileType ocaml nnoremap <buffer> <A-r> :QuickRun<CR>
     autocmd FileType sh nnoremap <buffer> <A-r> :QuickRun<CR>
+    autocmd FileType tex nnoremap <buffer> <A-r> :QuickRun<CR>
     autocmd FileType python nnoremap <buffer> <A-b> :QuickRunBackground<CR>
+    autocmd FileType tex nnoremap <buffer> <A-b> :QuickRunBackground<CR>
 augroup END
 
 " Mapping for my custom UpdateCTags function
@@ -155,13 +160,8 @@ map <leader>ls :source ~/.session.vim<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Color settings
 set termguicolors
-let ayucolor = 'mirage'
-colorscheme ayu
-augroup custom_colorscheme
-    autocmd Filetype tex,plaintex let g:two_firewatch_italics=1
-    autocmd Filetype tex,plaintex set background=dark
-    autocmd Filetype tex,plaintex colorscheme two-firewatch
-augroup END
+colorscheme one
+set background=dark
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
