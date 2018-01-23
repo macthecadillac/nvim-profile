@@ -65,7 +65,8 @@ set smartcase       " Smart case matching when search
 set incsearch       " Incremental search
 set tabstop=4       " Show existing tab with 4 space width
 set shiftwidth=4    " when indenting with '>', use 4 spaces width
-set foldmethod=manual
+set foldmethod=syntax
+set foldnestmax=1
 set wrap            " soft wrap
 set linebreak         " wrap text while respecting words
 set tags+=./tags;~      " Add parent directories to vim ctags search path
