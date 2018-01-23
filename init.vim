@@ -105,6 +105,7 @@ augroup basic_filetype_settings
     autocmd Filetype tex call MiscSettings(2, 1)
     autocmd Filetype plaintex call MiscSettings(2, 1)
     autocmd Filetype python call MiscSettings(4)
+    autocmd Filetype rust call MiscSettings(4)
     autocmd Filetype text set spell spelllang=en_us
     autocmd Filetype ocaml set shiftwidth=2
     " For vim-commentary
