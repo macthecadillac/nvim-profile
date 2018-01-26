@@ -17,6 +17,7 @@ Plug 'dag/vim-fish'
 Plug 'python-mode/python-mode', { 'for': 'python' }
 Plug 'othree/csscomplete.vim'
 Plug 'rust-lang/rust.vim'
+Plug 'cespare/vim-toml'
 
 " Deoplete & co.
 Plug 'Shougo/deoplete.nvim'
