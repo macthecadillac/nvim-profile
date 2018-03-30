@@ -115,7 +115,7 @@ augroup basic_filetype_settings
     " Use 4 spaces instead of the tabulator when pressing 'tab'
     autocmd Filetype c,cpp,fish,markdown,ocaml,plaintex,python,sh,tex,text,vim,html,css set expandtab
     " open LaTeX documentation for package under cursor
-    autocmd Filetype tex nmap <leader>pm :silent !texdoc <cword><CR>
+    autocmd Filetype tex nmap <leader>doc :silent !texdoc <cword><CR>
 augroup END
 
 
