@@ -114,6 +114,8 @@ augroup basic_filetype_settings
     autocmd Filetype ocaml set commentstring=(*\ %s\ *)
     " Use 4 spaces instead of the tabulator when pressing 'tab'
     autocmd Filetype c,cpp,fish,markdown,ocaml,plaintex,python,sh,tex,text,vim,html,css set expandtab
+    " open LaTeX documentation for package under cursor
+    autocmd Filetype tex nmap <leader>pm :silent !texdoc <cword><CR>
 augroup END
 
 
@@ -163,8 +165,8 @@ map <leader>ls :source ~/.session.vim<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Color settings
 set termguicolors
-colorscheme one
 set background=dark
+colorscheme one
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -199,6 +201,7 @@ let g:ale_linters = {
     \   'python': ['flake8'],
     \   'latex': ['chktex'],
     \   'rust': ['cargo'],
+    \   'bash': ['bash -n '],
     \}
 let g:ale_lint_delay = 1000
 let g:ale_set_highlights = 0
