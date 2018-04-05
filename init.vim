@@ -90,6 +90,12 @@ set omnifunc=syntaxcomplete#Complete    " enable omnicomplete for languages supp
 set hidden            " no force save bufer when going to definition
 set scrolloff=5      " starts scrolling when cursor is 10 lines away from screen edge
 
+" Automatically switch directory to the directory of the current file.
+augroup bufwrite
+    autocmd!
+    autocmd BufEnter * silent! lcd %:p:h
+augroup END
+
 " Filetype specific options
 function! MiscSettings(tabsize, ...)
     let &l:shiftwidth=a:tabsize
@@ -130,12 +136,6 @@ map <leader>sp :set spell! spelllang=en_us<CR>
 
 " Keybindings for highlighting search results
 nmap <leader>hl :set hlsearch!<CR>
-
-" Automatically switch directory to the directory of the current file.
-augroup bufwrite
-    autocmd!
-    autocmd BufEnter * silent! lcd %:p:h
-augroup END
 
 " Shortcuts for jumping to tags in a specific mannger.
 map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>

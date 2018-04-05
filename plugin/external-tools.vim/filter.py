@@ -41,9 +41,9 @@ def choose_env_from_ext(ext):
 
 def set_env():
     with open('./' + fname) as f:
-        shebang = f.readlines()[0][:-1]
+        first_line = f.readlines()[0][:-1]
 
-    if shebang[:2] == "#!":
+    if first_line[:2] == "#!":  # if the first line is a valid shebang
         env = ''
         st = os.stat('./' + fname)
         os.chmod('./' + fname, st.st_mode | stat.S_IEXEC)
@@ -58,11 +58,7 @@ def set_env():
 
 
 def compose_cmd(env):
-    if ext == '.rs':
-        script_content = 'cargo run\n'
-    else:
-        script_content = env + './' + fname + '\n'
-    return script_content
+    return env + './' + fname + '\n'
 
 
 def write_script(script_content):
@@ -89,7 +85,8 @@ if __name__ == '__main__':
         '.py': '/usr/bin/env python ',
         '.ml': '/usr/bin/env ocaml ',
         '.sh': '/usr/bin/bash ',
-        '.tex': '/usr/bin/latexmk ',
+        '.fish': '/usr/bin/fish ',
+        '.tex': '/usr/bin/latexmk -gg ',
     }
 
     fname = sys.argv[1]
