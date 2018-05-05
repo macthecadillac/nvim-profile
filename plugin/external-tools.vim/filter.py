@@ -86,7 +86,7 @@ if __name__ == '__main__':
         '.ml': '/usr/bin/env ocaml ',
         '.sh': '/usr/bin/bash ',
         '.fish': '/usr/bin/fish ',
-        '.tex': '/usr/bin/latexmk -gg ',
+        '.tex': '/usr/bin/latexmk -gg -silent -pdf -pdflatex="pdflatex -interaction=nostopmode"',
     }
 
     fname = sys.argv[1]
