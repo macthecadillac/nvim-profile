@@ -1,7 +1,3 @@
-if !has('python')
-    finish
-endif
-
 function! QuickRun()
     let currdir = '"' . getcwd() . '"'
     let homedir = $HOME

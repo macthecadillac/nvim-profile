@@ -20,7 +20,7 @@ Plug 'rust-lang/rust.vim'
 Plug 'cespare/vim-toml'
 
 " Deoplete & co.
-Plug 'Shougo/deoplete.nvim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/neco-syntax'
 Plug 'Shougo/neco-vim', { 'for': 'vim' }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
@@ -86,9 +86,9 @@ set cursorline
 set lazyredraw
 set ttyfast
 set mouse=a
-set omnifunc=syntaxcomplete#Complete    " enable omnicomplete for languages supported by vim ootb
 set hidden            " no force save bufer when going to definition
 set scrolloff=5      " starts scrolling when cursor is 10 lines away from screen edge
+" set guicursor=''
 
 " Automatically switch directory to the directory of the current file.
 augroup bufwrite
@@ -183,11 +183,11 @@ let g:pymode_options_colorcolumn = 0
 let g:pymode_lint = 0
 
 
-" " OCaml specific configuration
-" let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-" execute "set rtp+=" . g:opamshare . "/merlin/vim"
-" execute "set rtp+=" . g:opamshare . "/ocp-index/vim"
-" execute "set rtp^=" . g:opamshare . "/ocp-indent/vim"
+" OCaml specific configuration
+let g:opamshare = $HOME . "/.opam/4.06.0/share"
+execute "set rtp+=" . g:opamshare . "/merlin/vim"
+execute "set rtp+=" . g:opamshare . "/ocp-index/vim"
+execute "set rtp^=" . g:opamshare . "/ocp-indent/vim"
 
 
 " Tagbar configuration
@@ -207,8 +207,6 @@ let g:ale_lint_delay = 1000
 let g:ale_set_highlights = 0
 let g:ale_sign_error = '⨉'
 let g:ale_sign_warning = '⚠️'
-highlight clear ALEErrorSign
-" highlight clear ALEWarningSign
 
 
 " Vim-markdown-preview configuration
@@ -268,23 +266,23 @@ let g:deoplete#sources#syntax#min_keyword_length = 0
 let g:deoplete#max_list = 0
 let g:deoplete#max_abbr_width = 30
 let g:deoplete#auto_complete_delay = 0
-let g:deoplete#auto_refresh_delay = 0
+let g:deoplete#auto_refresh_delay = 10
 if !exists('g:deoplete#omni#input_patterns')
     let g:deoplete#omni#input_patterns = {}
 endif
-" <TAB>: completion.
+" " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" autoclose preview window
+" " autoclose preview window
 autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
-" Python support
+" " Python support
 let g:deoplete#sources#jedi#show_docstring = 1
 let g:deoplete#sources#jedi#statement_length = 30
 let g:deoplete#sources#jedi#python_path = '/usr/bin/python3'
-" OCaml support
+" " OCaml support
 let g:deoplete#omni#input_patterns.ocaml = '[.\w]+'
-" " Rust support
-let g:deoplete#sources#rust#racer_binary = '/home/mac/.cargo/bin/racer'
-let g:deoplete#sources#rust#rust_source_path = '/home/mac/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src'
+" " " Rust support
+let g:deoplete#sources#rust#racer_binary = $HOME . "/.cargo/bin/racer"
+let g:deoplete#sources#rust#rust_source_path = $HOME . "/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src"
 let g:deoplete#sources#rust#show_duplicates = 1
 let g:deoplete#sources#rust#documentation_max_height = 20
 
