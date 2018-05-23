@@ -179,7 +179,7 @@ let g:lightline = {
   \     'colorscheme': 'onedark',
   \     'active': {
   \         'left': [['mode', 'paste'],
-  \                  ['readonly_symbol', 'modified_symbol', 'filename']],
+  \                  ['readonly', 'modified', 'filename']],
   \         'right': [[ 'linter_checking',
   \                     'linter_errors',
   \                     'linter_warnings',
@@ -189,11 +189,10 @@ let g:lightline = {
   \                   ['filetype']],
   \     },
   \     'component': {
-  \         'lineinfo': '☰ %l/%L:%c %p%%'
-  \     },
-  \     'component_function': {
-  \         'modified_symbol': 'LightlineModified',
-  \         'readonly_symbol': 'LightlineReadOnly',
+  \         'lineinfo': '☰ %l/%L:%c %p%%',
+  \         'filetype': &filetype,
+  \         'readonly': '%{&readonly ? "🔒" : ""}',
+  \         'modified': '%{&modifiable && &modified ? "✎" : ""}',
   \     },
   \     'component_expand': {
   \         'linter_checking': 'lightline#ale#checking',
@@ -209,14 +208,6 @@ let g:lightline = {
   \     },
   \     'subseparator': {'left': '', 'right': ''},
   \ }
-
-function! LightlineReadOnly()
-    return &readonly ? '🔒' : ''
-endfunction
-
-function! LightlineModified()
-    return &modifiable && &modified ? '✎' : ''
-endfunction
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
