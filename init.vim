@@ -11,13 +11,13 @@ Plug 'reedes/vim-pencil', { 'for': 'markdown' }
 Plug 'brooth/far.vim', { 'on': ['Far', 'Farp', 'Fardo', 'Refar', 'Rarundo', 'F'] }
 Plug 'w0rp/ale'
 Plug 'equalsraf/neovim-gui-shim'
+Plug 'bling/vim-bufferline'
+
+" Vim-airline
+Plug 'vim-airline/vim-airline'
 
 " Language support
-Plug 'dag/vim-fish'
-Plug 'python-mode/python-mode', { 'for': 'python' }
-Plug 'othree/csscomplete.vim'
-Plug 'rust-lang/rust.vim'
-Plug 'cespare/vim-toml'
+Plug 'sheerun/vim-polyglot'
 
 " Deoplete & co.
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -40,7 +40,7 @@ Plug 'rbonvall/vim-textobj-latex', { 'for': ['plaintex', 'tex'] }
 Plug 'reedes/vim-textobj-sentence'
 
 " Color themes
-Plug 'rakr/vim-one'
+Plug 'joshdick/onedark.vim'
 call plug#end()
 
 
@@ -76,10 +76,10 @@ set laststatus=2
 set noswapfile
 set complete+=k
 set fillchars=""    " fill characters of vertical splits
-set statusline=%<%f\      " filename
-set statusline+=%w%h%m%r  " options
-set statusline+=\ %{getcwd()}
-set statusline+=%=%(\ \ \ line\ %l\ of\ %L,\ col\ %c%)\ \ \ %p%%
+" set statusline=%<%f\      " filename
+" set statusline+=%w%h%m%r  " options
+" set statusline+=\ %{getcwd()}
+" set statusline+=%=%(\ \ \ line\ %l\ of\ %L,\ col\ %c%)\ \ \ %p%%
 set dictionary+=/usr/share/dict/words       " for dictionary completion
 set dictionary+=~/.config/nvim/spell/en.utf-8.add
 set cursorline
@@ -165,8 +165,14 @@ map <leader>ls :source ~/.session.vim<CR>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Color settings
 set termguicolors
-set background=dark
-colorscheme one
+colorscheme onedark
+
+" Vim-airline
+let g:airline_powerline_fonts = 1
+let g:bufferline_echo = 0
+let g:airline_skip_empty_sections = 1
+let g:airline_highlighting_cache = 1
+let g:airline_section_z = airline#section#create([g:airline_symbols.linenr, '%l/%L:%c %p%%'])
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
