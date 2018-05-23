@@ -13,8 +13,9 @@ Plug 'w0rp/ale'
 Plug 'equalsraf/neovim-gui-shim'
 Plug 'bling/vim-bufferline'
 
-" Vim-airline
-Plug 'vim-airline/vim-airline'
+" Customize status line
+Plug 'itchyny/lightline.vim'
+Plug 'maximbaz/lightline-ale'
 
 " Language support
 Plug 'sheerun/vim-polyglot'
@@ -167,12 +168,55 @@ map <leader>ls :source ~/.session.vim<CR>
 set termguicolors
 colorscheme onedark
 
-" Vim-airline
-let g:airline_powerline_fonts = 1
-let g:bufferline_echo = 0
-let g:airline_skip_empty_sections = 1
-let g:airline_highlighting_cache = 1
-let g:airline_section_z = airline#section#create([g:airline_symbols.linenr, '%l/%L:%c %p%%'])
+" Bufferline
+let g:bufferline_active_buffer_left = ''
+let g:bufferline_active_buffer_right = ''
+let g:bufferline_modified = ''
+
+
+" Vim-lightline
+let g:lightline = {
+  \     'colorscheme': 'onedark',
+  \     'active': {
+  \         'left': [['mode', 'paste'],
+  \                  ['myreadonly', 'mymodified', 'filename']],
+  \         'right': [[ 'linter_checking',
+  \                     'linter_errors',
+  \                     'linter_warnings',
+  \                     'linter_ok',
+  \                     'lineinfo'],
+  \                   ['fileformat'],
+  \                   ['filetype']],
+  \     },
+  \     'component': {
+  \         'lineinfo': '☰ %l/%L:%c %p%%'
+  \     },
+  \     'component_function': {
+  \         'mymodified': 'LightlineModified',
+  \         'myreadonly': 'LightlineReadOnly',
+  \     },
+  \     'component_expand': {
+  \         'linter_checking': 'lightline#ale#checking',
+  \         'linter_warnings': 'lightline#ale#warnings',
+  \         'linter_errors': 'lightline#ale#errors',
+  \         'linter_ok': 'lightline#ale#ok',
+  \     },
+  \     'component_type': {
+  \         'linter_checking': 'left',
+  \         'linter_warnings': 'warning',
+  \         'linter_errors': 'error',
+  \         'linter_ok': 'left',
+  \     },
+  \     'subseparator': {'left': '', 'right': ''},
+  \ }
+
+function! LightlineReadOnly()
+    return &filetype !~? 'help' && &readonly ? '🔒' : ''
+endfunction
+
+function! LightlineModified()
+    return &modifiable && &modified ? '✎' : ''
+endfunction
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -190,10 +234,10 @@ let g:pymode_lint = 0
 
 
 " OCaml specific configuration
-let g:opamshare = $HOME . "/.opam/4.06.0/share"
-execute "set rtp+=" . g:opamshare . "/merlin/vim"
-execute "set rtp+=" . g:opamshare . "/ocp-index/vim"
-execute "set rtp^=" . g:opamshare . "/ocp-indent/vim"
+let g:opamshare = $HOME . '/.opam/4.06.0/share'
+execute 'set rtp+=' . g:opamshare . '/merlin/vim'
+execute 'set rtp+=' . g:opamshare . '/ocp-index/vim'
+execute 'set rtp^=' . g:opamshare . '/ocp-indent/vim'
 
 
 " Tagbar configuration
@@ -208,6 +252,7 @@ let g:ale_linters = {
     \   'latex': ['chktex'],
     \   'rust': ['cargo'],
     \   'bash': ['bash -n '],
+    \   'vim': ['vint'],
     \}
 let g:ale_lint_delay = 1000
 let g:ale_set_highlights = 0
@@ -216,10 +261,10 @@ let g:ale_sign_warning = '⚠️'
 
 
 " Vim-markdown-preview configuration
-let vim_markdown_preview_github=1
-let vim_markdown_preview_toggle=0
-let vim_markdown_preview_temp_file=1
-let vim_markdown_preview_hotkey='<F5>'
+let g:vim_markdown_preview_github=1
+let g:vim_markdown_preview_toggle=0
+let g:vim_markdown_preview_temp_file=1
+let g:vim_markdown_preview_hotkey='<F5>'
 
 
 " vim-operator-surround
@@ -279,7 +324,10 @@ endif
 " " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " " autoclose preview window
-autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
+augroup autoclose_prev_win
+    autocmd!
+    autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
+augroup end
 " " Python support
 let g:deoplete#sources#jedi#show_docstring = 1
 let g:deoplete#sources#jedi#statement_length = 30
@@ -287,11 +335,11 @@ let g:deoplete#sources#jedi#python_path = '/usr/bin/python3'
 " " OCaml support
 let g:deoplete#omni#input_patterns.ocaml = '[.\w]+'
 " " " Rust support
-let g:deoplete#sources#rust#racer_binary = $HOME . "/.cargo/bin/racer"
-let g:deoplete#sources#rust#rust_source_path = $HOME . "/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src"
+let g:deoplete#sources#rust#racer_binary = $HOME . '/.cargo/bin/racer'
+let g:deoplete#sources#rust#rust_source_path = $HOME . '/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src'
 let g:deoplete#sources#rust#show_duplicates = 1
 let g:deoplete#sources#rust#documentation_max_height = 20
 
 
 " execute at the end to avoid conflicts of shell commands above
-set sh=fish           " default shell set to /usr/bin/fish
+set shell=fish           " default shell set to /usr/bin/fish
