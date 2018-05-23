@@ -188,9 +188,13 @@ let g:lightline = {
   \                   ['fileformat'],
   \                   ['filetype']],
   \     },
+  \     'inactive': {
+  \         'left': [['readonly', 'modified', 'filename']],
+  \         'right': [['lineinfo']],
+  \     },
   \     'component': {
   \         'lineinfo': '☰ %l/%L:%c %p%%',
-  \         'filetype': &filetype,
+  \         'filetype': '%{&filetype}',
   \         'readonly': '%{&readonly ? "🔒" : ""}',
   \         'modified': '%{&modifiable && &modified ? "✎" : ""}',
   \     },
