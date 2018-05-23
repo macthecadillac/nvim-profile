@@ -217,17 +217,6 @@ let g:lightline = {
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""""" Plugin Settings """""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Pymode configuration
-let g:pymode_folding = 0
-let g:pymode_python = 'python3'
-let g:pymode_rope = 0
-let g:pymode_rope_completion = 0
-let g:pymode_rope_completion_on_dot = 0
-let g:pymode_rope_autoimport = 0
-let g:pymode_options_colorcolumn = 0
-let g:pymode_lint = 0
-
-
 " OCaml specific configuration
 let g:opamshare = $HOME . '/.opam/4.06.0/share'
 execute 'set rtp+=' . g:opamshare . '/merlin/vim'
@@ -301,12 +290,21 @@ let g:ctrlp_custom_ignore = {
 if executable('rg')
     set grepprg=rg\ --color=never
     " let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
-    let g:ctrlp_use_caching = 0
+    let g:ctrlp_use_caching = 1
 endif
 
+" autoclose preview window
+augroup autoclose_prev_win
+    autocmd!
+    autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
+augroup end
 
-" deoplete configuration
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
 set completeopt+=noselect
+
+" " deoplete configuration
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#syntax#min_keyword_length = 0
 let g:deoplete#max_list = 0
@@ -316,13 +314,6 @@ let g:deoplete#auto_refresh_delay = 10
 if !exists('g:deoplete#omni#input_patterns')
     let g:deoplete#omni#input_patterns = {}
 endif
-" " <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" " autoclose preview window
-augroup autoclose_prev_win
-    autocmd!
-    autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
-augroup end
 " " Python support
 let g:deoplete#sources#jedi#show_docstring = 1
 let g:deoplete#sources#jedi#statement_length = 30
