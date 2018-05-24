@@ -16,6 +16,7 @@ Plug 'bling/vim-bufferline'
 " Customize status line
 Plug 'itchyny/lightline.vim'
 Plug 'maximbaz/lightline-ale'
+" Plug 'mgee/lightline-bufferline'
 
 " Language support
 Plug 'sheerun/vim-polyglot'
@@ -89,6 +90,7 @@ set ttyfast
 set mouse=a
 set hidden            " no force save bufer when going to definition
 set scrolloff=5      " starts scrolling when cursor is 10 lines away from screen edge
+" set showtabline=2
 " set guicursor=''
 
 " Automatically switch directory to the directory of the current file.
@@ -171,8 +173,6 @@ colorscheme onedark
 " Bufferline
 let g:bufferline_active_buffer_left = ''
 let g:bufferline_active_buffer_right = ''
-let g:bufferline_modified = ''
-
 
 " Vim-lightline
 let g:lightline = {
@@ -212,6 +212,16 @@ let g:lightline = {
   \     },
   \     'subseparator': {'left': '', 'right': ''},
   \ }
+
+  " \         'buffers': 'lightline#bufferline#buffers',
+  " \         'buffers': 'tabsel',
+  " \     'tabline': {'left': [['buffers']], 'right': [[]]},
+" let g:lightline#bufferline#unicode_symbols = 1
+" let g:lightline#bufferline#show_number = 2
+" let g:lightline#bufferline#number_map = {
+  " \      0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴',
+  " \      5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹'
+  " \ }
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
