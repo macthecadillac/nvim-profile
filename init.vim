@@ -216,6 +216,8 @@ let g:lightline = {
   \     'subseparator': {'left': '', 'right': ''},
   \ }
 
+let g:lightline#ale#indicator_checking = ''
+
   " \         'buffers': 'lightline#bufferline#buffers',
   " \         'buffers': 'tabsel',
   " \     'tabline': {'left': [['buffers']], 'right': [[]]},
