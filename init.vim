@@ -19,7 +19,11 @@ Plug 'maximbaz/lightline-ale'
 " Plug 'mgee/lightline-bufferline'
 
 " Language support
-Plug 'sheerun/vim-polyglot'
+Plug 'dag/vim-fish'
+Plug 'vim-python/python-syntax', { 'for': 'python' }
+Plug 'othree/csscomplete.vim', { 'for': 'css' }
+Plug 'rust-lang/rust.vim'
+Plug 'cespare/vim-toml'
 
 " Autocompletion
 Plug 'maralla/completor.vim'
@@ -176,6 +180,7 @@ colorscheme onedark
 " Bufferline
 let g:bufferline_active_buffer_left = ''
 let g:bufferline_active_buffer_right = ''
+let g:bufferline_modified = ''
 
 " Vim-lightline
 let g:lightline = {
@@ -232,6 +237,9 @@ let g:lightline#ale#indicator_checking = ''
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""""" Plugin Settings """""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Better python syntax highlighting
+let g:python_hightlight_all = 1
+
 " OCaml specific configuration
 let g:opamshare = $HOME . '/.opam/4.06.0/share'
 execute 'set rtp+=' . g:opamshare . '/merlin/vim'
@@ -308,6 +316,8 @@ if executable('rg')
     let g:ctrlp_use_caching = 1
 endif
 
+
+" Autocompletion
 " autoclose preview window
 augroup autoclose_prev_win
     autocmd!
@@ -319,7 +329,6 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 set completeopt+=noselect
 
-" Autocompletion
 let g:completor_python_binary = '/usr/bin/python3'
 let g:completor_racer_binary = $HOME . '/.cargo/bin/racer'
 let g:completor_ocaml_omni_trigger = '[^. *\t]\.\w*|\s\w*|#'
