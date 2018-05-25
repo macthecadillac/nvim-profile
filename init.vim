@@ -343,7 +343,7 @@ let g:deoplete#sources#jedi#show_docstring = 1
 let g:deoplete#sources#jedi#statement_length = 30
 let g:deoplete#sources#jedi#python_path = '/usr/bin/python3'
 " " OCaml support
-let g:deoplete#omni#input_patterns.ocaml = '[^. *\t]\.\w*|\s\w*|#'
+let g:deoplete#omni#input_patterns.ocaml = '[.\w]+'
 " " " Rust support
 let g:deoplete#sources#rust#racer_binary = $HOME . '/.cargo/bin/racer'
 let g:deoplete#sources#rust#rust_source_path = $HOME . '/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src'
