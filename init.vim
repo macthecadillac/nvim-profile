@@ -322,7 +322,14 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 set completeopt+=noselect
 
 " deoplete configuration
-let g:deoplete#enable_at_startup = 1
+augroup enable_deoplete
+    " This augroup keeps vim startup snappy while retaining deoplete
+    " functionality on demand
+    autocmd!
+    autocmd InsertEnter * call deoplete#enable() | autocmd! enable_deoplete
+augroup END
+ 
+let g:deoplete#enable_at_startup = 0
 let g:deoplete#sources#syntax#min_keyword_length = 0
 let g:deoplete#max_list = 0
 let g:deoplete#max_abbr_width = 30
