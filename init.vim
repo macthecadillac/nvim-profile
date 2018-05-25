@@ -11,7 +11,6 @@ Plug 'reedes/vim-pencil', { 'for': 'markdown' }
 Plug 'brooth/far.vim', { 'on': ['Far', 'Farp', 'Fardo', 'Refar', 'Rarundo', 'F'] }
 Plug 'w0rp/ale'
 Plug 'equalsraf/neovim-gui-shim'
-Plug 'bling/vim-bufferline'
 
 " Customize status line
 Plug 'itchyny/lightline.vim'
@@ -177,11 +176,6 @@ map <leader>ls :source ~/.session.vim<CR>
 set termguicolors
 colorscheme onedark
 
-" Bufferline
-let g:bufferline_active_buffer_left = ''
-let g:bufferline_active_buffer_right = ''
-let g:bufferline_modified = ''
-
 " Vim-lightline
 let g:lightline = {
   \     'colorscheme': 'onedark',
@@ -330,13 +324,13 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 set completeopt+=noselect
 
-let g:completor_python_binary = '/usr/bin/python3'
-let g:completor_racer_binary = $HOME . '/.cargo/bin/racer'
-let g:completor_ocaml_omni_trigger = '[^. *\t]\.\w*|\s\w*|#'
-let g:completor_completion_delay = 0
-let g:completor_refresh_always = 0
+" let g:completor_python_binary = '/usr/bin/python3'
+" let g:completor_racer_binary = $HOME . '/.cargo/bin/racer'
+" let g:completor_ocaml_omni_trigger = '[^. *\t]\.\w*|\s\w*|#'
+" let g:completor_completion_delay = 0
+" let g:completor_refresh_always = 0
 
-" " " deoplete configuration
+" " deoplete configuration
 " let g:deoplete#enable_at_startup = 1
 " let g:deoplete#sources#syntax#min_keyword_length = 0
 " let g:deoplete#max_list = 0
