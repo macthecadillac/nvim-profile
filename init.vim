@@ -24,16 +24,13 @@ Plug 'othree/csscomplete.vim', { 'for': 'css' }
 Plug 'rust-lang/rust.vim'
 Plug 'cespare/vim-toml'
 
-" Autocompletion
-Plug 'maralla/completor.vim'
-
-" " Deoplete & co.
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'Shougo/neco-syntax'
-" Plug 'Shougo/neco-vim', { 'for': 'vim' }
-" Plug 'zchee/deoplete-jedi', { 'for': 'python' }
-" Plug 'tweekmonster/deoplete-clang2', { 'for': ['cpp', 'c'] }
-" Plug 'sebastianmarkow/deoplete-rust', { 'for': 'rust' }
+" Deoplete & co.
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/neco-syntax'
+Plug 'Shougo/neco-vim', { 'for': 'vim' }
+Plug 'zchee/deoplete-jedi', { 'for': 'python' }
+Plug 'tweekmonster/deoplete-clang2', { 'for': ['cpp', 'c'] }
+Plug 'sebastianmarkow/deoplete-rust', { 'for': 'rust' }
 
 " Operators
 Plug 'kana/vim-operator-user'
@@ -324,33 +321,27 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 set completeopt+=noselect
 
-" let g:completor_python_binary = '/usr/bin/python3'
-" let g:completor_racer_binary = $HOME . '/.cargo/bin/racer'
-" let g:completor_ocaml_omni_trigger = '[^. *\t]\.\w*|\s\w*|#'
-" let g:completor_completion_delay = 0
-" let g:completor_refresh_always = 0
-
-" " deoplete configuration
-" let g:deoplete#enable_at_startup = 1
-" let g:deoplete#sources#syntax#min_keyword_length = 0
-" let g:deoplete#max_list = 0
-" let g:deoplete#max_abbr_width = 30
-" let g:deoplete#auto_complete_delay = 0
-" let g:deoplete#auto_refresh_delay = 10
-" if !exists('g:deoplete#omni#input_patterns')
-"     let g:deoplete#omni#input_patterns = {}
-" endif
-" " " Python support
-" let g:deoplete#sources#jedi#show_docstring = 1
-" let g:deoplete#sources#jedi#statement_length = 30
-" let g:deoplete#sources#jedi#python_path = '/usr/bin/python3'
-" " " OCaml support
-" let g:deoplete#omni#input_patterns.ocaml = '[^. *\t]\.\w*|\s\w*|#'
-" " " " Rust support
-" let g:deoplete#sources#rust#racer_binary = $HOME . '/.cargo/bin/racer'
-" let g:deoplete#sources#rust#rust_source_path = $HOME . '/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src'
-" let g:deoplete#sources#rust#show_duplicates = 1
-" let g:deoplete#sources#rust#documentation_max_height = 20
+" deoplete configuration
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#sources#syntax#min_keyword_length = 0
+let g:deoplete#max_list = 0
+let g:deoplete#max_abbr_width = 30
+let g:deoplete#auto_complete_delay = 0
+let g:deoplete#auto_refresh_delay = 10
+if !exists('g:deoplete#omni#input_patterns')
+    let g:deoplete#omni#input_patterns = {}
+endif
+" " Python support
+let g:deoplete#sources#jedi#show_docstring = 1
+let g:deoplete#sources#jedi#statement_length = 30
+let g:deoplete#sources#jedi#python_path = '/usr/bin/python3'
+" " OCaml support
+let g:deoplete#omni#input_patterns.ocaml = '[^. *\t]\.\w*|\s\w*|#'
+" " " Rust support
+let g:deoplete#sources#rust#racer_binary = $HOME . '/.cargo/bin/racer'
+let g:deoplete#sources#rust#rust_source_path = $HOME . '/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src'
+let g:deoplete#sources#rust#show_duplicates = 1
+let g:deoplete#sources#rust#documentation_max_height = 20
 
 
 " execute at the end to avoid conflicts of shell commands above
