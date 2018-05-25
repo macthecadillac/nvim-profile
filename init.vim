@@ -213,6 +213,8 @@ let g:lightline = {
   \ }
 
 let g:lightline#ale#indicator_checking = ''
+let g:lightline#ale#indicator_errors = '🚫'
+let g:lightline#ale#indicator_warnings = '🔴'
 
   " \         'buffers': 'lightline#bufferline#buffers',
   " \         'buffers': 'tabsel',
@@ -232,7 +234,7 @@ let g:lightline#ale#indicator_checking = ''
 let g:python_hightlight_all = 1
 
 " OCaml specific configuration
-let g:opamshare = $HOME . '/.opam/4.06.0/share'
+let g:opamshare = $HOME . '/.opam/4.06.1/share'
 execute 'set rtp+=' . g:opamshare . '/merlin/vim'
 execute 'set rtp+=' . g:opamshare . '/ocp-index/vim'
 execute 'set rtp^=' . g:opamshare . '/ocp-indent/vim'
