@@ -11,6 +11,7 @@ Plug 'reedes/vim-pencil', { 'for': 'markdown' }
 Plug 'brooth/far.vim', { 'on': ['Far', 'Farp', 'Fardo', 'Refar', 'Rarundo', 'F'] }
 Plug 'w0rp/ale'
 Plug 'equalsraf/neovim-gui-shim'
+Plug 'tpope/vim-fugitive'
 
 " Customize status line
 Plug 'itchyny/lightline.vim'
@@ -215,6 +216,7 @@ let g:lightline = {
 let g:lightline#ale#indicator_checking = ''
 let g:lightline#ale#indicator_errors = '🚫'
 let g:lightline#ale#indicator_warnings = '🔴'
+let g:lightline#ale#indicator_ok = ''
 
   " \         'buffers': 'lightline#bufferline#buffers',
   " \         'buffers': 'tabsel',
