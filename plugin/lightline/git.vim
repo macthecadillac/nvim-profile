@@ -40,6 +40,7 @@ function! lightline#git#modified_count(hunks)
 endfunction
 
 function! lightline#git#update_status()
+
     let l:git_raw_output = lightline#git#raw_output()
 
     let l:curr_full_path = expand('%:p')
@@ -48,7 +49,7 @@ function! lightline#git#update_status()
     if l:git_raw_output ==# ''
         let g:lightline#git#report_status[l:curr_full_path] = 0
     " If file is readonly or that the dir is not a git repo
-    elseif !has_key(g:lightline#git#report_status, l:curr_full_path)
+    else
         let l:orphan = !&modifiable
         \ || split(l:git_raw_output, '\n')[0] ==# 'Not a git repository'
         if l:orphan
