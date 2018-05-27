@@ -43,7 +43,12 @@ function! lightline#git#update_status()
     let l:git_raw_output = lightline#git#raw_output()
 
     let l:curr_full_path = expand('%:p')
-    if !has_key(g:lightline#git#report_status, l:curr_full_path)
+    " Nothing has changed since last commit/file in a git repo but not in git
+    " tree
+    if l:git_raw_output ==# ''
+        let g:lightline#git#report_status[l:curr_full_path] = 0
+    " If file is readonly or that the dir is not a git repo
+    elseif !has_key(g:lightline#git#report_status, l:curr_full_path)
         let l:orphan = !&modifiable
         \ || split(l:git_raw_output, '\n')[0] ==# 'Not a git repository'
         if l:orphan
@@ -51,12 +56,6 @@ function! lightline#git#update_status()
         else
             let g:lightline#git#report_status[l:curr_full_path] = 1
         endif
-    endif
-
-    " Nothing has changed since last commit/file in git controlled dir but not
-    " in git tree
-    if l:git_raw_output ==# ''
-        let g:lightline#git#report_status[l:curr_full_path] = 0
     endif
 
     if g:lightline#git#report_status[l:curr_full_path] ==# 1
