@@ -3,15 +3,17 @@ let g:lightline#git#status = [0, 0, 0]
 let g:lightline#git#status#indicator_added = '+'
 let g:lightline#git#status#indicator_modified = '!'
 let g:lightline#git#status#indicator_deleted = '-'
+let g:lightline#git#is_git_controlled = {}
 
 augroup lightline#git
     autocmd!
+    autocmd BufEnter * call lightline#git#update_status()
     autocmd BufWrite * call lightline#git#update_status()
 augroup END
 
 function! lightline#git#raw_output()
     let l:cmd = 'git diff --compact-summary --word-diff=porcelain ' .
-      \         '--no-color --no-ext-diff -U0 -- ' . expand('%:f')
+    \           '--no-color --no-ext-diff -U0 -- ' . expand('%:f')
     return system(l:cmd)
 endfunction
 
@@ -39,7 +41,20 @@ endfunction
 
 function! lightline#git#update_status()
     let l:git_raw_output = lightline#git#raw_output()
-    if l:git_raw_output !=# ''
+
+    let l:curr_full_path = expand('%:p')
+    if !has_key(g:lightline#git#is_git_controlled, l:curr_full_path)
+        let l:orphan = l:git_raw_output ==# ''
+        \ || split(l:git_raw_output, '\n')[0] ==# 'Not a git repository'
+        \ || !&modifiable
+        if l:orphan
+            let g:lightline#git#is_git_controlled[l:curr_full_path] = 0
+        else
+            let g:lightline#git#is_git_controlled[l:curr_full_path] = 1
+        endif
+    endif
+
+    if g:lightline#git#is_git_controlled[l:curr_full_path] ==# 1
         let l:split_diff = split(lightline#git#raw_output(), '@@')
         let l:nhunks = (len(l:split_diff) - 1) / 2
 
@@ -61,7 +76,12 @@ endfunction
 
 function! lightline#git#get_status()
     let [l:added, l:modified, l:deleted] = g:lightline#git#status
-    return g:lightline#git#status#indicator_added . ' ' . l:added . ' ' .
-        \  g:lightline#git#status#indicator_modified . ' ' . l:modified . ' ' .
-        \  g:lightline#git#status#indicator_deleted . ' ' . l:deleted
+    let l:curr_full_path = expand('%:p')
+    if get(g:lightline#git#is_git_controlled, l:curr_full_path)
+        return g:lightline#git#status#indicator_added . ' ' . l:added . ' ' .
+        \      g:lightline#git#status#indicator_modified . ' ' . l:modified . ' ' .
+        \      g:lightline#git#status#indicator_deleted . ' ' . l:deleted
+    else
+        return ''
+    endif
 endfunction
