@@ -6,7 +6,6 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'kien/ctrlp.vim'
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 Plug 'tpope/vim-commentary'
-Plug 'JamshedVesuna/vim-markdown-preview', { 'for': 'markdown' }
 Plug 'reedes/vim-pencil', { 'for': 'markdown' }
 Plug 'brooth/far.vim', { 'on': ['Far', 'Farp', 'Fardo', 'Refar', 'Rarundo', 'F'] }
 Plug 'w0rp/ale'
@@ -272,13 +271,6 @@ let g:ale_set_highlights = 0
 let g:ale_sign_error =  '🚫'
 let g:ale_sign_warning = '⚠️'
 let g:ale_lint_on_enter = 0
-
-
-" Vim-markdown-preview configuration
-let g:vim_markdown_preview_github=1
-let g:vim_markdown_preview_toggle=0
-let g:vim_markdown_preview_temp_file=0
-let g:vim_markdown_preview_hotkey='<F5>'
 
 
 " vim-operator-surround
