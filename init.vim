@@ -11,7 +11,8 @@ Plug 'reedes/vim-pencil', { 'for': 'markdown' }
 Plug 'brooth/far.vim', { 'on': ['Far', 'Farp', 'Fardo', 'Refar', 'Rarundo', 'F'] }
 Plug 'w0rp/ale'
 Plug 'equalsraf/neovim-gui-shim'
-Plug 'tpope/vim-fugitive'
+Plug 'itchyny/vim-gitbranch'
+Plug 'macthecadillac/lightline-git'
 
 " Customize status line
 Plug 'itchyny/lightline.vim'
@@ -179,7 +180,7 @@ let g:lightline = {
   \     'colorscheme': 'onedark',
   \     'active': {
   \         'left': [['mode', 'paste'],
-  \                  ['readonly', 'modified', 'filename']],
+  \                  ['gitbranch', 'gitstatus', 'filename']],
   \         'right': [[ 'linter_checking',
   \                     'linter_errors',
   \                     'linter_warnings',
@@ -189,14 +190,12 @@ let g:lightline = {
   \                   ['filetype']],
   \     },
   \     'inactive': {
-  \         'left': [['readonly', 'modified', 'filename']],
+  \         'left': [['filename']],
   \         'right': [['lineinfo']],
   \     },
   \     'component': {
   \         'lineinfo': '☰ %l/%L:%c %p%%',
   \         'filetype': '%{&filetype}',
-  \         'readonly': '%{&readonly ? "🔒" : ""}',
-  \         'modified': '%{&modifiable && &modified ? "✎" : ""}',
   \     },
   \     'component_expand': {
   \         'linter_checking': 'lightline#ale#checking',
@@ -204,29 +203,37 @@ let g:lightline = {
   \         'linter_errors': 'lightline#ale#errors',
   \         'linter_ok': 'lightline#ale#ok',
   \     },
+  \     'component_function': {
+  \         'filename': 'LightlineFilename',
+  \         'gitbranch': 'DisplayGitBranchName',
+  \         'gitstatus': 'lightline#git#get_status',
+  \     },
   \     'component_type': {
   \         'linter_checking': 'left',
   \         'linter_warnings': 'warning',
   \         'linter_errors': 'error',
   \         'linter_ok': 'left',
   \     },
-  \     'subseparator': {'left': '', 'right': ''},
+  \     'separator': {'left': "\uE0B0", 'right': "\uE0B2"},
+  \     'subseparator': {'left': "\uE0B1", 'right': "\uE0B3"},
   \ }
 
 let g:lightline#ale#indicator_checking = ''
 let g:lightline#ale#indicator_errors = '🚫'
-let g:lightline#ale#indicator_warnings = '🔴'
+let g:lightline#ale#indicator_warnings = '⚠️'
 let g:lightline#ale#indicator_ok = ''
 
-  " \         'buffers': 'lightline#bufferline#buffers',
-  " \         'buffers': 'tabsel',
-  " \     'tabline': {'left': [['buffers']], 'right': [[]]},
-" let g:lightline#bufferline#unicode_symbols = 1
-" let g:lightline#bufferline#show_number = 2
-" let g:lightline#bufferline#number_map = {
-  " \      0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴',
-  " \      5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹'
-  " \ }
+function! DisplayGitBranchName()
+    let l:gitbranch = gitbranch#name()
+    return l:gitbranch ==# '' ? '' : "\uE0A0" . l:gitbranch
+endfunction
+
+function! LightlineFilename()
+    let l:readonly = &readonly ? "\uE0A2" . ' ' : ''
+    let l:filename = expand('%:t') !=# '' ? expand('%:t') : '[NO NAME]'
+    let l:modified = &modified ? ' +' : ''
+    return l:readonly . l:filename . l:modified
+endfunction
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -258,7 +265,7 @@ let g:ale_linters = {
     \}
 let g:ale_lint_delay = 1000
 let g:ale_set_highlights = 0
-let g:ale_sign_error = '⨉'
+let g:ale_sign_error =  '🚫'
 let g:ale_sign_warning = '⚠️'
 let g:ale_lint_on_enter = 0
 
