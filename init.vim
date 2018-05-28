@@ -277,7 +277,7 @@ let g:ale_lint_on_enter = 0
 " Vim-markdown-preview configuration
 let g:vim_markdown_preview_github=1
 let g:vim_markdown_preview_toggle=0
-let g:vim_markdown_preview_temp_file=1
+let g:vim_markdown_preview_temp_file=0
 let g:vim_markdown_preview_hotkey='<F5>'
 
 
