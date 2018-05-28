@@ -195,6 +195,7 @@ let g:lightline = {
   \     'component': {
   \         'lineinfo': '☰ %l/%L:%c %p%%',
   \         'filetype': '%{&filetype}',
+  \         'gitstatus': '%<%{lightline#git#get_status()}',
   \     },
   \     'component_expand': {
   \         'linter_checking': 'lightline#ale#checking',
@@ -205,13 +206,16 @@ let g:lightline = {
   \     'component_function': {
   \         'filename': 'LightlineFilename',
   \         'gitbranch': 'DisplayGitBranchName',
-  \         'gitstatus': 'lightline#git#get_status',
+  \         'fileformat': 'LightlineFileFormat',
   \     },
   \     'component_type': {
   \         'linter_checking': 'left',
   \         'linter_warnings': 'warning',
   \         'linter_errors': 'error',
   \         'linter_ok': 'left',
+  \     },
+  \     'component_visible_condition': {
+  \         'gitstatus': 'lightline#git#get_status() !=# ""',
   \     },
   \     'separator': {'left': "\uE0B0", 'right': "\uE0B2"},
   \     'subseparator': {'left': "\uE0B1", 'right': "\uE0B3"},
@@ -227,17 +231,22 @@ let g:lightline#git#indicator_added = "\uf067"
 let g:lightline#git#indicator_deleted = "\uf068"
 let g:lightline#git#indicator_modified = "\uf12a"
 
+function! LightlineFileFormat()
+    return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
 function! DisplayGitBranchName()
     let l:gitbranch = gitbranch#name()
     " return l:gitbranch ==# '' ? '' : "\uE0A0" . l:gitbranch
-    return l:gitbranch ==# '' ? '' : "\uf126" . ' ' . l:gitbranch
+    let l:displaytext = winwidth(0) > 70 ? "\uf126" . ' ' . l:gitbranch : "\uf126"
+    return l:gitbranch ==# '' ? '' : l:displaytext
 endfunction
 
 function! LightlineFilename()
     " let l:readonly = &readonly ? "\uE0A2" . ' ' : ''
+    " let l:modified = &modified ? ' +' : ''
     let l:readonly = &readonly ? "\uf023" . ' ' : ''
     let l:filename = expand('%:t') !=# '' ? expand('%:t') : '[NO NAME]'
-    " let l:modified = &modified ? ' +' : ''
     let l:modified = &modified ? ' ' . "\uf040" : ''
     return l:readonly . l:filename . l:modified
 endfunction
