@@ -194,6 +194,7 @@ let g:lightline = {
   \     },
   \     'component': {
   \         'lineinfo': '☰ %l/%L:%c %p%%',
+  \         'filename': '%<%{LightlineFilename()}',
   \         'filetype': '%{&filetype}',
   \         'gitstatus': '%<%{lightline#git#get_status()}',
   \     },
@@ -204,7 +205,6 @@ let g:lightline = {
   \         'linter_ok': 'lightline#ale#ok',
   \     },
   \     'component_function': {
-  \         'filename': 'LightlineFilename',
   \         'gitbranch': 'DisplayGitBranchName',
   \         'fileformat': 'LightlineFileFormat',
   \     },
