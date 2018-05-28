@@ -222,10 +222,14 @@ let g:lightline#ale#indicator_checking = ''
 let g:lightline#ale#indicator_errors = '🚫'
 let g:lightline#ale#indicator_warnings = '⚠️'
 let g:lightline#ale#indicator_ok = ''
+" let g:lightline#git#indicator_added = "\uf067"
+" let g:lightline#git#indicator_deleted = "\uf068"
+" let g:lightline#git#indicator_modified = "\uf12a"
 
 function! DisplayGitBranchName()
     let l:gitbranch = gitbranch#name()
     return l:gitbranch ==# '' ? '' : "\uE0A0" . l:gitbranch
+    " return l:gitbranch ==# '' ? '' : "\uf126" . ' ' . l:gitbranch
 endfunction
 
 function! LightlineFilename()
