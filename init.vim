@@ -82,10 +82,10 @@ set laststatus=2
 set noswapfile
 set complete+=k
 set fillchars=""    " fill characters of vertical splits
-" set statusline=%<%f\      " filename
-" set statusline+=%w%h%m%r  " options
-" set statusline+=\ %{getcwd()}
-" set statusline+=%=%(\ \ \ line\ %l\ of\ %L,\ col\ %c%)\ \ \ %p%%
+set statusline=%<%f\      " filename
+set statusline+=%w%h%m%r  " options
+set statusline+=\ %{getcwd()}
+set statusline+=%=%(\ \ \ line\ %l\ of\ %L,\ col\ %c%)\ \ \ %p%%
 set dictionary+=/usr/share/dict/words       " for dictionary completion
 set dictionary+=~/.config/nvim/spell/en.utf-8.add
 set cursorline
