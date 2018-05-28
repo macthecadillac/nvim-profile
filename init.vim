@@ -11,7 +11,7 @@ Plug 'brooth/far.vim', { 'on': ['Far', 'Farp', 'Fardo', 'Refar', 'Rarundo', 'F']
 Plug 'w0rp/ale'
 Plug 'equalsraf/neovim-gui-shim'
 Plug 'itchyny/vim-gitbranch'
-Plug 'macthecadillac/lightline-git'
+Plug '~/lightline-git'
 
 " Customize status line
 Plug 'itchyny/lightline.vim'
@@ -218,23 +218,27 @@ let g:lightline = {
   \ }
 
 let g:lightline#ale#indicator_checking = ''
-let g:lightline#ale#indicator_errors = '🚫'
-let g:lightline#ale#indicator_warnings = '⚠️'
+" let g:lightline#ale#indicator_errors = '🚫'
+" let g:lightline#ale#indicator_warnings = '⚠️'
 let g:lightline#ale#indicator_ok = ''
-" let g:lightline#git#indicator_added = "\uf067"
-" let g:lightline#git#indicator_deleted = "\uf068"
-" let g:lightline#git#indicator_modified = "\uf12a"
+let g:lightline#ale#indicator_errors = "\uf05e"
+let g:lightline#ale#indicator_warnings = "\uf071"
+let g:lightline#git#indicator_added = "\uf067"
+let g:lightline#git#indicator_deleted = "\uf068"
+let g:lightline#git#indicator_modified = "\uf12a"
 
 function! DisplayGitBranchName()
     let l:gitbranch = gitbranch#name()
-    return l:gitbranch ==# '' ? '' : "\uE0A0" . l:gitbranch
-    " return l:gitbranch ==# '' ? '' : "\uf126" . ' ' . l:gitbranch
+    " return l:gitbranch ==# '' ? '' : "\uE0A0" . l:gitbranch
+    return l:gitbranch ==# '' ? '' : "\uf126" . ' ' . l:gitbranch
 endfunction
 
 function! LightlineFilename()
-    let l:readonly = &readonly ? "\uE0A2" . ' ' : ''
+    " let l:readonly = &readonly ? "\uE0A2" . ' ' : ''
+    let l:readonly = &readonly ? "\uf023" . ' ' : ''
     let l:filename = expand('%:t') !=# '' ? expand('%:t') : '[NO NAME]'
-    let l:modified = &modified ? ' +' : ''
+    " let l:modified = &modified ? ' +' : ''
+    let l:modified = &modified ? ' ' . "\uf040" : ''
     return l:readonly . l:filename . l:modified
 endfunction
 
@@ -268,8 +272,10 @@ let g:ale_linters = {
     \}
 let g:ale_lint_delay = 1000
 let g:ale_set_highlights = 0
-let g:ale_sign_error =  '🚫'
-let g:ale_sign_warning = '⚠️'
+" let g:ale_sign_error =  '🚫'
+" let g:ale_sign_warning = '⚠️'
+let g:ale_sign_error = "\uf05e"
+let g:ale_sign_warning = "\uf071"
 let g:ale_lint_on_enter = 0
 
 
