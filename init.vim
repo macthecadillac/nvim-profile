@@ -93,7 +93,7 @@ set lazyredraw
 set ttyfast
 set mouse=a
 set hidden            " no force save bufer when going to definition
-set scrolloff=5      " starts scrolling when cursor is 10 lines away from screen edge
+set scrolloff=2      " starts scrolling when cursor is 10 lines away from screen edge
 " set showtabline=2
 " set guicursor=''
 
