@@ -193,7 +193,7 @@ let g:lightline = {
   \         'right': [['lineinfo']],
   \     },
   \     'component': {
-  \         'lineinfo': '☰ %l/%L:%c %p%%',
+  \         'lineinfo': ' %l/%L:%c %p%%',
   \         'filename': '%<%{LightlineFilename()}',
   \         'filetype': '%{&filetype}',
   \         'gitstatus': '%<%{lightline#git#get_status()}',
