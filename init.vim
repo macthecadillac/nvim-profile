@@ -10,12 +10,12 @@ Plug 'reedes/vim-pencil', { 'for': 'markdown' }
 Plug 'brooth/far.vim', { 'on': ['Far', 'Farp', 'Fardo', 'Refar', 'Rarundo', 'F'] }
 Plug 'w0rp/ale'
 Plug 'equalsraf/neovim-gui-shim'
-Plug 'itchyny/vim-gitbranch'
-Plug '~/lightline-git'
 
 " Customize status line
 Plug 'itchyny/lightline.vim'
 Plug 'maximbaz/lightline-ale'
+Plug 'itchyny/vim-gitbranch'
+Plug '~/lightline-git'
 " Plug 'mgee/lightline-bufferline'
 
 " Language support
