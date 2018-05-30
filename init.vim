@@ -56,7 +56,7 @@ call plug#end()
 filetype plugin indent on
 syntax on
 set encoding=utf8
-set nrformats=      " treat all numeral as decimal
+set nrformats=    " treat all numeral as decimal
 set wildmenu
 set wildmode=longest:full,full
 set smarttab
@@ -64,71 +64,72 @@ set splitbelow
 set splitright
 set breakindent
 set nohlsearch
-set number      " Turn on numbering by default
-set showmatch       " Highlight matching brackets/braces/whatever
+set number    " Turn on numbering by default
+set showmatch     " Highlight matching brackets/braces/whatever
 set matchtime=0
 set ignorecase
-set smartcase       " Smart case matching when search
-set incsearch       " Incremental search
-set tabstop=4       " Show existing tab with 4 space width
-set shiftwidth=4    " when indenting with '>', use 4 spaces width
+set smartcase     " Smart case matching when search
+set incsearch     " Incremental search
+set tabstop=4     " Show existing tab with 4 space width
+set shiftwidth=4  " when indenting with '>', use 4 spaces width
 " set foldmethod=syntax
 " set foldnestmax=1
-set wrap            " soft wrap
-set linebreak         " wrap text while respecting words
-set tags+=./tags;~      " Add parent directories to vim ctags search path
+set wrap      " soft wrap
+set linebreak     " wrap text while respecting words
+set tags+=./tags;~    " Add parent directories to vim ctags search path
 set undofile
 set laststatus=2
 set noswapfile
 set complete+=k
-set fillchars=""    " fill characters of vertical splits
-set statusline=%<%f\      " filename
+set fillchars=""  " fill characters of vertical splits
+set statusline=%<%f\    " filename
 set statusline+=%w%h%m%r  " options
 set statusline+=\ %{getcwd()}
 set statusline+=%=%(\ \ \ line\ %l\ of\ %L,\ col\ %c%)\ \ \ %p%%
-set dictionary+=/usr/share/dict/words       " for dictionary completion
+set dictionary+=/usr/share/dict/words     " for dictionary completion
 set dictionary+=~/.config/nvim/spell/en.utf-8.add
 set cursorline
 set lazyredraw
 set ttyfast
 set mouse=a
-set hidden            " no force save bufer when going to definition
-set scrolloff=0      " starts scrolling when cursor is 0 lines away from screen edge
+set hidden      " no force save bufer when going to definition
+set scrolloff=0    " starts scrolling when cursor is 0 lines away from screen edge
 " set showtabline=2
 " set guicursor=''
 
 " Automatically switch directory to the directory of the current file.
 augroup bufwrite
-    autocmd!
-    autocmd BufEnter * silent! lcd %:p:h
+  autocmd!
+  autocmd BufEnter * silent! lcd %:p:h
 augroup END
 
 " Filetype specific options
 function! MiscSettings(tabsize, ...)
-    let &l:shiftwidth=a:tabsize
-    set textwidth=80
-    if a:0 == 1
-        set spell spelllang=en_us
-    endif
-    nmap <leader>co :set colorcolumn=81<CR>
-    nmap <leader>nco :set colorcolumn=<CR>
+  let &l:shiftwidth=a:tabsize
+  set textwidth=80
+  if a:0 == 1
+    set spell spelllang=en_us
+  endif
+  nmap <leader>co :set colorcolumn=81<CR>
+  nmap <leader>nco :set colorcolumn=<CR>
 endfunction
 
 augroup basic_filetype_settings
-    autocmd!
-    autocmd Filetype markdown call MiscSettings(2, 1)
-    autocmd Filetype tex call MiscSettings(2, 1)
-    autocmd Filetype plaintex call MiscSettings(2, 1)
-    autocmd Filetype python call MiscSettings(4)
-    autocmd Filetype rust call MiscSettings(4)
-    autocmd Filetype text set spell spelllang=en_us
-    autocmd Filetype ocaml set shiftwidth=2
-    " For vim-commentary
-    autocmd Filetype ocaml set commentstring=(*\ %s\ *)
-    " Use 4 spaces instead of the tabulator when pressing 'tab'
-    autocmd Filetype c,cpp,fish,markdown,ocaml,plaintex,python,sh,tex,text,vim,html,css set expandtab
-    " open LaTeX documentation for package under cursor
-    autocmd Filetype tex nmap <leader>doc :silent !texdoc <cword><CR>
+  autocmd!
+  autocmd Filetype markdown call MiscSettings(2, 1)
+  autocmd Filetype tex call MiscSettings(2, 1)
+  autocmd Filetype plaintex call MiscSettings(2, 1)
+  autocmd Filetype python call MiscSettings(4)
+  autocmd Filetype rust call MiscSettings(4)
+  autocmd Filetype text set spell spelllang=en_us
+  autocmd Filetype ocaml call MiscSettings(2)
+  autocmd Filetype vim call MiscSettings(2)
+  " For vim-commentary
+  autocmd Filetype ocaml set commentstring=(*\ %s\ *)
+  " Use 4 spaces instead of the tabulator when pressing 'tab'
+  autocmd Filetype c,cpp,fish,markdown,ocaml,plaintex,python,sh,tex,text,vim,html,css set expandtab
+  " open LaTeX documentation for package under cursor
+  autocmd Filetype tex nmap <leader>doc :silent !texdoc <cword><CR>
 augroup END
 
 
@@ -150,13 +151,13 @@ map <A-[> :sp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 " Enables running scripts directly from vim
 augroup enable_quickrun
-    autocmd!
-    autocmd FileType python nnoremap <buffer> <A-r> :QuickRun<CR>
-    autocmd FileType ocaml nnoremap <buffer> <A-r> :QuickRun<CR>
-    autocmd FileType sh nnoremap <buffer> <A-r> :QuickRun<CR>
-    autocmd FileType tex nnoremap <buffer> <A-r> :QuickRun<CR>
-    autocmd FileType python nnoremap <buffer> <A-b> :QuickRunBackground<CR>
-    autocmd FileType tex nnoremap <buffer> <A-b> :QuickRunBackground<CR>
+  autocmd!
+  autocmd FileType python nnoremap <buffer> <A-r> :QuickRun<CR>
+  autocmd FileType ocaml nnoremap <buffer> <A-r> :QuickRun<CR>
+  autocmd FileType sh nnoremap <buffer> <A-r> :QuickRun<CR>
+  autocmd FileType tex nnoremap <buffer> <A-r> :QuickRun<CR>
+  autocmd FileType python nnoremap <buffer> <A-b> :QuickRunBackground<CR>
+  autocmd FileType tex nnoremap <buffer> <A-b> :QuickRunBackground<CR>
 augroup END
 
 " Mapping for my custom UpdateCTags function
@@ -176,49 +177,51 @@ colorscheme onedark
 
 " Vim-lightline
 let g:lightline = {
-  \     'colorscheme': 'onedark',
-  \     'active': {
-  \         'left': [['mode', 'paste'],
-  \                  ['gitbranch', 'gitstatus', 'filename']],
-  \         'right': [[ 'linter_checking',
-  \                     'linter_errors',
-  \                     'linter_warnings',
-  \                     'linter_ok',
-  \                     'lineinfo'],
-  \                   ['fileformat'],
-  \                   ['filetype']],
-  \     },
-  \     'inactive': {
-  \         'left': [['filename']],
-  \         'right': [['lineinfo']],
-  \     },
-  \     'component': {
-  \         'lineinfo': ' %l/%L:%-2c %p%%',
-  \         'filename': '%<%{LightlineFilename()}',
-  \         'filetype': '%{&filetype}',
-  \         'gitstatus': '%<%{lightline#git#get_status()}',
-  \     },
-  \     'component_expand': {
-  \         'linter_checking': 'lightline#ale#checking',
-  \         'linter_warnings': 'lightline#ale#warnings',
-  \         'linter_errors': 'lightline#ale#errors',
-  \         'linter_ok': 'lightline#ale#ok',
-  \     },
-  \     'component_function': {
-  \         'gitbranch': 'DisplayGitBranchName',
-  \         'fileformat': 'LightlineFileFormat',
-  \     },
-  \     'component_type': {
-  \         'linter_checking': 'left',
-  \         'linter_warnings': 'warning',
-  \         'linter_errors': 'error',
-  \         'linter_ok': 'left',
-  \     },
-  \     'component_visible_condition': {
-  \         'gitstatus': 'lightline#git#get_status() !=# ""',
-  \     },
-  \     'separator': {'left': "\uE0B0", 'right': "\uE0B2"},
-  \     'subseparator': {'left': "\uE0B1", 'right': "\uE0B3"},
+  \   'colorscheme': 'onedark',
+  \   'active': {
+  \     'left': [['mode', 'paste'],
+  \              ['gitbranch', 'gitstatus', 'filename']],
+  \     'right': [
+  \       [ 'linter_checking',
+  \         'linter_errors',
+  \         'linter_warnings',
+  \         'linter_ok',
+  \         'lineinfo'],
+  \       ['fileformat'],
+  \       ['filetype']
+  \     ],
+  \   },
+  \   'inactive': {
+  \     'left': [['filename']],
+  \     'right': [['lineinfo']],
+  \   },
+  \   'component': {
+  \     'lineinfo': ' %l/%L:%-2c %p%%',
+  \     'filename': '%<%{LightlineFilename()}',
+  \     'filetype': '%{&filetype}',
+  \     'gitstatus': '%<%{lightline#git#get_status()}',
+  \   },
+  \   'component_expand': {
+  \     'linter_checking': 'lightline#ale#checking',
+  \     'linter_warnings': 'lightline#ale#warnings',
+  \     'linter_errors': 'lightline#ale#errors',
+  \     'linter_ok': 'lightline#ale#ok',
+  \   },
+  \   'component_function': {
+  \     'gitbranch': 'DisplayGitBranchName',
+  \     'fileformat': 'LightlineFileFormat',
+  \   },
+  \   'component_type': {
+  \     'linter_checking': 'left',
+  \     'linter_warnings': 'warning',
+  \     'linter_errors': 'error',
+  \     'linter_ok': 'left',
+  \   },
+  \   'component_visible_condition': {
+  \     'gitstatus': 'lightline#git#get_status() !=# ""',
+  \   },
+  \   'separator': {'left': "\uE0B0", 'right': "\uE0B2"},
+  \   'subseparator': {'left': "\uE0B1", 'right': "\uE0B3"},
   \ }
 
 let g:lightline#ale#indicator_checking = ''
@@ -232,23 +235,23 @@ let g:lightline#git#indicator_deleted = "\uf068"
 let g:lightline#git#indicator_modified = "\uf12a"
 
 function! LightlineFileFormat()
-    return winwidth(0) > 70 ? &fileformat : ''
+  return winwidth(0) > 70 ? &fileformat : ''
 endfunction
 
 function! DisplayGitBranchName()
-    let l:gitbranch = gitbranch#name()
-    " return l:gitbranch ==# '' ? '' : "\uE0A0" . l:gitbranch
-    let l:displaytext = winwidth(0) > 70 ? "\uf126" . ' ' . l:gitbranch : "\uf126"
-    return l:gitbranch ==# '' ? '' : l:displaytext
+  let l:gitbranch = gitbranch#name()
+  " return l:gitbranch ==# '' ? '' : "\uE0A0" . l:gitbranch
+  let l:displaytext = winwidth(0) > 70 ? "\uf126" . ' ' . l:gitbranch : "\uf126"
+  return l:gitbranch ==# '' ? '' : l:displaytext
 endfunction
 
 function! LightlineFilename()
-    " let l:readonly = &readonly ? "\uE0A2" . ' ' : ''
-    " let l:modified = &modified ? ' +' : ''
-    let l:readonly = &readonly ? "\uf023" . ' ' : ''
-    let l:filename = expand('%:t') !=# '' ? expand('%:t') : '[NO NAME]'
-    let l:modified = &modified ? ' ' . "\uf040" : ''
-    return l:readonly . l:filename . l:modified
+  " let l:readonly = &readonly ? "\uE0A2" . ' ' : ''
+  " let l:modified = &modified ? ' +' : ''
+  let l:readonly = &readonly ? "\uf023" . ' ' : ''
+  let l:filename = expand('%:t') !=# '' ? expand('%:t') : '[NO NAME]'
+  let l:modified = &modified ? ' ' . "\uf040" : ''
+  return l:readonly . l:filename . l:modified
 endfunction
 
 
@@ -284,12 +287,12 @@ nmap <F4> :TagbarToggle<CR>
 
 " Ale configurations
 let g:ale_linters = {
-    \   'python': ['flake8'],
-    \   'latex': ['chktex'],
-    \   'rust': ['cargo'],
-    \   'bash': ['bash -n '],
-    \   'vim': ['vint'],
-    \}
+  \   'python': ['flake8'],
+  \   'latex': ['chktex'],
+  \   'rust': ['cargo'],
+  \   'bash': ['bash -n '],
+  \   'vim': ['vint'],
+  \}
 let g:ale_lint_delay = 1000
 let g:ale_set_highlights = 0
 " let g:ale_sign_error =  '🚫'
@@ -313,9 +316,9 @@ nmap <silent>srb <Plug>(operator-surround-replace)<Plug>(textobj-between-a)
 let g:textobj#sentence#move_n = ')'
 let g:textobj#sentence#move_p = '('
 augroup textobj_sentence
-    autocmd!
-    autocmd FileType markdown call textobj#sentence#init()
-    autocmd FileType text call textobj#sentence#init()
+  autocmd!
+  autocmd FileType markdown call textobj#sentence#init()
+  autocmd FileType text call textobj#sentence#init()
 augroup END
 
 
@@ -323,8 +326,8 @@ augroup END
 let g:pencil#conceallevel = 0
 let g:pencil#cursorwrap = 1
 augroup pencil
-    autocmd!
-    autocmd FileType markdown call pencil#init()
+  autocmd!
+  autocmd FileType markdown call pencil#init()
 augroup END
 
 
@@ -336,17 +339,17 @@ let g:ctrlp_custom_ignore = {
   \ 'file': '\v\.(pyc)$',
   \ }
 if executable('rg')
-    set grepprg=rg\ --color=never
-    " let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
-    let g:ctrlp_use_caching = 1
+  set grepprg=rg\ --color=never
+  " let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+  let g:ctrlp_use_caching = 1
 endif
 
 
 " Autocompletion
 " autoclose preview window
 augroup autoclose_prev_win
-    autocmd!
-    autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
+  autocmd!
+  autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
 augroup end
 
 " <TAB>: completion.
@@ -356,10 +359,10 @@ set completeopt+=noselect
 
 " deoplete configuration
 augroup enable_deoplete
-    " This augroup keeps vim startup snappy while retaining deoplete
-    " functionality on demand
-    autocmd!
-    autocmd InsertEnter * call deoplete#enable() | autocmd! enable_deoplete
+  " This augroup keeps vim startup snappy while retaining deoplete
+  " functionality on demand
+  autocmd!
+  autocmd InsertEnter * call deoplete#enable() | autocmd! enable_deoplete
 augroup END
  
 let g:deoplete#enable_at_startup = 0
@@ -369,7 +372,7 @@ let g:deoplete#max_abbr_width = 30
 let g:deoplete#auto_complete_delay = 0
 let g:deoplete#auto_refresh_delay = 10
 if !exists('g:deoplete#omni#input_patterns')
-    let g:deoplete#omni#input_patterns = {}
+  let g:deoplete#omni#input_patterns = {}
 endif
 " " Python support
 let g:deoplete#sources#jedi#show_docstring = 1
@@ -385,4 +388,4 @@ let g:deoplete#sources#rust#documentation_max_height = 20
 
 
 " execute at the end to avoid conflicts of shell commands above
-set shell=fish           " default shell set to /usr/bin/fish
+set shell=fish       " default shell set to /usr/bin/fish
