@@ -167,6 +167,13 @@ map <A-u> :UpdateCTags<CR>
 map <leader>ss :mksession! ~/.session.vim<CR>
 map <leader>ls :source ~/.session.vim<CR>
 
+" Mapping for bringing up FIXME and TODO comments
+if executable('rg')
+  nnoremap <leader>fix :silent grep \(FIXME\)\\\|\(TODO\) %:p<CR> :cw<CR>
+  nnoremap <leader>dfix :silent grep \(FIXME\)\\\|\(TODO\) *.*<CR> :cw<CR>
+  nnoremap <leader>afix :silent grep \(FIXME\)\\\|\(TODO\) **/*.*<CR> :cw<CR>
+endif
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""" UI specific settings """"""""""""""""""""
@@ -273,7 +280,7 @@ let g:python_highlight_operators = 1
 let g:python_slow_sync = 0
 
 " OCaml specific configuration
-let g:opamshare = $HOME . '/.opam/4.06.1/share'
+let g:opamshare = $HOME . '/.opam/4.06.1+flambda/share'
 execute 'set rtp+=' . g:opamshare . '/merlin/vim'
 execute 'set rtp+=' . g:opamshare . '/ocp-index/vim'
 execute 'set rtp^=' . g:opamshare . '/ocp-indent/vim'
@@ -339,9 +346,9 @@ let g:ctrlp_custom_ignore = {
   \ 'file': '\v\.(pyc)$',
   \ }
 if executable('rg')
-  set grepprg=rg\ --color=never
+  set grepprg=rg\ --color=never\ --vimgrep
   " let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
-  let g:ctrlp_use_caching = 1
+  let g:ctrlp_use_caching = 0
 endif
 
 
