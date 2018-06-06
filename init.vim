@@ -206,7 +206,7 @@ let g:lightline = {
   \     'lineinfo': ' %l/%L:%-2c %p%%',
   \     'filename': '%<%{LightlineFilename()}',
   \     'filetype': '%{&filetype}',
-  \     'gitstatus': '%<%{lightline#git#get_status()}',
+  \     'gitstatus': '%<%{lightline_git#get_status()}',
   \   },
   \   'component_expand': {
   \     'linter_checking': 'lightline#ale#checking',
@@ -225,7 +225,7 @@ let g:lightline = {
   \     'linter_ok': 'left',
   \   },
   \   'component_visible_condition': {
-  \     'gitstatus': 'lightline#git#get_status() !=# ""',
+  \     'gitstatus': 'lightline_git#get_status() !=# ""',
   \   },
   \   'separator': {'left': "\uE0B0", 'right': "\uE0B2"},
   \   'subseparator': {'left': "\uE0B1", 'right': "\uE0B3"},
@@ -237,9 +237,9 @@ let g:lightline#ale#indicator_checking = ''
 let g:lightline#ale#indicator_ok = ''
 let g:lightline#ale#indicator_errors = "\uf05e"
 let g:lightline#ale#indicator_warnings = "\uf071"
-let g:lightline#git#indicator_added = "\uf067"
-let g:lightline#git#indicator_deleted = "\uf068"
-let g:lightline#git#indicator_modified = "\uf12a"
+let g:lightline_git#indicator_added = "\uf067"
+let g:lightline_git#indicator_deleted = "\uf068"
+let g:lightline_git#indicator_modified = "\uf12a"
 
 function! LightlineFileFormat()
   return winwidth(0) > 70 ? &fileformat : ''
