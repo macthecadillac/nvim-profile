@@ -126,7 +126,7 @@ augroup basic_filetype_settings
   autocmd Filetype vim call MiscSettings(2)
   " For vim-commentary
   autocmd Filetype ocaml set commentstring=(*\ %s\ *)
-  " Use 4 spaces instead of the tabulator when pressing 'tab'
+  " Use spaces instead of the tabulator when pressing 'tab'
   autocmd Filetype c,cpp,fish,markdown,ocaml,plaintex,python,sh,tex,text,vim,html,css set expandtab
   " open LaTeX documentation for package under cursor
   autocmd Filetype tex nmap <leader>doc :silent !texdoc <cword><CR>
@@ -235,8 +235,8 @@ let g:lightline#ale#indicator_checking = ''
 " let g:lightline#ale#indicator_errors = '🚫'
 " let g:lightline#ale#indicator_warnings = '⚠️'
 let g:lightline#ale#indicator_ok = ''
-let g:lightline#ale#indicator_errors = "\uf05e"
-let g:lightline#ale#indicator_warnings = "\uf071"
+let g:lightline#ale#indicator_errors = "\uf05e "
+let g:lightline#ale#indicator_warnings = "\uf071 "
 let g:lightline_git#indicator_added = "\uf067"
 let g:lightline_git#indicator_deleted = "\uf068"
 let g:lightline_git#indicator_modified = "\uf12a"
@@ -280,11 +280,10 @@ let g:python_highlight_operators = 1
 let g:python_slow_sync = 0
 
 " OCaml specific configuration
-let g:opamshare = $HOME . '/.opam/4.06.1+flambda/share'
+let g:opamshare = $HOME . '/.opam/4.07.0/share'
 execute 'set rtp+=' . g:opamshare . '/merlin/vim'
 execute 'set rtp+=' . g:opamshare . '/ocp-index/vim'
 execute 'set rtp^=' . g:opamshare . '/ocp-indent/vim'
-
 
 " Tagbar configuration
 let g:tagbar_autoclose=1
@@ -296,7 +295,7 @@ nmap <F4> :TagbarToggle<CR>
 let g:ale_linters = {
   \   'python': ['flake8'],
   \   'latex': ['chktex'],
-  \   'rust': ['cargo'],
+  \   'rust': ['cargo', 'rustfmt'],
   \   'bash': ['bash -n '],
   \   'vim': ['vint'],
   \}
@@ -307,6 +306,7 @@ let g:ale_set_highlights = 0
 let g:ale_sign_error = "\uf05e"
 let g:ale_sign_warning = "\uf071"
 let g:ale_lint_on_enter = 0
+let g:ale_max_signs = 100
 
 
 " vim-operator-surround
@@ -390,9 +390,9 @@ let g:deoplete#omni#input_patterns.ocaml = '[.\w]+'
 " " " Rust support
 let g:deoplete#sources#rust#racer_binary = $HOME . '/.cargo/bin/racer'
 let g:deoplete#sources#rust#rust_source_path = $HOME . '/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src'
+let g:deoplete#sources#rust#disable_keymap = 1
 let g:deoplete#sources#rust#show_duplicates = 1
 let g:deoplete#sources#rust#documentation_max_height = 20
-
 
 " execute at the end to avoid conflicts of shell commands above
 set shell=fish       " default shell set to /usr/bin/fish

@@ -1,2 +1,2 @@
-Guifont Monospace:h10
-GuiLinespace 2
+GuiFont! Monospace:h10
+GuiLinespace 0
