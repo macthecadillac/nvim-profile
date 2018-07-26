@@ -1,3 +1,6 @@
+scriptencoding "utf-8"
+set shell=sh  " speeds up the 'system' function
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""" Vim-Plug Plugins """""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -19,7 +22,7 @@ Plug '~/lightline-git'
 " Plug 'mgee/lightline-bufferline'
 
 " Language support
-Plug 'dag/vim-fish'
+Plug 'aliva/vim-fish'
 Plug 'vim-python/python-syntax', { 'for': 'python' }
 Plug 'othree/csscomplete.vim', { 'for': 'css' }
 Plug 'rust-lang/rust.vim'
@@ -280,7 +283,7 @@ let g:python_highlight_operators = 1
 let g:python_slow_sync = 0
 
 " OCaml specific configuration
-let g:opamshare = $HOME . '/.opam/4.07.0/share'
+let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
 execute 'set rtp+=' . g:opamshare . '/merlin/vim'
 execute 'set rtp+=' . g:opamshare . '/ocp-index/vim'
 execute 'set rtp^=' . g:opamshare . '/ocp-indent/vim'
@@ -298,11 +301,10 @@ let g:ale_linters = {
   \   'rust': ['cargo', 'rustfmt'],
   \   'bash': ['bash -n '],
   \   'vim': ['vint'],
+  \   'fish': [],
   \}
 let g:ale_lint_delay = 1000
 let g:ale_set_highlights = 0
-" let g:ale_sign_error =  '🚫'
-" let g:ale_sign_warning = '⚠️'
 let g:ale_sign_error = "\uf05e"
 let g:ale_sign_warning = "\uf071"
 let g:ale_lint_on_enter = 0
