@@ -344,7 +344,7 @@ augroup END
 let g:ctrlp_map = '<c-p>'
 map <C-S> :CtrlPTag<CR>
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'dir':  '\v[\/](_build|\.(git|hg|svn))$',
   \ 'file': '\v\.(pyc)$',
   \ }
 if executable('rg')
