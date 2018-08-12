@@ -183,8 +183,15 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Color settings
 set termguicolors
+
 set background=dark
 colorscheme two-firewatch
+
+" colorscheme onedark
+
+" let ayucolor='mirage'
+" colorscheme ayu
+
 
 " Vim-lightline
 let g:lightline = {
@@ -299,7 +306,7 @@ nmap <F4> :TagbarToggle<CR>
 let g:ale_linters = {
   \   'python': ['flake8'],
   \   'latex': ['chktex'],
-  \   'rust': ['cargo'],
+  \   'rust': ['rls'],
   \   'bash': ['bash -n '],
   \   'vim': ['vint'],
   \   'fish': [],
@@ -311,12 +318,12 @@ let g:ale_sign_warning = "\uf071"
 let g:ale_lint_on_enter = 0
 let g:ale_max_signs = 100
 " rust specific options for ALE
-let g:ale_rust_cargo_use_check = 1
-let g:ale_rust_cargo_check_all_targets = 1
-let g:ale_rust_cargo_check_tests = 1
-let g:ale_rust_cargo_check_examples = 1
-" let g:ale_rust_rls_executable = $HOME . '/.cargo/bin/rls'
-" let g:ale_rust_rls_toolchain = 'stable'
+" let g:ale_rust_cargo_use_check = 1
+" let g:ale_rust_cargo_check_all_targets = 1
+" let g:ale_rust_cargo_check_tests = 1
+" let g:ale_rust_cargo_check_examples = 1
+let g:ale_rust_rls_executable = $HOME . '/.cargo/bin/rls'
+let g:ale_rust_rls_toolchain = 'nightly'
 
 
 " vim-operator-surround
