@@ -1,3 +1,4 @@
+set encoding=utf8
 scriptencoding "utf-8"
 set shell=sh  " speeds up the 'system' function
 
@@ -49,7 +50,8 @@ Plug 'rbonvall/vim-textobj-latex', { 'for': ['plaintex', 'tex'] }
 Plug 'reedes/vim-textobj-sentence'
 
 " Color themes
-Plug 'joshdick/onedark.vim'
+" Plug 'joshdick/onedark.vim'
+Plug 'rakr/vim-two-firewatch'
 call plug#end()
 
 
@@ -58,7 +60,6 @@ call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 filetype plugin indent on
 syntax on
-set encoding=utf8
 set nrformats=    " treat all numeral as decimal
 set wildmenu
 set wildmode=longest:full,full
@@ -183,11 +184,12 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Color settings
 set termguicolors
-colorscheme onedark
+set background=dark
+colorscheme two-firewatch
 
 " Vim-lightline
 let g:lightline = {
-  \   'colorscheme': 'onedark',
+  \   'colorscheme': 'twofirewatch',
   \   'active': {
   \     'left': [['mode', 'paste'],
   \              ['gitbranch', 'gitstatus', 'filename']],
@@ -298,7 +300,7 @@ nmap <F4> :TagbarToggle<CR>
 let g:ale_linters = {
   \   'python': ['flake8'],
   \   'latex': ['chktex'],
-  \   'rust': ['cargo', 'rustfmt'],
+  \   'rust': ['cargo'],
   \   'bash': ['bash -n '],
   \   'vim': ['vint'],
   \   'fish': [],
@@ -309,6 +311,13 @@ let g:ale_sign_error = "\uf05e"
 let g:ale_sign_warning = "\uf071"
 let g:ale_lint_on_enter = 0
 let g:ale_max_signs = 100
+" rust specific options for ALE
+let g:ale_rust_cargo_use_check = 1
+let g:ale_rust_cargo_check_all_targets = 1
+let g:ale_rust_cargo_check_tests = 1
+let g:ale_rust_cargo_check_examples = 1
+" let g:ale_rust_rls_executable = $HOME . '/.cargo/bin/rls'
+" let g:ale_rust_rls_toolchain = 'stable'
 
 
 " vim-operator-surround
@@ -344,7 +353,7 @@ augroup END
 let g:ctrlp_map = '<c-p>'
 map <C-S> :CtrlPTag<CR>
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/](_build|\.(git|hg|svn))$',
+  \ 'dir':  '\v[\/](target|_build|\.(git|hg|svn))$',
   \ 'file': '\v\.(pyc)$',
   \ }
 if executable('rg')
