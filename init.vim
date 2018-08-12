@@ -51,7 +51,6 @@ Plug 'reedes/vim-textobj-sentence'
 
 " Color themes
 " Plug 'joshdick/onedark.vim'
-Plug 'rakr/vim-two-firewatch'
 call plug#end()
 
 
