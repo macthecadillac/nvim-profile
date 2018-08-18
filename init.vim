@@ -331,10 +331,10 @@ let g:ale_linters = {
   \}
 let g:ale_lint_delay = 1000
 let g:ale_set_highlights = 0
-" let g:ale_sign_error = "\uf05e"
-" let g:ale_sign_warning = "\uf071"
-let g:ale_sign_error = "\uf111"
-let g:ale_sign_warning = "\uf111"
+let g:ale_sign_error = "\uf00d"
+let g:ale_sign_warning = "\uf12a"
+" let g:ale_sign_error = "\uf111"
+" let g:ale_sign_warning = "\uf111"
 let g:ale_lint_on_enter = 0
 let g:ale_max_signs = 100
 " rust specific options for ALE
