@@ -640,6 +640,16 @@ if has('gui_running') || &t_Co == 88 || &t_Co == 256
   call <sid>X('rubySymbol',                    s:duo_1,         '', '')
   " }}}
 
+  " Rust highlighting ---------------------------------------------------{{{
+  " call <sid>X('rustIdentifier')
+  " call <sid>X('rustTrait')
+  " call <sid>X('rustEscape')
+  " call <sid>X('rustCharacterInvalid')
+  " call <sid>X('rustLifetime')
+  " call <sid>X('SpecialComment')
+  call <sid>X('rustEnumVariant', s:syntax_color_added, '', '')
+  " }}}
+
   " Spelling highlighting ---------------------------------------------------{{{
   call <sid>X('SpellBad',     '', s:syntax_bg, 'undercurl')
   call <sid>X('SpellLocal',   '', s:syntax_bg, 'undercurl')

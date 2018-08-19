@@ -56,7 +56,7 @@ Plug 'rbonvall/vim-textobj-latex', { 'for': ['plaintex', 'tex'] }
 Plug 'reedes/vim-textobj-sentence'
 
 " Color themes
-" Plug 'joshdick/onedark.vim'
+Plug 'joshdick/onedark.vim'
 call plug#end()
 
 
@@ -194,9 +194,9 @@ if has('termguicolors')
 endif
 
 set background=dark
-colorscheme two-firewatch
+" colorscheme two-firewatch
 
-" colorscheme onedark
+colorscheme onedark
 
 " let ayucolor='mirage'
 " colorscheme ayu
@@ -204,7 +204,7 @@ colorscheme two-firewatch
 
 " Vim-lightline
 let g:lightline = {
-  \   'colorscheme': 'twofirewatch',
+  \   'colorscheme': 'onedark',
   \   'active': {
   \     'left': [['mode', 'paste'],
   \              ['gitbranch', 'gitstatus', 'filename']],
