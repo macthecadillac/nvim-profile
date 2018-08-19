@@ -649,7 +649,9 @@ if has('gui_running') || &t_Co == 88 || &t_Co == 256
   " }}}
 
   " Ocaml highlighting  ---------------------------------------------------{{{
+  call <sid>X('ocamlKeyword', s:uno_1, '', 'bold')
   call <sid>X('ocamlConstructor', s:syntax_accent, '', '')
+  call <sid>X('ocamlBoolean', s:syntax_accent, '', '')
   " }}}
 
   " Spelling highlighting ---------------------------------------------------{{{

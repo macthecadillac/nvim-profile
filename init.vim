@@ -28,6 +28,7 @@ Plug 'vim-python/python-syntax', { 'for': 'python' }
 Plug 'othree/csscomplete.vim', { 'for': 'css' }
 Plug 'rust-lang/rust.vim'
 Plug 'cespare/vim-toml'
+Plug 'rgrinberg/vim-ocaml'
 
 " Deoplete & co.
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -56,7 +57,8 @@ Plug 'rbonvall/vim-textobj-latex', { 'for': ['plaintex', 'tex'] }
 Plug 'reedes/vim-textobj-sentence'
 
 " Color themes
-Plug 'joshdick/onedark.vim'
+" Plug 'joshdick/onedark.vim'
+" Plug 'arcticicestudio/nord-vim'
 call plug#end()
 
 
@@ -90,7 +92,7 @@ set undofile
 set laststatus=2
 set noswapfile
 set complete+=k
-set fillchars=""  " fill characters of vertical splits
+set fillchars+=vert:\  " fill characters of vertical splits
 set statusline=%<%f\    " filename
 set statusline+=%w%h%m%r  " options
 set statusline+=\ %{getcwd()}
@@ -195,6 +197,7 @@ endif
 
 set background=dark
 colorscheme two-firewatch
+" colorscheme nord
 
 " colorscheme onedark
 
@@ -235,7 +238,7 @@ let g:lightline = {
   \     'filename': '%<%{LightlineFilename()}',
   \     'filetype': '%{&filetype}',
   \     'gitstatus': '%<%{lightline_git#get_status()}',
-  \     'close': ' ' . "\uf057" . ' ',
+  \     'close': ' ' . "\uf00d" . ' ',
   \   },
   \   'component_expand': {
   \     'linter_checking': 'lightline#ale#checking',
