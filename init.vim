@@ -194,9 +194,9 @@ if has('termguicolors')
 endif
 
 set background=dark
-" colorscheme two-firewatch
+colorscheme two-firewatch
 
-colorscheme onedark
+" colorscheme onedark
 
 " let ayucolor='mirage'
 " colorscheme ayu
@@ -204,7 +204,7 @@ colorscheme onedark
 
 " Vim-lightline
 let g:lightline = {
-  \   'colorscheme': 'onedark',
+  \   'colorscheme': 'twofirewatch',
   \   'active': {
   \     'left': [['mode', 'paste'],
   \              ['gitbranch', 'gitstatus', 'filename']],
