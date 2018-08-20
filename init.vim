@@ -59,6 +59,7 @@ Plug 'reedes/vim-textobj-sentence'
 " Color themes
 " Plug 'joshdick/onedark.vim'
 " Plug 'arcticicestudio/nord-vim'
+" Plug 'kaicataldo/material.vim'
 call plug#end()
 
 
@@ -197,6 +198,7 @@ endif
 
 set background=dark
 colorscheme two-firewatch
+" colorscheme material
 " colorscheme nord
 
 " colorscheme onedark
