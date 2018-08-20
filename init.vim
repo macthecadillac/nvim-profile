@@ -19,7 +19,7 @@ Plug 'equalsraf/neovim-gui-shim'
 Plug 'itchyny/lightline.vim'
 Plug 'maximbaz/lightline-ale'
 Plug 'itchyny/vim-gitbranch'
-Plug '~/lightline-git'
+Plug '~/lightline-gitdiff'
 " Plug 'mgee/lightline-bufferline'
 
 " Language support
@@ -237,7 +237,7 @@ let g:lightline = {
   \     'lineinfo': ' %l/%L:%-2c %p%%',
   \     'filename': '%<%{LightlineFilename()}',
   \     'filetype': '%{&filetype}',
-  \     'gitstatus': '%<%{lightline_git#get_status()}',
+  \     'gitstatus': '%<%{lightline_gitdiff#get_status()}',
   \     'close': ' ' . "\uf00d" . ' ',
   \   },
   \   'component_expand': {
@@ -257,7 +257,7 @@ let g:lightline = {
   \     'linter_ok': 'left',
   \   },
   \   'component_visible_condition': {
-  \     'gitstatus': 'lightline_git#get_status() !=# ""',
+  \     'gitstatus': 'lightline_gitdiff#get_status() !=# ""',
   \   },
   \   'separator': {'left': "\uE0B0", 'right': "\uE0B2"},
   \   'subseparator': {'left': "\uE0B1", 'right': "\uE0B3"},
@@ -269,9 +269,9 @@ let g:lightline#ale#indicator_checking = ''
 let g:lightline#ale#indicator_ok = ''
 let g:lightline#ale#indicator_errors = "\uf05e "
 let g:lightline#ale#indicator_warnings = "\uf071 "
-let g:lightline_git#indicator_added = "\uf067"
-let g:lightline_git#indicator_deleted = "\uf068"
-let g:lightline_git#indicator_modified = "\uf12a"
+let g:lightline_gitdiff#indicator_added = "\uf067"
+let g:lightline_gitdiff#indicator_deleted = "\uf068"
+let g:lightline_gitdiff#indicator_modified = "\uf12a"
 
 function! LightlineFileFormat()
   return winwidth(0) > 70 ? &fileformat : ''
