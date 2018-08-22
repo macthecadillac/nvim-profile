@@ -58,8 +58,7 @@ Plug 'reedes/vim-textobj-sentence'
 
 " Color themes
 " Plug 'joshdick/onedark.vim'
-" Plug 'arcticicestudio/nord-vim'
-" Plug 'kaicataldo/material.vim'
+Plug 'arcticicestudio/nord-vim'
 call plug#end()
 
 
@@ -197,19 +196,18 @@ if has('termguicolors')
 endif
 
 set background=dark
-colorscheme two-firewatch
-" colorscheme material
-" colorscheme nord
+" colorscheme two-firewatch
 
 " colorscheme onedark
 
 " let ayucolor='mirage'
 " colorscheme ayu
 
+colorscheme nord
 
 " Vim-lightline
 let g:lightline = {
-  \   'colorscheme': 'twofirewatch',
+  \   'colorscheme': 'nord',
   \   'active': {
   \     'left': [['mode', 'paste'],
   \              ['gitbranch', 'gitstatus', 'filename']],
