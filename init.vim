@@ -1,6 +1,6 @@
 set encoding=utf8
 scriptencoding "utf-8"
-set shell=sh  " speeds up the 'system' function
+set shell=sh  " speeds up the 'system' function and a lot more things
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""" Vim-Plug Plugins """""""""""""""""""""
@@ -444,6 +444,3 @@ let g:deoplete#sources#rust#rust_source_path = $HOME . '/.rustup/toolchains/stab
 let g:deoplete#sources#rust#disable_keymap = 1
 let g:deoplete#sources#rust#show_duplicates = 1
 let g:deoplete#sources#rust#documentation_max_height = 20
-
-" execute at the end to avoid conflicts of shell commands above
-set shell=fish       " default shell set to /usr/bin/fish
