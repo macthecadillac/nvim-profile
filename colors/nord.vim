@@ -591,8 +591,12 @@ hi! link VimwikiList markdownListMarker
 " > stephpy/vim-yaml
 call s:hi('yamlKey', s:nord7_gui, '', s:nord7_term, '', '', '')
 
+" Python
+call s:hi('pythonClassVar', s:nord8_gui, '', s:nord8_term, '', '', '')
+
 " Rust
 call s:hi('rustEnumVariant', s:nord7_gui, '', s:nord7_term, '', '', '')
+call s:hi('rustSelf', s:nord8_gui, '', s:nord8_term, '', '', '')
 
 " Ocaml
 call s:hi('ocamlConstructor', s:nord7_gui, '', s:nord7_term, '', '', '')
