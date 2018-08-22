@@ -202,6 +202,8 @@ set background=dark
 " let ayucolor='mirage'
 " colorscheme ayu
 
+let g:nord_italic = 1
+let g:nord_italic_comments = 1
 colorscheme nord
 
 " Vim-lightline
