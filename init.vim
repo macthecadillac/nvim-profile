@@ -58,7 +58,6 @@ Plug 'reedes/vim-textobj-sentence'
 
 " Color themes
 " Plug 'joshdick/onedark.vim'
-Plug 'arcticicestudio/nord-vim'
 call plug#end()
 
 
@@ -339,7 +338,7 @@ let g:ale_sign_warning = "\uf12a"
 " let g:ale_sign_error = "\uf111"
 " let g:ale_sign_warning = "\uf111"
 let g:ale_lint_on_enter = 0
-let g:ale_max_signs = 100
+" let g:ale_max_signs = 100
 " rust specific options for ALE
 " let g:ale_rust_cargo_use_check = 1
 " let g:ale_rust_cargo_check_all_targets = 1
