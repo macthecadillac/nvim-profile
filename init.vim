@@ -219,7 +219,8 @@ let g:lightline = {
   \   'colorscheme': 'nord',
   \   'active': {
   \     'left': [['mode', 'paste'],
-  \              ['gitbranch', 'gitstatus', 'filename']],
+  \              ['filename'],
+  \              ['gitbranch', 'gitstatus']],
   \     'right': [
   \       [ 'linter_checking',
   \         'linter_errors',
@@ -244,8 +245,7 @@ let g:lightline = {
   \   },
   \   'component': {
   \     'lineinfo': ' %l/%L:%-2c %p%%',
-  \     'filename': '%<%{LightlineFilename()}',
-  \     'filetype': '%{&filetype}',
+  \     'filetype': '%<%{&filetype}',
   \     'gitstatus': '%<%{lightline_gitdiff#get_status()}',
   \     'close': ' ' . "\uf00d" . ' ',
   \   },
@@ -258,6 +258,7 @@ let g:lightline = {
   \   'component_function': {
   \     'gitbranch': 'DisplayGitBranchName',
   \     'fileformat': 'LightlineFileFormat',
+  \     'filename': 'LightlineFilename',
   \   },
   \   'component_type': {
   \     'linter_checking': 'left',
@@ -269,8 +270,9 @@ let g:lightline = {
   \     'gitstatus': 'lightline_gitdiff#get_status() !=# ""',
   \   },
   \   'separator': {'left': "\uE0B0", 'right': "\uE0B2"},
-  \   'subseparator': {'left': "\uE0B1", 'right': "\uE0B3"},
+  \   'subseparator': {'left': '', 'right': ''},
   \ }
+  " \   'subseparator': {'left': "\uE0B1", 'right': "\uE0B3"},
 
 let g:lightline#ale#indicator_checking = ''
 " let g:lightline#ale#indicator_errors = '🚫'
