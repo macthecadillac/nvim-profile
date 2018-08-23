@@ -1,4 +1,4 @@
-" Copyright (c) 2016-present Arctic Ice Studio <development@arcticicestudio.com>
+" Copyright (c) 2015-present Arctic Ice Studio <development@arcticicestudio.com>
 " Copyright (c) 2016-present Sven Greb <code@svengreb.de>
 
 " Project: Nord Vim
@@ -44,4 +44,4 @@ let s:p.tabline.middle = [ [ s:nord5, s:nord3 ] ]
 let s:p.tabline.right = [ [ s:nord5, s:nord3 ] ]
 let s:p.tabline.tabsel = [ [ s:nord1, s:nord8 ] ]
 
-let g:lightline#colorscheme#nord#palette = lightline#colorscheme#flatten(s:p)
+ let g:lightline#colorscheme#nord#palette = lightline#colorscheme#flatten(s:p)

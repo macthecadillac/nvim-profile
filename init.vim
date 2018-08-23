@@ -98,7 +98,6 @@ set statusline+=\ %{getcwd()}
 set statusline+=%=%(\ \ \ line\ %l\ of\ %L,\ col\ %c%)\ \ \ %p%%
 set dictionary+=/usr/share/dict/words     " for dictionary completion
 set dictionary+=~/.config/nvim/spell/en.utf-8.add
-set cursorline
 set lazyredraw
 set ttyfast
 set mouse=a
@@ -107,6 +106,12 @@ set scrolloff=0    " starts scrolling when cursor is 0 lines away from screen ed
 " set showtabline=2
 " set guicursor=''
 set noshowmode  " we don't need to show the current mode since it is shown in the statusline
+
+augroup CursorLineActiveOnly
+  autocmd!
+  autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  autocmd WinLeave * setlocal nocursorline
+augroup END
 
 " Automatically switch directory to the directory of the current file.
 augroup bufwrite
