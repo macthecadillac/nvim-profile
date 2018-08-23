@@ -267,7 +267,7 @@ call s:hi('Tag', s:nord4_gui, '', '', '', '', '')
 call s:hi('Todo', s:nord13_gui, 'NONE', s:nord13_term, 'NONE', '', '')
 call s:hi('Type', s:nord9_gui, '', s:nord9_term, '', 'NONE', '')
 call s:hi('Typedef', s:nord9_gui, '', s:nord9_term, '', '', '')
-hi! link Macro Define
+call s:hi('Macro', s:nord7_gui, '', s:nord7_term, '', '', '')
 hi! link PreCondit PreProc
 
 " +-----------+
@@ -597,6 +597,9 @@ call s:hi('pythonClassVar', s:nord8_gui, '', s:nord8_term, '', '', '')
 " Rust
 call s:hi('rustEnumVariant', s:nord7_gui, '', s:nord7_term, '', '', '')
 call s:hi('rustSelf', s:nord8_gui, '', s:nord8_term, '', '', '')
+call s:hi('rustAttribute', s:nord15_gui, '', s:nord15_term, '', '', '')
+hi! link rustDerive rustAttribute
+hi! link rustDeriveTrait rustDerive
 
 " Ocaml
 call s:hi('ocamlConstructor', s:nord7_gui, '', s:nord7_term, '', '', '')
