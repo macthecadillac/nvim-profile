@@ -190,6 +190,9 @@ if executable('rg')
   nnoremap <leader>afix :silent grep \(FIXME\)\\\|\(TODO\) **/*.*<CR> :cw<CR>
 endif
 
+" Launch terminal with fish shell
+nmap <A-t> :execute 'terminal fish'<CR> :set number!<CR>
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""" UI specific settings """"""""""""""""""""
