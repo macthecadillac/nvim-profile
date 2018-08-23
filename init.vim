@@ -211,7 +211,8 @@ let g:lightline = {
   \   'colorscheme': 'nord',
   \   'active': {
   \     'left': [['mode', 'paste'],
-  \              ['gitbranch', 'gitstatus', 'filename']],
+  \              ['gitbranch', 'gitstatus'],
+  \              ['filename']],
   \     'right': [
   \       [ 'linter_checking',
   \         'linter_errors',
