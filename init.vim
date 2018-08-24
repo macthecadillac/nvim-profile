@@ -99,7 +99,6 @@ set statusline+=%=%(\ \ \ line\ %l\ of\ %L,\ col\ %c%)\ \ \ %p%%
 set dictionary+=/usr/share/dict/words     " for dictionary completion
 set dictionary+=~/.config/nvim/spell/en.utf-8.add
 set lazyredraw
-set ttyfast
 set mouse=a
 set hidden      " no force save bufer when going to definition
 set scrolloff=0    " starts scrolling when cursor is 0 lines away from screen edge
@@ -273,6 +272,7 @@ let g:lightline = {
   \   'subseparator': {'left': '', 'right': ''},
   \ }
   " \   'subseparator': {'left': "\uE0B1", 'right': "\uE0B3"},
+  " \   'subseparator': {'left': '', 'right': ''},
 
 let g:lightline#ale#indicator_checking = ''
 " let g:lightline#ale#indicator_errors = '🚫'
