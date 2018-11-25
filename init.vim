@@ -122,6 +122,8 @@ augroup END
 function! MiscSettings(tabsize, ...)
   let &l:shiftwidth=a:tabsize
   set textwidth=80
+  set formatoptions-=t  " so vim doesn't auto-wrap everything
+  set formatoptions+=c
   if a:0 == 1
     set spell spelllang=en_us
   endif
