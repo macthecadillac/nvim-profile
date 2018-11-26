@@ -96,8 +96,8 @@ set statusline=%<%f\    " filename
 set statusline+=%w%h%m%r  " options
 set statusline+=\ %{getcwd()}
 set statusline+=%=%(\ \ \ line\ %l\ of\ %L,\ col\ %c%)\ \ \ %p%%
-set dictionary+=/usr/share/dict/words     " for dictionary completion
-set dictionary+=~/.config/nvim/spell/en.utf-8.add
+" set dictionary+=/usr/share/dict/words     " for dictionary completion
+" set dictionary+=~/.config/nvim/spell/en.utf-8.add
 set lazyredraw
 set mouse=a
 set hidden      " no force save bufer when going to definition
