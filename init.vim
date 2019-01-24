@@ -421,7 +421,7 @@ set completeopt+=noselect
 set hidden
 let g:LanguageClient_diagnosticsSignsMax = 0
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'nightly', 'rls'],
     \ }
 nnoremap <silent> <leader>t :call LanguageClient#textDocument_hover()<CR>
 " nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
@@ -455,3 +455,4 @@ let g:deoplete#sources#rust#rust_source_path = $HOME . '/.rustup/toolchains/stab
 let g:deoplete#sources#rust#disable_keymap = 1
 let g:deoplete#sources#rust#show_duplicates = 1
 let g:deoplete#sources#rust#documentation_max_height = 20
+call deoplete#custom#option('ignore_sources', {'rust': ['LanguageClient']})
