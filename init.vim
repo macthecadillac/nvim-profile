@@ -14,6 +14,7 @@ Plug 'reedes/vim-pencil', { 'for': 'markdown' }
 Plug 'brooth/far.vim', { 'on': ['Far', 'Farp', 'Fardo', 'Refar', 'Rarundo', 'F'] }
 Plug 'w0rp/ale'
 Plug 'equalsraf/neovim-gui-shim'
+Plug 'mg979/vim-visual-multi'
 
 " Customize status line
 Plug 'itchyny/lightline.vim'
