@@ -15,6 +15,7 @@ Plug 'brooth/far.vim', { 'on': ['Far', 'Farp', 'Fardo', 'Refar', 'Rarundo', 'F']
 Plug 'w0rp/ale'
 Plug 'equalsraf/neovim-gui-shim'
 Plug 'mg979/vim-visual-multi'
+Plug '~/external-tools.nvim'
 
 " Customize status line
 Plug 'itchyny/lightline.vim'
@@ -171,12 +172,10 @@ map <A-[> :sp <CR>:exec("tag ".expand("<cword>"))<CR>
 " Enables running scripts directly from vim
 augroup enable_quickrun
   autocmd!
-  autocmd FileType python nnoremap <buffer> <A-r> :QuickRun<CR>
-  autocmd FileType ocaml nnoremap <buffer> <A-r> :QuickRun<CR>
-  autocmd FileType sh nnoremap <buffer> <A-r> :QuickRun<CR>
-  autocmd FileType tex nnoremap <buffer> <A-r> :QuickRun<CR>
-  autocmd FileType python nnoremap <buffer> <A-b> :QuickRunBackground<CR>
-  autocmd FileType tex nnoremap <buffer> <A-b> :QuickRunBackground<CR>
+  autocmd FileType python nnoremap <buffer> <A-r> :FileTypeCmd<CR>
+  autocmd FileType ocaml nnoremap <buffer> <A-r> :FileTypeCmd<CR>
+  autocmd FileType sh nnoremap <buffer> <A-r> :FileTypeCmd<CR>
+  autocmd FileType tex nnoremap <buffer> <A-r> :FileTypeCmd<CR>
 augroup END
 
 " Mapping for my custom UpdateCTags function
@@ -392,6 +391,15 @@ augroup pencil
   autocmd FileType markdown call pencil#init()
 augroup END
 
+" external-tools configuration
+let g:external_tools#envs = {
+      \ 'python': ['/usr/bin/env python', 'Executing'],
+      \ 'ocaml': ['/usr/bin/env ocaml', 'Executing'],
+      \ 'sh': ['/bin/sh', 'Executing'],
+      \ 'fish': ['/usr/bin/env fish', 'Executing'],
+      \ 'tex': ['/usr/bin/latexmk -gg silent', 'Compiling'],
+      \ 'rust': [$HOME . '/.cargo/bin/cargo build', 'Compiling'],
+      \ }
 
 " " CtrlP configuration
 let g:ctrlp_map = '<c-p>'
@@ -458,3 +466,5 @@ let g:deoplete#sources#rust#disable_keymap = 1
 let g:deoplete#sources#rust#show_duplicates = 1
 let g:deoplete#sources#rust#documentation_max_height = 20
 call deoplete#custom#option('ignore_sources', {'rust': ['LanguageClient']})
+
+set shell=fish
