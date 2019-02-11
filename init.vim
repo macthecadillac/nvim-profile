@@ -176,7 +176,7 @@ augroup enable_quickrun
   autocmd FileType ocaml nnoremap <buffer> <A-r> :FileTypeCmd<CR>
   autocmd FileType sh nnoremap <buffer> <A-r> :FileTypeCmd<CR>
   autocmd FileType tex nnoremap <buffer> <A-r> :FileTypeCmd<CR>
-  autocmd FileType rust nnoremap <buffer> <A-r> :Compile<CR>
+  autocmd FileType rust nnoremap <buffer> <A-r> :FileTypeCmd<CR>
 augroup END
 
 " Mapping for my custom UpdateCTags function
@@ -394,12 +394,12 @@ augroup END
 
 " external-tools configuration
 let g:external_tools#envs = {
-      \ 'python': ['/usr/bin/env python', 'Executing'],
-      \ 'ocaml': ['/usr/bin/env ocaml', 'Executing'],
-      \ 'sh': ['/bin/sh', 'Executing'],
-      \ 'fish': ['/usr/bin/env fish', 'Executing'],
-      \ 'tex': ['/usr/bin/latexmk -gg silent', 'Compiling'],
-      \ 'rust': [$HOME . '/.cargo/bin/cargo build', 'Build'],
+      \ 'python': ['/usr/bin/env python', 1],
+      \ 'ocaml': ['/usr/bin/env ocaml', 1],
+      \ 'sh': ['/bin/sh', 1],
+      \ 'fish': ['/usr/bin/env fish', 1],
+      \ 'tex': ['/usr/bin/latexmk -gg silent', 1],
+      \ 'rust': [$HOME . '/.cargo/bin/cargo build', 0],
       \ }
 
 " " CtrlP configuration
