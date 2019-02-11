@@ -394,12 +394,12 @@ augroup END
 
 " external-tools configuration
 let g:external_tools#envs = {
-      \ 'python': ['/usr/bin/env python', 1],
-      \ 'ocaml': ['/usr/bin/env ocaml', 1],
-      \ 'sh': ['/bin/sh', 1],
-      \ 'fish': ['/usr/bin/env fish', 1],
-      \ 'tex': ['/usr/bin/latexmk -gg silent', 1],
-      \ 'rust': [$HOME . '/.cargo/bin/cargo build', 0],
+      \ 'python': ['python3', 1],
+      \ 'ocaml': ['ocaml', 1],
+      \ 'sh': ['sh', 1],
+      \ 'fish': ['fish', 1],
+      \ 'tex': ['latexmk -gg silent', 1],
+      \ 'rust': ['cargo build', 0],
       \ }
 
 " " CtrlP configuration
