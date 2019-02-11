@@ -398,7 +398,7 @@ let g:external_tools#envs = {
       \ 'ocaml': ['ocaml', 1],
       \ 'sh': ['sh', 1],
       \ 'fish': ['fish', 1],
-      \ 'tex': ['latexmk -gg silent', 1],
+      \ 'tex': ['latexmk -gg -silent', 1],
       \ 'rust': ['cargo build', 0],
       \ }
 
