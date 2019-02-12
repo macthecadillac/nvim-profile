@@ -10,7 +10,6 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'kien/ctrlp.vim'
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 Plug 'tpope/vim-commentary'
-Plug 'reedes/vim-pencil', { 'for': 'markdown' }
 Plug 'brooth/far.vim', { 'on': ['Far', 'Farp', 'Fardo', 'Refar', 'Rarundo', 'F'] }
 Plug 'w0rp/ale'
 Plug 'equalsraf/neovim-gui-shim'
@@ -383,14 +382,6 @@ augroup textobj_sentence
   autocmd FileType text call textobj#sentence#init()
 augroup END
 
-
-" vim-pencil configuration
-let g:pencil#conceallevel = 0
-let g:pencil#cursorwrap = 1
-augroup pencil
-  autocmd!
-  autocmd FileType markdown call pencil#init()
-augroup END
 
 " external-tools configuration
 let g:external_tools#envs = {
