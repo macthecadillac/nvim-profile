@@ -1,5 +1,5 @@
 *.swp
-/plugged/*
+/vimplug/*
 /..vimrc.un~
 **/*.pyc
 /autoload/plug.vim.old

@@ -5,7 +5,7 @@ set shell=sh  " speeds up the 'system' function and a lot more things
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""" Vim-Plug Plugins """""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-call plug#begin('~/.config/nvim/plugged')
+call plug#begin('~/.config/nvim/vimplug')
 " Tools
 Plug 'kien/ctrlp.vim'
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
@@ -286,6 +286,7 @@ let g:lightline#ale#indicator_warnings = "\uf071 "
 let g:lightline_gitdiff#indicator_added = "\uf067"
 let g:lightline_gitdiff#indicator_deleted = "\uf068"
 let g:lightline_gitdiff#indicator_modified = "\uf12a"
+let g:lightline_gitdiff#min_winwidth = 90
 
 function! LightlineFileFormat()
   return winwidth(0) > 70 ? &fileformat : ''
@@ -386,7 +387,7 @@ augroup END
 " external-tools configuration
 let g:external_tools#envs = {
       \ 'python': ['python3', 1],
-      \ 'ocaml': ['ocaml', 1],
+      \ 'ocaml': ['dune build @all', 0],
       \ 'sh': ['sh', 1],
       \ 'fish': ['fish', 1],
       \ 'tex': ['latexmk -gg -silent', 1],
