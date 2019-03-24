@@ -172,11 +172,11 @@ map <A-[> :sp <CR>:exec("tag ".expand("<cword>"))<CR>
 " Enables running scripts directly from vim
 augroup enable_quickrun
   autocmd!
-  autocmd FileType python nnoremap <buffer> <A-r> :FileTypeCmd<CR>
-  autocmd FileType ocaml nnoremap <buffer> <A-r> :FileTypeCmd<CR>
-  autocmd FileType sh nnoremap <buffer> <A-r> :FileTypeCmd<CR>
-  autocmd FileType tex nnoremap <buffer> <A-r> :FileTypeCmd<CR>
-  autocmd FileType rust nnoremap <buffer> <A-r> :FileTypeCmd<CR>
+  autocmd FileType python nnoremap <buffer> <A-r> :ExtCmd run<CR>
+  autocmd FileType ocaml nnoremap <buffer> <A-r> :ExtCmd build<CR>
+  autocmd FileType sh nnoremap <buffer> <A-r> :ExtCmd run<CR>
+  autocmd FileType tex nnoremap <buffer> <A-r> :ExtCmd compile<CR>
+  autocmd FileType rust nnoremap <buffer> <A-r> :ExtCmd build<CR>
 augroup END
 
 " Mapping for my custom UpdateCTags function
@@ -386,13 +386,25 @@ augroup END
 
 
 " external-tools configuration
-let g:external_tools#envs = {
-      \ 'python': ['python3', 1],
-      \ 'ocaml': ['dune build @all', 0],
-      \ 'sh': ['sh', 1],
-      \ 'fish': ['fish', 1],
-      \ 'tex': ['latexmk -gg -silent', 1],
-      \ 'rust': ['cargo build', 0],
+let g:external_tools#cmds = {
+      \ 'python': {
+      \     'run': {'cmd': 'python3', 'with_filename': 1, 'in_term': 1},
+      \   },
+      \ 'ocaml': {
+      \     'build': {'cmd': 'dune build @all', 'with_filename': 0, 'in_term': 1},
+      \   },
+      \ 'sh': {
+      \     'run': {'cmd': 'sh', 'with_filename': 1, 'in_term': 1},
+      \   },
+      \ 'fish': {
+      \     'run': {'cmd': 'fish', 'with_filename': 1, 'in_term': 1},
+      \   },
+      \ 'tex': {
+      \     'compile': {'cmd': 'latexmk -gg -silent', 'with_filename': 1, 'in_term': 1},
+      \   },
+      \ 'rust': {
+      \     'build': {'cmd': 'cargo build', 'with_filename': 0, 'in_term': 1},
+      \   },
       \ }
 
 " " CtrlP configuration
