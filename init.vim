@@ -30,6 +30,7 @@ Plug 'othree/csscomplete.vim', { 'for': 'css' }
 Plug 'rust-lang/rust.vim'
 Plug 'cespare/vim-toml'
 Plug 'rgrinberg/vim-ocaml'
+Plug 'euclio/vim-markdown-composer', { 'do': ':!cargo build --release' }
 
 " Deoplete & co.
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
