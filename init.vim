@@ -176,7 +176,7 @@ augroup enable_quickrun
   autocmd FileType ocaml nnoremap <buffer> <A-r> :ExtCmd build<CR>
   autocmd FileType sh nnoremap <buffer> <A-r> :ExtCmd run<CR>
   autocmd FileType tex nnoremap <buffer> <A-r> :ExtCmd compile<CR>
-  autocmd FileType rust nnoremap <buffer> <A-r> :ExtCmd build<CR>
+  autocmd FileType rust nnoremap <buffer> <A-r> :ExtCmd quick-build<CR>
 augroup END
 
 " Mapping for my custom UpdateCTags function
@@ -392,6 +392,8 @@ let g:external_tools#cmds = {
       \   },
       \ 'ocaml': {
       \     'build': {'cmd': 'dune build @all', 'with_filename': 0, 'in_term': 1},
+      \     'build-install': {'cmd': 'dune build @all @install', 'with_filename': 0, 'in_term': 1},
+      \     'install': {'cmd': 'dune install', 'with_filename': 0, 'in_term': 1},
       \   },
       \ 'sh': {
       \     'run': {'cmd': 'sh', 'with_filename': 1, 'in_term': 1},
@@ -401,9 +403,11 @@ let g:external_tools#cmds = {
       \   },
       \ 'tex': {
       \     'compile': {'cmd': 'latexmk -gg -silent', 'with_filename': 1, 'in_term': 1},
+      \     'continuous-compile': {'cmd': 'latexmk -pvc -interaction=nonstopmode', 'with_filename': 1, 'in_term': 0},
       \   },
       \ 'rust': {
-      \     'build': {'cmd': 'cargo build', 'with_filename': 0, 'in_term': 1},
+      \     'quick-build': {'cmd': 'cargo build', 'with_filename': 0, 'in_term': 1},
+      \     'release-build': {'cmd': 'cargo build --release', 'with_filename': 0, 'in_term': 1},
       \   },
       \ }
 
