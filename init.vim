@@ -411,6 +411,9 @@ let g:external_tools#cmds = {
       \   },
       \ }
 
+" Markdown-composer configuration
+let g:markdown_composer_autostart = 0
+
 " " CtrlP configuration
 let g:ctrlp_map = '<c-p>'
 map <C-S> :CtrlPTag<CR>
