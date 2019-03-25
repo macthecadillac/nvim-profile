@@ -175,7 +175,7 @@ augroup enable_quickrun
   autocmd FileType python nnoremap <buffer> <A-r> :ExtCmd run<CR>
   autocmd FileType ocaml nnoremap <buffer> <A-r> :ExtCmd build<CR>
   autocmd FileType sh nnoremap <buffer> <A-r> :ExtCmd run<CR>
-  autocmd FileType tex nnoremap <buffer> <A-r> :ExtCmd compile<CR>
+  autocmd FileType tex nnoremap <buffer> <A-r> :ExtCmd build<CR>
   autocmd FileType rust nnoremap <buffer> <A-r> :ExtCmd quick-build<CR>
 augroup END
 
@@ -402,10 +402,11 @@ let g:external_tools#cmds = {
       \     'run': {'cmd': 'fish', 'with_filename': 1, 'in_term': 1},
       \   },
       \ 'tex': {
-      \     'compile': {'cmd': 'latexmk -gg -silent', 'with_filename': 1, 'in_term': 1},
-      \     'continuous-compile': {'cmd': 'latexmk -pvc -interaction=nonstopmode', 'with_filename': 1, 'in_term': 0},
+      \     'build': {'cmd': 'latexmk -gg -silent', 'with_filename': 1, 'in_term': 1},
+      \     'continuous-build': {'cmd': 'latexmk -pvc -interaction=nonstopmode', 'with_filename': 1, 'in_term': 0},
       \   },
       \ 'rust': {
+      \     'run': {'cmd': 'cargo run', 'with_filename': 0, 'in_term': 1},
       \     'quick-build': {'cmd': 'cargo build', 'with_filename': 0, 'in_term': 1},
       \     'release-build': {'cmd': 'cargo build --release', 'with_filename': 0, 'in_term': 1},
       \   },
