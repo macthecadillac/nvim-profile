@@ -343,7 +343,7 @@ nmap <F4> :TagbarToggle<CR>
 let g:ale_linters = {
   \   'python': ['flake8'],
   \   'latex': ['chktex'],
-  \   'rust': ['rls'],
+  \   'rust': ['rls', 'cargo'],
   \   'bash': ['bash -n '],
   \   'vim': ['vint'],
   \   'fish': [],
@@ -357,12 +357,12 @@ let g:ale_sign_warning = "\uf12a"
 let g:ale_lint_on_enter = 0
 " let g:ale_max_signs = 100
 " rust specific options for ALE
-" let g:ale_rust_cargo_use_check = 1
-" let g:ale_rust_cargo_check_all_targets = 1
-" let g:ale_rust_cargo_check_tests = 1
+let g:ale_rust_cargo_use_check = 1
+let g:ale_rust_cargo_check_all_targets = 1
+let g:ale_rust_cargo_check_tests = 1
 " let g:ale_rust_cargo_check_examples = 1
 let g:ale_rust_rls_executable = $HOME . '/.cargo/bin/rls'
-let g:ale_rust_rls_toolchain = 'nightly'
+let g:ale_rust_rls_toolchain = 'stable'
 
 
 " vim-operator-surround
@@ -444,8 +444,9 @@ set completeopt+=noselect
 " language server configuration
 set hidden
 let g:LanguageClient_diagnosticsSignsMax = 0
+let g:LanguageClient_diagnosticsEnable = 0
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'nightly', 'rls'],
+    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
     \ }
 nnoremap <silent> <leader>t :call LanguageClient#textDocument_hover()<CR>
 " nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
