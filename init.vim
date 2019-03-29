@@ -44,6 +44,7 @@ Plug 'sebastianmarkow/deoplete-rust', { 'for': 'rust' }
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
+    \ 'for': ['rust']
     \ }
 
 " Operators
