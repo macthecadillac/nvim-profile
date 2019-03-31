@@ -13,7 +13,7 @@ Plug 'tpope/vim-commentary'
 Plug 'brooth/far.vim', { 'on': ['Far', 'Farp', 'Fardo', 'Refar', 'Rarundo', 'F'] }
 Plug 'w0rp/ale'
 Plug 'equalsraf/neovim-gui-shim'
-Plug 'mg979/vim-visual-multi'
+" Plug 'mg979/vim-visual-multi'
 Plug '~/external-tools.nvim'
 
 " Customize status line
@@ -344,7 +344,7 @@ nmap <F4> :TagbarToggle<CR>
 let g:ale_linters = {
   \   'python': ['flake8'],
   \   'latex': ['chktex'],
-  \   'rust': ['rls'],
+  \   'rust': ['rls', 'cargo'],
   \   'bash': ['bash -n '],
   \   'vim': ['vint'],
   \   'fish': [],
@@ -358,10 +358,10 @@ let g:ale_sign_warning = "\uf12a"
 let g:ale_lint_on_enter = 0
 " let g:ale_max_signs = 100
 " rust specific options for ALE
-" let g:ale_rust_cargo_use_check = 1
-" let g:ale_rust_cargo_check_all_targets = 1
-" let g:ale_rust_cargo_check_tests = 1
-" let g:ale_rust_cargo_check_examples = 1
+let g:ale_rust_cargo_use_check = 1
+let g:ale_rust_cargo_check_all_targets = 1
+let g:ale_rust_cargo_check_tests = 1
+let g:ale_rust_cargo_check_examples = 1
 let g:ale_rust_rls_executable = $HOME . '/.cargo/bin/rls'
 let g:ale_rust_rls_toolchain = 'stable'
 
@@ -413,6 +413,8 @@ let g:external_tools#cmds = {
       \     'build-doc': {'cmd': 'cargo doc', 'with_filename': 0, 'in_term': 1},
       \     'doc': {'cmd': 'cargo doc --open', 'with_filename': 0, 'in_term': 0},
       \     'rust-doc': {'cmd': 'rustup doc', 'with_filename': 0, 'in_term': 0},
+      \     'book': {'cmd': 'rustup doc --book', 'with_filename': 0, 'in_term': 0},
+      \     'std-doc': {'cmd': 'rustup doc --std', 'with_filename': 0, 'in_term': 0},
       \   },
       \ }
 
