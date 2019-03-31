@@ -410,6 +410,7 @@ let g:external_tools#cmds = {
       \     'run': {'cmd': 'cargo run', 'with_filename': 0, 'in_term': 1},
       \     'quick-build': {'cmd': 'cargo build', 'with_filename': 0, 'in_term': 1},
       \     'release-build': {'cmd': 'cargo build --release', 'with_filename': 0, 'in_term': 1},
+      \     'doc': {'cmd': 'rustup doc', 'with_filename': 0, 'in_term': 0},
       \   },
       \ }
 
