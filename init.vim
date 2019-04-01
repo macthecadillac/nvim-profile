@@ -177,6 +177,7 @@ augroup enable_quickrun
   autocmd FileType sh nnoremap <buffer> <A-r> :ExtCmd run<CR>
   autocmd FileType tex nnoremap <buffer> <A-r> :ExtCmd build<CR>
   autocmd FileType rust nnoremap <buffer> <A-r> :ExtCmd quick-build<CR>
+  autocmd FileType markdown nnoremap <buffer> <A-r> :ComposerStart<CR>
 augroup END
 
 " Mapping for my custom UpdateCTags function
