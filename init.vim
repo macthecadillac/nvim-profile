@@ -180,6 +180,7 @@ command! TodoBuffer silent! grep! '(FIXME)\|(TODO)' %:p | cwindow | redraw!
 command! TodoDir silent! grep! '(FIXME)\|(TODO)' | cwindow | redraw!
 
 " Better Grep
+command! -nargs=1 GrepLocal silent! grep! <args> %:p | cwindow | redraw!
 command! -nargs=+ -complete=file Grep silent! grep! <args> | cwindow | redraw!
 
 " Launch terminal with fish shell
