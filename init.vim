@@ -160,12 +160,6 @@ augroup END
 " Map F7 to toggle relative numbering.
 map <F7> :set relativenumber! number!<CR>
 
-" Add a keybinding for toggling between spell-check and no spell-check
-map <leader>sp :set spell! spelllang=en_us<CR>
-
-" Keybindings for highlighting search results
-nmap <leader>hl :set hlsearch!<CR>
-
 " Shortcuts for jumping to tags in a specific mannger.
 map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 map <A-[> :sp <CR>:exec("tag ".expand("<cword>"))<CR>
@@ -181,22 +175,23 @@ augroup enable_quickrun
   autocmd FileType markdown nnoremap <buffer> <A-r> :ComposerStart<CR>
 augroup END
 
-" Mapping for my custom UpdateCTags function
-map <A-u> :UpdateCTags<CR>
-
-" Key combo for saving the current session
-map <leader>ss :mksession! ~/.session.vim<CR>
-map <leader>ls :source ~/.session.vim<CR>
-
 " Mapping for bringing up FIXME and TODO comments
-if executable('rg')
-  nnoremap <leader>fix :silent grep \(FIXME\)\\\|\(TODO\) %:p<CR> :cw<CR>
-  nnoremap <leader>dfix :silent grep \(FIXME\)\\\|\(TODO\) *.*<CR> :cw<CR>
-  nnoremap <leader>afix :silent grep \(FIXME\)\\\|\(TODO\) **/*.*<CR> :cw<CR>
-endif
+command! TodoBuffer silent! grep! '(FIXME)\|(TODO)' %:p | cwindow | redraw!
+command! TodoDir silent! grep! '(FIXME)\|(TODO)' | cwindow | redraw!
+
+" Better Grep
+command! -nargs=+ -complete=file Grep silent! grep! <args> | cwindow | redraw!
 
 " Launch terminal with fish shell
-nmap <A-t> :execute 'terminal fish'<CR> :set number!<CR>
+function! s:termopen()
+  setlocal shell=fish
+  term
+  setlocal number!
+  setlocal nospell
+endfunction
+
+command! Terminal call s:termopen()
+nmap <A-t> Terminal
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -434,7 +429,7 @@ let g:ctrlp_custom_ignore = {
   \ }
 if executable('rg')
   set grepprg=rg\ --color=never\ --vimgrep
-  " let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
   let g:ctrlp_use_caching = 0
 endif
 
@@ -459,7 +454,7 @@ let g:LanguageClient_serverCommands = {
     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
     \ }
 nnoremap <silent> <leader>t :call LanguageClient#textDocument_hover()<CR>
-" nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 
 " deoplete configuration
 augroup enable_deoplete
@@ -491,5 +486,3 @@ let g:deoplete#sources#rust#disable_keymap = 1
 let g:deoplete#sources#rust#show_duplicates = 1
 let g:deoplete#sources#rust#documentation_max_height = 20
 call deoplete#custom#option('ignore_sources', {'rust': ['LanguageClient']})
-
-set shell=fish
