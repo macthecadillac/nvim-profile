@@ -110,11 +110,11 @@ set scrolloff=0    " starts scrolling when cursor is 0 lines away from screen ed
 " set guicursor=''
 set noshowmode  " we don't need to show the current mode since it is shown in the statusline
 
-augroup CursorLineActiveOnly
-  autocmd!
-  autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-  autocmd WinLeave * setlocal nocursorline
-augroup END
+" augroup CursorLineActiveOnly
+"   autocmd!
+"   autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+"   autocmd WinLeave * setlocal nocursorline
+" augroup END
 
 " Automatically switch directory to the directory of the current file.
 augroup bufwrite
@@ -443,7 +443,7 @@ augroup autoclose_prev_win
 augroup end
 
 " <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 set completeopt+=noselect
 
@@ -455,7 +455,7 @@ let g:LanguageClient_serverCommands = {
     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
     \ }
 nnoremap <silent> <leader>t :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+" nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 
 " deoplete configuration
 augroup enable_deoplete
