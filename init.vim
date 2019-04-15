@@ -14,7 +14,7 @@ Plug 'brooth/far.vim', { 'on': ['Far', 'Farp', 'Fardo', 'Refar', 'Rarundo', 'F']
 Plug 'w0rp/ale'
 Plug 'equalsraf/neovim-gui-shim'
 " Plug 'mg979/vim-visual-multi'
-Plug '~/external-tools.nvim'
+Plug '~/axe'
 
 " Customize status line
 Plug 'itchyny/lightline.vim'
