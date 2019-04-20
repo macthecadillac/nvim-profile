@@ -7,8 +7,7 @@ set shell=sh  " speeds up the 'system' function and a lot more things
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.config/nvim/vimplug')
 " Tools
-Plug 'kien/ctrlp.vim'
-Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tpope/vim-commentary'
 Plug 'brooth/far.vim', { 'on': ['Far', 'Farp', 'Fardo', 'Refar', 'Rarundo', 'F'] }
 Plug 'w0rp/ale'
@@ -21,7 +20,6 @@ Plug 'itchyny/lightline.vim'
 Plug 'maximbaz/lightline-ale'
 Plug 'itchyny/vim-gitbranch'
 Plug '~/lightline-gitdiff'
-" Plug 'mgee/lightline-bufferline'
 
 " Language support
 Plug 'aliva/vim-fish'
@@ -31,6 +29,9 @@ Plug 'rust-lang/rust.vim'
 Plug 'cespare/vim-toml'
 Plug 'rgrinberg/vim-ocaml'
 Plug 'euclio/vim-markdown-composer', { 'do': ':!cargo build --release' }
+Plug '$OPAM_SWITCH_PREFIX/share/merlin', { 'rtp': 'vim' }
+Plug '$OPAM_SWITCH_PREFIX/share/ocp-index', { 'rtp': 'vim' }
+Plug '$OPAM_SWITCH_PREFIX/share/ocp-indent', { 'rtp': 'vim' }
 
 " Deoplete & co.
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -314,19 +315,7 @@ let g:python_highlight_class_vars = 1
 let g:python_highlight_operators = 1
 let g:python_slow_sync = 0
 
-" OCaml specific configuration
-let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-execute 'set rtp+=' . g:opamshare . '/merlin/vim'
-execute 'set rtp+=' . g:opamshare . '/ocp-index/vim'
-execute 'set rtp^=' . g:opamshare . '/ocp-indent/vim'
-
-" Tagbar configuration
-let g:tagbar_autoclose=1
-let g:tagbar_sort=0
-nmap <F4> :TagbarToggle<CR>
-
-
-" Ale configurations
+"""""""""" ALE configurations """"""""""
 let g:ale_linters = {
   \   'python': ['flake8'],
   \   'latex': ['chktex'],
@@ -353,7 +342,7 @@ let g:ale_rust_rls_config = {
   \ }
 
 
-" vim-operator-surround
+"""""""""" vim-operator-surround """"""""""
 " operator mappings
 map <silent>sa <Plug>(operator-surround-append)
 map <silent>sd <Plug>(operator-surround-delete)
@@ -363,7 +352,7 @@ nmap <silent>sdb <Plug>(operator-surround-delete)<Plug>(textobj-between-a)
 nmap <silent>srb <Plug>(operator-surround-replace)<Plug>(textobj-between-a)
 
 
-" vim-textobj-sentence configuration
+"""""""""" vim-textobj-sentence configuration """"""""""
 let g:textobj#sentence#move_n = ')'
 let g:textobj#sentence#move_p = '('
 augroup textobj_sentence
@@ -373,42 +362,44 @@ augroup textobj_sentence
 augroup END
 
 
-" axe configuration
+"""""""""" AXE configuration """"""""""
 let g:axe#cmds = {
-      \ 'python': {
-      \     'run': {'cmd': 'python3', 'with_filename': 1, 'in_term': 1},
-      \   },
-      \ 'ocaml': {
-      \     'build': {'cmd': 'dune build @all', 'with_filename': 0, 'in_term': 1},
-      \     'build-install': {'cmd': 'dune build @all @install', 'with_filename': 0, 'in_term': 1},
-      \     'install': {'cmd': 'dune install', 'with_filename': 0, 'in_term': 1},
-      \   },
-      \ 'sh': {
-      \     'run': {'cmd': 'sh', 'with_filename': 1, 'in_term': 1},
-      \   },
-      \ 'fish': {
-      \     'run': {'cmd': 'fish', 'with_filename': 1, 'in_term': 1},
-      \   },
-      \ 'tex': {
-      \     'build': {'cmd': 'latexmk -gg -silent', 'with_filename': 1, 'in_term': 1},
-      \     'continuous-build': {'cmd': 'latexmk -pvc -interaction=nonstopmode', 'with_filename': 1, 'in_term': 0},
-      \   },
-      \ 'rust': {
-      \     'run': {'cmd': 'cargo run', 'with_filename': 0, 'in_term': 1},
-      \     'quick-build': {'cmd': 'cargo build', 'with_filename': 0, 'in_term': 1},
-      \     'release-build': {'cmd': 'cargo build --release', 'with_filename': 0, 'in_term': 1},
-      \     'build-doc': {'cmd': 'cargo doc', 'with_filename': 0, 'in_term': 1},
-      \     'doc': {'cmd': 'cargo doc --open', 'with_filename': 0, 'in_term': 0},
-      \     'rust-doc': {'cmd': 'rustup doc', 'with_filename': 0, 'in_term': 0},
-      \     'book': {'cmd': 'rustup doc --book', 'with_filename': 0, 'in_term': 0},
-      \     'std-doc': {'cmd': 'rustup doc --std', 'with_filename': 0, 'in_term': 0},
-      \   },
-      \ }
+  \ 'python': {
+  \     'run': {'cmd': 'python3', 'with_filename': 1, 'in_term': 1},
+  \   },
+  \ 'ocaml': {
+  \     'build': {'cmd': 'dune build @all', 'with_filename': 0, 'in_term': 1},
+  \     'build-install': {'cmd': 'dune build @all @install', 'with_filename': 0, 'in_term': 1},
+  \     'install': {'cmd': 'dune install', 'with_filename': 0, 'in_term': 1},
+  \   },
+  \ 'sh': {
+  \     'run': {'cmd': 'sh', 'with_filename': 1, 'in_term': 1},
+  \   },
+  \ 'fish': {
+  \     'run': {'cmd': 'fish', 'with_filename': 1, 'in_term': 1},
+  \   },
+  \ 'tex': {
+  \     'build': {'cmd': 'latexmk -gg -silent', 'with_filename': 1, 'in_term': 1},
+  \     'continuous-build': {'cmd': 'latexmk -pvc -interaction=nonstopmode', 'with_filename': 1, 'in_term': 0},
+  \   },
+  \ 'rust': {
+  \     'run': {'cmd': 'cargo run', 'with_filename': 0, 'in_term': 1},
+  \     'quick-build': {'cmd': 'cargo build', 'with_filename': 0, 'in_term': 1},
+  \     'release-build': {'cmd': 'cargo build --release', 'with_filename': 0, 'in_term': 1},
+  \     'build-doc': {'cmd': 'cargo doc', 'with_filename': 0, 'in_term': 1},
+  \     'doc': {'cmd': 'cargo doc --open', 'with_filename': 0, 'in_term': 0},
+  \     'rust-doc': {'cmd': 'rustup doc', 'with_filename': 0, 'in_term': 0},
+  \     'book': {'cmd': 'rustup doc --book', 'with_filename': 0, 'in_term': 0},
+  \     'std-doc': {'cmd': 'rustup doc --std', 'with_filename': 0, 'in_term': 0},
+  \   },
+  \ }
 
-" Markdown-composer configuration
+
+"""""""""" Markdown-composer configuration """"""""""
 let g:markdown_composer_autostart = 0
 
-" " CtrlP configuration
+
+"""""""""" CtrlP configuration """"""""""
 let g:ctrlp_map = '<c-p>'
 map <C-S> :CtrlPTag<CR>
 let g:ctrlp_custom_ignore = {
@@ -422,7 +413,9 @@ if executable('rg')
 endif
 
 
-" Autocompletion
+"""""""""""""""""""""""""""""""
+""""""" Autocompletion """"""""
+"""""""""""""""""""""""""""""""
 " autoclose preview window
 augroup autoclose_prev_win
   autocmd!
@@ -440,8 +433,8 @@ let g:LanguageClient_serverCommands = {
     \ }
 nnoremap <silent> <leader>t :call LanguageClient#textDocument_hover()<CR>
 
-" deoplete configuration
 
+"""""""""" deoplete configuration """"""""""
 " This augroup keeps vim startup snappy while retaining deoplete
 " functionality on demand
 let g:deoplete#enable_at_startup = 0
