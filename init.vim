@@ -193,7 +193,7 @@ function! s:termopen()
 endfunction
 
 command! Terminal call s:termopen()
-nmap <A-t> Terminal
+nmap <A-t> :Terminal<CR>
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -431,7 +431,12 @@ let g:LanguageClient_diagnosticsEnable = 0
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
     \ }
-nnoremap <silent> <leader>t :call LanguageClient#textDocument_hover()<CR>
+
+augroup language_client_enable
+  autocmd!
+  autocmd FileType rust nnoremap <silent> <leader>t :call LanguageClient#textDocument_hover()<CR>
+  autocmd FileType rust nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+augroup END
 
 
 """""""""" deoplete configuration """"""""""
