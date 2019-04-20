@@ -57,7 +57,7 @@ Plug 'kana/vim-textobj-user'
 Plug 'thinca/vim-textobj-between'
 Plug 'glts/vim-textobj-comment'
 Plug 'kana/vim-textobj-indent'
-Plug 'rbonvall/vim-textobj-latex', { 'for': ['plaintex', 'tex'] }
+Plug 'fvictorio/vim-textobj-backticks'
 Plug 'reedes/vim-textobj-sentence'
 
 " Color themes
