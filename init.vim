@@ -167,21 +167,21 @@ map <A-[> :sp <CR>:exec("tag ".expand("<cword>"))<CR>
 " Enables running scripts directly from vim
 augroup enable_quickrun
   autocmd!
-  autocmd FileType python nnoremap <buffer> <A-r> :ExtCmd run<CR>
-  autocmd FileType ocaml nnoremap <buffer> <A-r> :ExtCmd build<CR>
-  autocmd FileType sh nnoremap <buffer> <A-r> :ExtCmd run<CR>
-  autocmd FileType tex nnoremap <buffer> <A-r> :ExtCmd build<CR>
-  autocmd FileType rust nnoremap <buffer> <A-r> :ExtCmd quick-build<CR>
+  autocmd FileType python nnoremap <buffer> <A-r> :Axe run<CR>
+  autocmd FileType ocaml nnoremap <buffer> <A-r> :Axe build<CR>
+  autocmd FileType sh nnoremap <buffer> <A-r> :Axe run<CR>
+  autocmd FileType tex nnoremap <buffer> <A-r> :Axe build<CR>
+  autocmd FileType rust nnoremap <buffer> <A-r> :Axe quick-build<CR>
   autocmd FileType markdown nnoremap <buffer> <A-r> :ComposerStart<CR>
 augroup END
 
 " Mapping for bringing up FIXME and TODO comments
-command! TodoBuffer silent! grep! '(FIXME)\|(TODO)' %:p | cwindow | redraw!
-command! TodoDir silent! grep! '(FIXME)\|(TODO)' | cwindow | redraw!
+command! TodoBuffer silent! grep! '(FIXME)\|(TODO)' %:p | cwindow | setlocal nospell | file TODO | redraw!
+command! TodoDir silent! grep! '(FIXME)\|(TODO)' | cwindow | setlocal nospell | file TODO | redraw!
 
 " Better Grep
-command! -nargs=1 GrepLocal silent! grep! <args> %:p | cwindow | redraw!
-command! -nargs=+ -complete=file Grep silent! grep! <args> | cwindow | redraw!
+command! -nargs=1 GrepLocal silent! grep! <args> %:p | cwindow | setlocal nospell | file Grep | redraw!
+command! -nargs=+ -complete=file Grep silent! grep! <args> | cwindow | setlocal nospell | file Grep | redraw!
 
 " Launch terminal with fish shell
 function! s:termopen()
@@ -204,12 +204,6 @@ if has('termguicolors')
 endif
 
 set background=dark
-" colorscheme two-firewatch
-
-" colorscheme onedark
-
-" let ayucolor='mirage'
-" colorscheme ayu
 
 let g:nord_italic = 1
 let g:nord_italic_comments = 1
@@ -277,8 +271,6 @@ let g:lightline = {
   " \   'subseparator': {'left': '', 'right': ''},
 
 let g:lightline#ale#indicator_checking = ''
-" let g:lightline#ale#indicator_errors = '🚫'
-" let g:lightline#ale#indicator_warnings = '⚠️'
 let g:lightline#ale#indicator_ok = ''
 let g:lightline#ale#indicator_errors = "\uf05e "
 let g:lightline#ale#indicator_warnings = "\uf071 "
@@ -293,14 +285,11 @@ endfunction
 
 function! DisplayGitBranchName()
   let l:gitbranch = gitbranch#name()
-  " return l:gitbranch ==# '' ? '' : "\uE0A0" . l:gitbranch
   let l:displaytext = winwidth(0) > 70 ? "\uf126" . ' ' . l:gitbranch : "\uf126"
   return l:gitbranch ==# '' ? '' : l:displaytext
 endfunction
 
 function! LightlineFilename()
-  " let l:readonly = &readonly ? "\uE0A2" . ' ' : ''
-  " let l:modified = &modified ? ' +' : ''
   let l:readonly = &readonly ? "\uf023" . ' ' : ''
   let l:filename = expand('%:t') !=# '' ? expand('%:t') : '[NO NAME]'
   let l:modified = &modified ? ' ' . "\uf040" : ''
@@ -350,8 +339,6 @@ let g:ale_lint_delay = 1000
 let g:ale_set_highlights = 0
 let g:ale_sign_error = "\uf00d"
 let g:ale_sign_warning = "\uf12a"
-" let g:ale_sign_error = "\uf111"
-" let g:ale_sign_warning = "\uf111"
 let g:ale_lint_on_enter = 0
 " let g:ale_max_signs = 100
 " rust specific options for ALE
@@ -386,8 +373,8 @@ augroup textobj_sentence
 augroup END
 
 
-" external-tools configuration
-let g:external_tools#cmds = {
+" axe configuration
+let g:axe#cmds = {
       \ 'python': {
       \     'run': {'cmd': 'python3', 'with_filename': 1, 'in_term': 1},
       \   },
@@ -442,9 +429,6 @@ augroup autoclose_prev_win
   autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
 augroup end
 
-" <TAB>: completion.
-" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-
 set completeopt+=noselect
 
 " language server configuration
@@ -455,22 +439,22 @@ let g:LanguageClient_serverCommands = {
     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
     \ }
 nnoremap <silent> <leader>t :call LanguageClient#textDocument_hover()<CR>
-" nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 
 " deoplete configuration
+
+" This augroup keeps vim startup snappy while retaining deoplete
+" functionality on demand
+let g:deoplete#enable_at_startup = 0
 augroup enable_deoplete
-  " This augroup keeps vim startup snappy while retaining deoplete
-  " functionality on demand
   autocmd!
   autocmd InsertEnter * call deoplete#enable() | autocmd! enable_deoplete
 augroup END
  
-let g:deoplete#enable_at_startup = 0
 let g:deoplete#sources#syntax#min_keyword_length = 0
 let g:deoplete#max_list = 0
 let g:deoplete#max_abbr_width = 30
 let g:deoplete#auto_complete_delay = 0
-let g:deoplete#auto_refresh_delay = 10
+let g:deoplete#auto_refresh_delay = 1
 if !exists('g:deoplete#omni#input_patterns')
   let g:deoplete#omni#input_patterns = {}
 endif
