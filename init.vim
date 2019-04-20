@@ -41,13 +41,6 @@ Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 Plug 'tweekmonster/deoplete-clang2', { 'for': ['cpp', 'c'] }
 Plug 'sebastianmarkow/deoplete-rust', { 'for': 'rust' }
 
-" Language server
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ 'for': ['rust']
-    \ }
-
 " Operators
 Plug 'kana/vim-operator-user'
 Plug 'rhysd/vim-operator-surround'
@@ -143,6 +136,7 @@ augroup basic_filetype_settings
   autocmd Filetype plaintex call MiscSettings(2, 1)
   autocmd Filetype python call MiscSettings(4)
   autocmd Filetype rust call MiscSettings(4)
+  autocmd FileType rust set tags+=$RUST_SRC_PATH/tags  " add rust src to tags path
   autocmd Filetype text set spell spelllang=en_us
   autocmd Filetype ocaml call MiscSettings(2)
   autocmd Filetype vim call MiscSettings(2)
@@ -194,6 +188,10 @@ endfunction
 
 command! Terminal call s:termopen()
 nmap <A-t> :Terminal<CR>
+
+augroup tags
+  autocmd BufWritePost *.rs :Axe update-tags
+augroup END
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -366,6 +364,11 @@ augroup END
 let g:axe#cmds = {
   \ 'python': {
   \     'run': {'cmd': 'python3', 'with_filename': 1, 'in_term': 1},
+  \     'update-tags': {
+  \       'cmd': 'ctags -R -h [".py"] --exclude={.git,__pycache__,__init__.py}',
+  \       'with_filename': 0,
+  \       'in_term': 0
+  \     },
   \   },
   \ 'ocaml': {
   \     'build': {'cmd': 'dune build @all', 'with_filename': 0, 'in_term': 1},
@@ -391,6 +394,11 @@ let g:axe#cmds = {
   \     'rust-doc': {'cmd': 'rustup doc', 'with_filename': 0, 'in_term': 0},
   \     'book': {'cmd': 'rustup doc --book', 'with_filename': 0, 'in_term': 0},
   \     'std-doc': {'cmd': 'rustup doc --std', 'with_filename': 0, 'in_term': 0},
+  \     'update-tags': {
+  \       'cmd': 'rusty-tags vi --quiet --output tags',
+  \       'with_filename': 0,
+  \       'in_term': 0,
+  \     }
   \   },
   \ }
 
@@ -423,21 +431,6 @@ augroup autoclose_prev_win
 augroup end
 
 set completeopt+=noselect
-
-" language server configuration
-set hidden
-let g:LanguageClient_diagnosticsSignsMax = 0
-let g:LanguageClient_diagnosticsEnable = 0
-let g:LanguageClient_serverCommands = {
-    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
-    \ }
-
-augroup language_client_enable
-  autocmd!
-  autocmd FileType rust nnoremap <silent> <leader>t :call LanguageClient#textDocument_hover()<CR>
-  autocmd FileType rust nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-augroup END
-
 
 """""""""" deoplete configuration """"""""""
 " This augroup keeps vim startup snappy while retaining deoplete
