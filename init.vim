@@ -77,7 +77,6 @@ set matchtime=0
 set ignorecase
 set smartcase     " Smart case matching when search
 set incsearch     " Incremental search
-set inccommand=nosplit  " provides live preview of substitute as you type
 set tabstop=4     " Show existing tab with 4 space width
 set shiftwidth=4  " when indenting with '>', use 4 spaces width
 " set foldmethod=syntax
@@ -103,6 +102,10 @@ set scrolloff=0    " starts scrolling when cursor is 0 lines away from screen ed
 " set showtabline=2
 " set guicursor=''
 set noshowmode  " we don't need to show the current mode since it is shown in the statusline
+
+if has('nvim')
+  set inccommand=nosplit  " provides live preview of substitute as you type
+endif
 
 " augroup CursorLineActiveOnly
 "   autocmd!
@@ -335,9 +338,7 @@ let g:ale_lint_on_enter = 0
 " let g:ale_rust_cargo_check_examples = 1
 let g:ale_rust_rls_executable = $HOME . '/.cargo/bin/rls'
 let g:ale_rust_rls_toolchain = 'stable'
-let g:ale_rust_rls_config = {
-  \     'all_targets': 1
-  \ }
+let g:ale_rust_rls_config = { 'all_targets': 1 }
 
 
 """""""""" vim-operator-surround """"""""""
@@ -361,44 +362,44 @@ augroup END
 
 
 """""""""" AXE configuration """"""""""
+let g:axe#filetype_defaults = {
+  \ 'ocaml': {'in_term': 1},
+  \ 'rust': {'with_filename': 0},
+  \ }
 let g:axe#cmds = {
   \ 'python': {
-  \     'run': {'cmd': 'python3', 'with_filename': 1, 'in_term': 1},
+  \     'run': {'cmd': 'python3', 'in_term': 1},
   \     'update-tags': {
   \       'cmd': 'ctags -R -h [".py"] --exclude={.git,__pycache__,__init__.py}',
   \       'with_filename': 0,
-  \       'in_term': 0
+  \       'exe_in_proj_root': 1
   \     },
   \   },
   \ 'ocaml': {
-  \     'build': {'cmd': 'dune build @all', 'with_filename': 0, 'in_term': 1},
-  \     'build-install': {'cmd': 'dune build @all @install', 'with_filename': 0, 'in_term': 1},
-  \     'install': {'cmd': 'dune install', 'with_filename': 0, 'in_term': 1},
+  \     'build': {'cmd': 'dune build @all'},
+  \     'build-install': {'cmd': 'dune build @all @install'},
+  \     'install': {'cmd': 'dune install'},
   \   },
   \ 'sh': {
-  \     'run': {'cmd': 'sh', 'with_filename': 1, 'in_term': 1},
+  \     'run': {'cmd': 'sh', 'in_term': 1},
   \   },
   \ 'fish': {
-  \     'run': {'cmd': 'fish', 'with_filename': 1, 'in_term': 1},
+  \     'run': {'cmd': 'fish', 'in_term': 1},
   \   },
   \ 'tex': {
-  \     'build': {'cmd': 'latexmk -gg -silent', 'with_filename': 1, 'in_term': 1},
-  \     'continuous-build': {'cmd': 'latexmk -pvc -interaction=nonstopmode', 'with_filename': 1, 'in_term': 0},
+  \     'build': {'cmd': 'latexmk -gg -silent', 'in_term': 1},
+  \     'continuous-build': {'cmd': 'latexmk -pvc -interaction=nonstopmode'},
   \   },
   \ 'rust': {
-  \     'run': {'cmd': 'cargo run', 'with_filename': 0, 'in_term': 1},
-  \     'quick-build': {'cmd': 'cargo build', 'with_filename': 0, 'in_term': 1},
-  \     'release-build': {'cmd': 'cargo build --release', 'with_filename': 0, 'in_term': 1},
-  \     'build-doc': {'cmd': 'cargo doc', 'with_filename': 0, 'in_term': 1},
-  \     'doc': {'cmd': 'cargo doc --open', 'with_filename': 0, 'in_term': 0},
-  \     'rust-doc': {'cmd': 'rustup doc', 'with_filename': 0, 'in_term': 0},
-  \     'book': {'cmd': 'rustup doc --book', 'with_filename': 0, 'in_term': 0},
-  \     'std-doc': {'cmd': 'rustup doc --std', 'with_filename': 0, 'in_term': 0},
-  \     'update-tags': {
-  \       'cmd': 'rusty-tags vi --quiet --output tags',
-  \       'with_filename': 0,
-  \       'in_term': 0,
-  \     }
+  \     'run': {'cmd': 'cargo run', 'in_term': 1},
+  \     'quick-build': {'cmd': 'cargo build', 'in_term': 1},
+  \     'release-build': {'cmd': 'cargo build --release', 'in_term': 1},
+  \     'build-doc': {'cmd': 'cargo doc', 'in_term': 1},
+  \     'doc': {'cmd': 'cargo doc --open'},
+  \     'rust-doc': {'cmd': 'rustup doc'},
+  \     'book': {'cmd': 'rustup doc --book'},
+  \     'std-doc': {'cmd': 'rustup doc --std'},
+  \     'update-tags': {'cmd': 'rusty-tags vi --quiet --output tags'},
   \   },
   \ }
 
