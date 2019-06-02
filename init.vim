@@ -12,7 +12,7 @@ Plug 'tpope/vim-commentary'
 Plug 'brooth/far.vim', { 'on': ['Far', 'Farp', 'Fardo', 'Refar', 'Rarundo', 'F'] }
 Plug 'w0rp/ale'
 Plug 'equalsraf/neovim-gui-shim'
-Plug 'raghur/vim-ghost'
+Plug 'raghur/vim-ghost', {'do': 'GhostInstall'}
 " Plug 'mg979/vim-visual-multi'
 Plug '~/axe'
 
