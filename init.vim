@@ -12,6 +12,7 @@ Plug 'tpope/vim-commentary'
 Plug 'brooth/far.vim', { 'on': ['Far', 'Farp', 'Fardo', 'Refar', 'Rarundo', 'F'] }
 Plug 'w0rp/ale'
 Plug 'equalsraf/neovim-gui-shim'
+Plug 'raghur/vim-ghost'
 " Plug 'mg979/vim-visual-multi'
 Plug '~/axe'
 
@@ -393,6 +394,7 @@ let g:axe#cmds = {
   \ 'rust': {
   \     'run': {'cmd': 'cargo run', 'in_term': 1},
   \     'quick-build': {'cmd': 'cargo build', 'in_term': 1},
+  \     'test': {'cmd': 'cargo test', 'in_term': 1},
   \     'release-build': {'cmd': 'cargo build --release', 'in_term': 1},
   \     'build-doc': {'cmd': 'cargo doc', 'in_term': 1},
   \     'doc': {'cmd': 'cargo doc --open'},
