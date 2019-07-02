@@ -197,6 +197,14 @@ augroup tags
   autocmd BufWritePost *.rs :Axe update-tags
 augroup END
 
+function! s:format_sentence(start, end)
+    silent execute a:start.','.a:end.'s/[.!?]\zs /\r/g'
+endfunction
+
+" augroup autoformat
+"   autocmd FileType tex set formatexpr=s:format_sentence(v:lnum, v:lnum + v:count - 1)
+" augroup END
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""" UI specific settings """"""""""""""""""""
