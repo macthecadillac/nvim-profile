@@ -328,7 +328,7 @@ let g:python_slow_sync = 0
 let g:ale_linters = {
   \   'python': ['flake8'],
   \   'latex': ['chktex'],
-  \   'rust': ['rls'],
+  \   'rust': ['cargo'],
   \   'bash': ['bash -n '],
   \   'vim': ['vint'],
   \   'fish': [],
@@ -340,10 +340,10 @@ let g:ale_sign_warning = "\uf12a"
 let g:ale_lint_on_enter = 0
 " let g:ale_max_signs = 100
 " rust specific options for ALE
-" let g:ale_rust_cargo_use_check = 1
-" let g:ale_rust_cargo_check_all_targets = 1
-" let g:ale_rust_cargo_check_tests = 1
-" let g:ale_rust_cargo_check_examples = 1
+let g:ale_rust_cargo_use_check = 1
+let g:ale_rust_cargo_check_all_targets = 1
+let g:ale_rust_cargo_check_tests = 1
+let g:ale_rust_cargo_check_examples = 1
 let g:ale_rust_rls_executable = $HOME . '/.cargo/bin/rls'
 let g:ale_rust_rls_toolchain = 'stable'
 let g:ale_rust_rls_config = { 'all_targets': 1 }
@@ -403,8 +403,8 @@ let g:axe#cmds = {
   \     'quick-build': {'cmd': 'cargo build', 'in_term': 1},
   \     'test': {'cmd': 'cargo test', 'in_term': 1},
   \     'release-build': {'cmd': 'cargo build --release', 'in_term': 1},
-  \     'build-doc': {'cmd': 'cargo doc --document-private-items', 'in_term': 1},
-  \     'doc': {'cmd': 'cargo doc --open'},
+  \     'build-doc': {'cmd': 'cargo doc --document-private-items --no-deps', 'in_term': 1},
+  \     'doc': {'cmd': 'cargo doc --open --document-private-items --no-deps'},
   \     'rust-doc': {'cmd': 'rustup doc'},
   \     'book': {'cmd': 'rustup doc --book'},
   \     'std-doc': {'cmd': 'rustup doc --std'},
