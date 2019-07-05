@@ -39,7 +39,7 @@ Plug 'Shougo/neco-syntax'
 Plug 'Shougo/neco-vim', { 'for': 'vim' }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 Plug 'tweekmonster/deoplete-clang2', { 'for': ['cpp', 'c'] }
-Plug 'sebastianmarkow/deoplete-rust', { 'for': 'rust' }
+Plug 'racer-rust/vim-racer'
 
 " Operators
 Plug 'kana/vim-operator-user'
@@ -466,9 +466,6 @@ let g:deoplete#sources#jedi#python_path = '/usr/bin/python3'
 " " OCaml support
 let g:deoplete#omni#input_patterns.ocaml = '[.\w]+'
 " " " Rust support
-let g:deoplete#sources#rust#racer_binary = $HOME . '/.cargo/bin/racer'
-let g:deoplete#sources#rust#rust_source_path = $HOME . '/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src'
-let g:deoplete#sources#rust#disable_keymap = 1
-let g:deoplete#sources#rust#show_duplicates = 1
-let g:deoplete#sources#rust#documentation_max_height = 20
 call deoplete#custom#option('ignore_sources', {'rust': ['LanguageClient']})
+let g:racer_cmd = $HOME . "/.cargo/bin/racer"
+let g:racer_experimental_completer = 1
