@@ -174,12 +174,12 @@ augroup enable_quickrun
 augroup END
 
 " Mapping for bringing up FIXME and TODO comments
-command! TodoBuffer silent! grep! '(FIXME)\|(TODO)' %:p | cwindow | setlocal nospell | file TODO | redraw!
-command! TodoDir silent! grep! '(FIXME)\|(TODO)' | cwindow | setlocal nospell | file TODO | redraw!
+command! TodoBuffer silent! grep! '(FIXME)\|(TODO)' %:t | cwindow | setlocal nospell | file TODO | redraw!
+command! TodoDir silent! grep! '(FIXME)\|(TODO)' %:h | cwindow | setlocal nospell | file TODO | redraw!
 
 " Better Grep
-command! -nargs=1 GrepLocal silent! grep! <args> %:p | cwindow | setlocal nospell | file Grep | redraw!
-command! -nargs=+ -complete=file Grep silent! grep! <args> | cwindow | setlocal nospell | file Grep | redraw!
+command! -nargs=1 GrepLocal silent! grep! <args> %:t | cwindow | setlocal nospell | file Grep | redraw!
+command! -nargs=+ -complete=file Grep silent! grep! <args> %:h | cwindow | setlocal nospell | file Grep | redraw!
 
 " Launch terminal with fish shell
 function! s:termopen()
@@ -453,7 +453,7 @@ augroup END
  
 let g:deoplete#sources#syntax#min_keyword_length = 0
 let g:deoplete#max_list = 0
-let g:deoplete#max_abbr_width = 30
+let g:deoplete#max_abbr_width = 35
 let g:deoplete#auto_complete_delay = 0
 let g:deoplete#auto_refresh_delay = 1
 if !exists('g:deoplete#omni#input_patterns')
@@ -461,11 +461,11 @@ if !exists('g:deoplete#omni#input_patterns')
 endif
 " " Python support
 let g:deoplete#sources#jedi#show_docstring = 1
-let g:deoplete#sources#jedi#statement_length = 30
+let g:deoplete#sources#jedi#statement_length = 35
 let g:deoplete#sources#jedi#python_path = '/usr/bin/python3'
 " " OCaml support
 let g:deoplete#omni#input_patterns.ocaml = '[.\w]+'
 " " " Rust support
-call deoplete#custom#option('ignore_sources', {'rust': ['LanguageClient']})
+" call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
 let g:racer_cmd = $HOME . "/.cargo/bin/racer"
 let g:racer_experimental_completer = 1
