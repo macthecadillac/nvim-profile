@@ -344,9 +344,9 @@ let g:ale_rust_cargo_use_check = 1
 let g:ale_rust_cargo_check_all_targets = 1
 let g:ale_rust_cargo_check_tests = 1
 let g:ale_rust_cargo_check_examples = 1
-let g:ale_rust_rls_executable = $HOME . '/.cargo/bin/rls'
-let g:ale_rust_rls_toolchain = 'stable'
-let g:ale_rust_rls_config = { 'all_targets': 1 }
+" let g:ale_rust_rls_executable = $HOME . '/.cargo/bin/rls'
+" let g:ale_rust_rls_toolchain = 'stable'
+" let g:ale_rust_rls_config = { 'all_targets': 1 }
 
 
 """""""""" vim-operator-surround """"""""""
@@ -456,16 +456,18 @@ let g:deoplete#max_list = 0
 let g:deoplete#max_abbr_width = 35
 let g:deoplete#auto_complete_delay = 0
 let g:deoplete#auto_refresh_delay = 1
+call deoplete#custom#option('check_stderr', v:false)  " so racer crashes won't impede typing
 if !exists('g:deoplete#omni#input_patterns')
   let g:deoplete#omni#input_patterns = {}
 endif
-" " Python support
+" Python support
 let g:deoplete#sources#jedi#show_docstring = 1
 let g:deoplete#sources#jedi#statement_length = 35
 let g:deoplete#sources#jedi#python_path = '/usr/bin/python3'
-" " OCaml support
+" OCaml support
 let g:deoplete#omni#input_patterns.ocaml = '[.\w]+'
-" " " Rust support
-" call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
+" Rust support
+call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
 let g:racer_cmd = $HOME . "/.cargo/bin/racer"
 let g:racer_experimental_completer = 1
+let g:racer_disable_errors = 1
