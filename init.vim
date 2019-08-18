@@ -151,6 +151,9 @@ augroup basic_filetype_settings
   autocmd Filetype tex nmap <leader>doc :silent !texdoc <cword><CR>
 augroup END
 
+let g:python_host_prog = '/usr/bin/python'
+let g:python3_host_prog = '/usr/bin/python3'
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""""""" Custom Keybinding """""""""""""""""""""
