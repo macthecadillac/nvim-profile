@@ -197,6 +197,7 @@ nmap <A-t> :Terminal<CR>
 
 augroup tags
   autocmd BufWritePost *.rs :Axe update-tags
+  autocmd BufWritePost *.ml :Axe update-tags
 augroup END
 
 function! s:format_sentence(start, end)
@@ -395,6 +396,12 @@ let g:axe#cmds = {
   \     'build': {'cmd': 'dune build @all'},
   \     'build-install': {'cmd': 'dune build @all @install'},
   \     'install': {'cmd': 'dune install'},
+  \     'update-tags': {
+  \       'cmd': 'ctags -R -h [".ml"] --exclude={.git,_build}',
+  \       'with_filename': 0,
+  \       'in_term': 0,
+  \       'exe_in_proj_root': 1
+  \   },
   \   },
   \ 'sh': {
   \     'run': {'cmd': 'sh', 'in_term': 1},
