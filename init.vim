@@ -198,6 +198,7 @@ nmap <A-t> :Terminal<CR>
 augroup tags
   autocmd BufWritePost *.rs :Axe update-tags
   autocmd BufWritePost *.ml :Axe update-tags
+  autocmd BufWritePost *.py :Axe update-tags
 augroup END
 
 function! s:format_sentence(start, end)
@@ -380,7 +381,7 @@ augroup END
 
 """""""""" AXE configuration """"""""""
 let g:axe#filetype_defaults = {
-  \ 'ocaml': {'in_term': 1},
+  \ 'ocaml': {'in_term': 1, 'with_filename': 0},
   \ 'rust': {'with_filename': 0},
   \ }
 let g:axe#cmds = {
@@ -398,10 +399,9 @@ let g:axe#cmds = {
   \     'install': {'cmd': 'dune install'},
   \     'update-tags': {
   \       'cmd': 'ctags -R -h [".ml"] --exclude={.git,_build}',
-  \       'with_filename': 0,
   \       'in_term': 0,
   \       'exe_in_proj_root': 1
-  \   },
+  \     },
   \   },
   \ 'sh': {
   \     'run': {'cmd': 'sh', 'in_term': 1},
