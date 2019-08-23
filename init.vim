@@ -483,6 +483,6 @@ let g:deoplete#sources#jedi#python_path = '/usr/bin/python3'
 let g:deoplete#omni#input_patterns.ocaml = '[.\w]+'
 " Rust support
 call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
-let g:racer_cmd = $HOME . "/.cargo/bin/racer"
+let g:racer_cmd = $HOME . '/.cargo/bin/racer'
 let g:racer_experimental_completer = 1
 let g:racer_disable_errors = 1
