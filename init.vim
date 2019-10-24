@@ -416,7 +416,7 @@ let g:axe#cmds = {
   \ 'rust': {
   \     'run': {'cmd': 'cargo run', 'in_term': 1},
   \     'quick-build': {'cmd': 'cargo build', 'in_term': 1},
-  \     'test': {'cmd': 'cargo test', 'in_term': 1},
+  \     'test': {'cmd': 'RUST_BACKTRACE=1 cargo test', 'in_term': 1},
   \     'release-build': {'cmd': 'cargo build --release', 'in_term': 1},
   \     'build-doc': {'cmd': 'cargo doc --document-private-items --no-deps', 'in_term': 1},
   \     'doc': {'cmd': 'cargo doc --open --document-private-items --no-deps'},
