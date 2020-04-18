@@ -4,3 +4,4 @@
 **/*.pyc
 /autoload/plug.vim.old
 **/.ropeproject/*
+/undo/*

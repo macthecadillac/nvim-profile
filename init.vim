@@ -14,6 +14,8 @@ Plug 'w0rp/ale'
 Plug 'equalsraf/neovim-gui-shim'
 " Plug 'mg979/vim-visual-multi'
 Plug '~/axe'
+Plug 'ncm2/float-preview.nvim'
+Plug 'simnalamburt/vim-mundo'
 
 " Customize status line
 Plug 'itchyny/lightline.vim'
@@ -29,6 +31,7 @@ Plug 'rust-lang/rust.vim'
 Plug 'cespare/vim-toml'
 Plug 'rgrinberg/vim-ocaml'
 Plug 'euclio/vim-markdown-composer', { 'do': ':!cargo build --release' }
+Plug 'neovimhaskell/haskell-vim'
 Plug '$OPAM_SWITCH_PREFIX/share/merlin', { 'rtp': 'vim' }
 Plug '$OPAM_SWITCH_PREFIX/share/ocp-index', { 'rtp': 'vim' }
 Plug '$OPAM_SWITCH_PREFIX/share/ocp-indent', { 'rtp': 'vim' }
@@ -39,7 +42,13 @@ Plug 'Shougo/neco-syntax'
 Plug 'Shougo/neco-vim', { 'for': 'vim' }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 Plug 'tweekmonster/deoplete-clang2', { 'for': ['cpp', 'c'] }
-Plug 'racer-rust/vim-racer'
+
+" Language server
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'for': ['haskell', 'tex', 'plaintex', 'rust'],
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 
 " Operators
 Plug 'kana/vim-operator-user'
@@ -85,6 +94,7 @@ set wrap      " soft wrap
 set linebreak     " wrap text while respecting words
 set tags+=./tags;~    " Add parent directories to vim ctags search path
 set undofile
+set undodir=~/.config/nvim/undo
 set laststatus=2
 set noswapfile
 set complete+=k
@@ -142,11 +152,13 @@ augroup basic_filetype_settings
   autocmd FileType rust set tags+=$RUST_SRC_PATH/tags  " add rust src to tags path
   autocmd Filetype text set spell spelllang=en_us
   autocmd Filetype ocaml call MiscSettings(2)
+  autocmd Filetype haskell call MiscSettings(2)
+  autocmd Filetype yaml call MiscSettings(2)
   autocmd Filetype vim call MiscSettings(2)
   " For vim-commentary
   autocmd Filetype ocaml set commentstring=(*\ %s\ *)
   " Use spaces instead of the tabulator when pressing 'tab'
-  autocmd Filetype c,cpp,fish,markdown,ocaml,plaintex,python,sh,tex,text,vim,html,css set expandtab
+  autocmd Filetype c,cpp,fish,markdown,ocaml,plaintex,python,sh,tex,text,vim,html,css,haskell set expandtab
   " open LaTeX documentation for package under cursor
   autocmd Filetype tex nmap <leader>doc :silent !texdoc <cword><CR>
 augroup END
@@ -196,9 +208,11 @@ command! Terminal call s:termopen()
 nmap <A-t> :Terminal<CR>
 
 augroup tags
+  autocmd!
   autocmd BufWritePost *.rs :Axe update-tags
   autocmd BufWritePost *.ml :Axe update-tags
   autocmd BufWritePost *.py :Axe update-tags
+  " autocmd BufWritePost *.hs :Axe update-tags
 augroup END
 
 function! s:format_sentence(start, end)
@@ -206,6 +220,7 @@ function! s:format_sentence(start, end)
 endfunction
 
 " augroup autoformat
+"   autocmd!
 "   autocmd FileType tex set formatexpr=s:format_sentence(v:lnum, v:lnum + v:count - 1)
 " augroup END
 
@@ -268,6 +283,7 @@ let g:lightline = {
   \   'component_function': {
   \     'gitbranch': 'DisplayGitBranchName',
   \     'fileformat': 'LightlineFileFormat',
+  \     'filetype': 'LightlineFileType',
   \     'filename': 'LightlineFilename',
   \   },
   \   'component_type': {
@@ -282,8 +298,6 @@ let g:lightline = {
   \   'separator': {'left': "\uE0B0", 'right': "\uE0B2"},
   \   'subseparator': {'left': '', 'right': ''},
   \ }
-  " \   'subseparator': {'left': "\uE0B1", 'right': "\uE0B3"},
-  " \   'subseparator': {'left': '', 'right': ''},
 
 let g:lightline#ale#indicator_checking = ''
 let g:lightline#ale#indicator_ok = ''
@@ -304,9 +318,22 @@ function! DisplayGitBranchName()
   return l:gitbranch ==# '' ? '' : l:displaytext
 endfunction
 
+function! LightlineFormat()
+  return &filetype =~# '^Mundo\|MundoDiff' ? '' : &filetype
+endfunction
+
 function! LightlineFilename()
   let l:readonly = &readonly ? "\uf023" . ' ' : ''
-  let l:filename = expand('%:t') !=# '' ? expand('%:t') : '[NO NAME]'
+
+  let l:fname = expand('%:t')
+  if l:fname ==# ''
+    let l:filename = '[NO NAME]'
+  elseif &filetype =~# '^Mundo\|MundoDiff'
+    let l:filename = &filetype
+  else
+    let l:filename = l:fname
+  endif
+
   let l:modified = &modified ? ' ' . "\uf040" : ''
   return l:readonly . l:filename . l:modified
 endfunction
@@ -329,6 +356,15 @@ let g:python_highlight_class_vars = 1
 let g:python_highlight_operators = 1
 let g:python_slow_sync = 0
 
+" Better haskell syntax highlighting
+let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
+let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
+let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
+let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
+let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
+let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
+let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
+
 """""""""" ALE configurations """"""""""
 let g:ale_linters = {
   \   'python': ['flake8'],
@@ -337,6 +373,7 @@ let g:ale_linters = {
   \   'bash': ['bash -n '],
   \   'vim': ['vint'],
   \   'fish': [],
+  \   'haskell': ['hie']
   \}
 let g:ale_lint_delay = 1000
 let g:ale_set_highlights = 0
@@ -357,6 +394,7 @@ let g:ale_rust_rls_config = {
   \      'clippy_preference': 'on'
   \   },
   \ }
+let g:ale_haskell_hie_executable = $HOME . '/.local/bin/hie'
 
 
 """""""""" vim-operator-surround """"""""""
@@ -399,6 +437,13 @@ let g:axe#cmds = {
   \     'install': {'cmd': 'dune install'},
   \     'update-tags': {
   \       'cmd': 'ctags -R -h [".ml"] --exclude={.git,_build}',
+  \       'in_term': 0,
+  \       'exe_in_proj_root': 1
+  \     },
+  \   },
+  \ 'haskell': {
+  \     'update-tags': {
+  \       'cmd': 'hasktags --ctags .',
   \       'in_term': 0,
   \       'exe_in_proj_root': 1
   \     },
@@ -457,6 +502,25 @@ augroup autoclose_prev_win
 augroup end
 
 set completeopt+=noselect
+set completeopt-=preview
+
+"""""""""" float-preview """""""""""
+let g:float_preview#docked = 0
+
+"""""""""" language servers """""""""""
+let g:LanguageClient_serverCommands = {
+    \ 'haskell': ['hie', '--lsp'],
+    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
+    \ 'tex': ['texlab'],
+    \ 'plaintex': ['texlab'],
+    \ }
+let g:LanguageClient_diagnosticsEnable = 0
+
+augroup LCHover
+  autocmd!
+  autocmd FileType haskell nnoremap <leader>d :call LanguageClient#textDocument_hover()<CR>
+  autocmd FileType rust nnoremap <leader>d :call LanguageClient#textDocument_hover()<CR>
+augroup END
 
 """""""""" deoplete configuration """"""""""
 " This augroup keeps vim startup snappy while retaining deoplete
@@ -472,7 +536,6 @@ let g:deoplete#max_list = 0
 let g:deoplete#max_abbr_width = 35
 let g:deoplete#auto_complete_delay = 0
 let g:deoplete#auto_refresh_delay = 1
-call deoplete#custom#option('check_stderr', v:false)  " so racer crashes won't impede typing
 if !exists('g:deoplete#omni#input_patterns')
   let g:deoplete#omni#input_patterns = {}
 endif
@@ -482,8 +545,3 @@ let g:deoplete#sources#jedi#statement_length = 35
 let g:deoplete#sources#jedi#python_path = '/usr/bin/python3'
 " OCaml support
 let g:deoplete#omni#input_patterns.ocaml = '[.\w]+'
-" Rust support
-call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
-let g:racer_cmd = $HOME . '/.cargo/bin/racer'
-let g:racer_experimental_completer = 1
-let g:racer_disable_errors = 1
