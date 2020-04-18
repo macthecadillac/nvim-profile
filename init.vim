@@ -94,6 +94,7 @@ set wrap      " soft wrap
 set linebreak     " wrap text while respecting words
 set tags+=./tags;~    " Add parent directories to vim ctags search path
 set undofile
+set undolevels=4000
 set undodir=~/.config/nvim/undo
 set laststatus=2
 set noswapfile
@@ -490,6 +491,9 @@ if executable('rg')
   let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
   let g:ctrlp_use_caching = 0
 endif
+
+"""""""""" Mundo Settings """"""""""
+let g:mundo_preview_bottom = 1
 
 
 """""""""""""""""""""""""""""""
