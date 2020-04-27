@@ -187,6 +187,7 @@ augroup enable_quickrun
   autocmd FileType tex nnoremap <buffer> <A-r> :Axe build<CR>
   autocmd FileType rust nnoremap <buffer> <A-r> :Axe quick-build<CR>
   autocmd FileType markdown nnoremap <buffer> <A-r> :ComposerStart<CR>
+  autocmd FileType haskell nnoremap <buffer> <A-r> : Axe build<CR>
 augroup END
 
 " Mapping for bringing up FIXME and TODO comments
@@ -374,7 +375,7 @@ let g:ale_linters = {
   \   'bash': ['bash -n '],
   \   'vim': ['vint'],
   \   'fish': [],
-  \   'haskell': ['hie']
+  \   'haskell': ['hdevtools', 'hie']
   \}
 let g:ale_lint_delay = 1000
 let g:ale_set_highlights = 0
@@ -395,7 +396,7 @@ let g:ale_rust_rls_config = {
   \      'clippy_preference': 'on'
   \   },
   \ }
-let g:ale_haskell_hie_executable = $HOME . '/.local/bin/hie'
+let g:ale_haskell_hie_executable = $HOME . '/.local/bin/hie-wrapper'
 
 
 """""""""" vim-operator-surround """"""""""
@@ -421,6 +422,7 @@ augroup END
 """""""""" AXE configuration """"""""""
 let g:axe#filetype_defaults = {
   \ 'ocaml': {'in_term': 1, 'with_filename': 0},
+  \ 'haskell': {'in_term': 1, 'with_filename': 0},
   \ 'rust': {'with_filename': 0},
   \ }
 let g:axe#cmds = {
@@ -448,6 +450,7 @@ let g:axe#cmds = {
   \       'in_term': 0,
   \       'exe_in_proj_root': 1
   \     },
+  \     'build': {'cmd': 'stack build'},
   \   },
   \ 'sh': {
   \     'run': {'cmd': 'sh', 'in_term': 1},
@@ -513,7 +516,7 @@ let g:float_preview#docked = 0
 
 """""""""" language servers """""""""""
 let g:LanguageClient_serverCommands = {
-    \ 'haskell': ['hie', '--lsp'],
+    \ 'haskell': ['hie-wrapper', '--lsp'],
     \ 'rust': ['rustup', 'run', 'stable', 'rls'],
     \ 'tex': ['texlab'],
     \ 'plaintex': ['texlab'],
