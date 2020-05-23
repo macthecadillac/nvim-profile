@@ -22,6 +22,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'maximbaz/lightline-ale'
 Plug 'itchyny/vim-gitbranch'
 Plug '~/lightline-gitdiff'
+Plug 'mengelbrecht/lightline-bufferline'
 
 " Language support
 Plug 'aliva/vim-fish'
@@ -64,6 +65,7 @@ Plug 'reedes/vim-textobj-sentence'
 
 " Color themes
 " Plug 'joshdick/onedark.vim'
+Plug 'rakr/vim-one'
 call plug#end()
 
 
@@ -263,12 +265,8 @@ let g:lightline = {
   \     'right': [['lineinfo']],
   \   },
   \   'tabline': {
-  \     'left': [['tabs']],
+  \     'left': [['buffers']],
   \     'right': [['close']],
-  \   },
-  \   'tab': {
-  \     'active': ['tabnum', 'filename'],
-  \     'inactive': ['tabnum', 'filename'],
   \   },
   \   'component': {
   \     'lineinfo': ' %l/%L:%-2c %p%%',
@@ -281,6 +279,7 @@ let g:lightline = {
   \     'linter_warnings': 'lightline#ale#warnings',
   \     'linter_errors': 'lightline#ale#errors',
   \     'linter_ok': 'lightline#ale#ok',
+  \     'buffers': 'lightline#bufferline#buffers',
   \   },
   \   'component_function': {
   \     'gitbranch': 'DisplayGitBranchName',
@@ -293,6 +292,7 @@ let g:lightline = {
   \     'linter_warnings': 'warning',
   \     'linter_errors': 'error',
   \     'linter_ok': 'left',
+  \     'buffers': 'tabsel',
   \   },
   \   'component_visible_condition': {
   \     'gitstatus': 'lightline_gitdiff#get_status() !=# ""',
@@ -309,6 +309,13 @@ let g:lightline_gitdiff#indicator_added = "\uf067"
 let g:lightline_gitdiff#indicator_deleted = "\uf068"
 let g:lightline_gitdiff#indicator_modified = "\uf12a"
 let g:lightline_gitdiff#min_winwidth = 90
+let g:lightline#bufferline#modified = " \uf040" 
+let g:lightline#bufferline#read_only = " \uf023"
+let g:lightline#bufferline#more_buffers = "\u2026"
+let g:lightline#bufferline#show_number = 1
+let g:lightline#bufferline#unnamed = '[NO NAME]'
+let g:lightline#bufferline#enable_devicons = 1
+let g:lightline#bufferline#min_buffer_count = 2
 
 function! LightlineFileFormat()
   return winwidth(0) > 70 ? &fileformat : ''
@@ -375,7 +382,7 @@ let g:ale_linters = {
   \   'bash': ['bash -n '],
   \   'vim': ['vint'],
   \   'fish': [],
-  \   'haskell': ['hdevtools', 'hie']
+  \   'haskell': ['hdevtools', 'hlint']
   \}
 let g:ale_lint_delay = 1000
 let g:ale_set_highlights = 0
@@ -539,16 +546,15 @@ augroup enable_deoplete
 augroup END
  
 let g:deoplete#sources#syntax#min_keyword_length = 0
-let g:deoplete#max_list = 0
+" let g:deoplete#max_list = 0
+call deoplete#custom#option('max_list', 0)
+call deoplete#custom#option('auto_refresh_delay', 1)
 let g:deoplete#max_abbr_width = 35
-let g:deoplete#auto_complete_delay = 0
-let g:deoplete#auto_refresh_delay = 1
-if !exists('g:deoplete#omni#input_patterns')
-  let g:deoplete#omni#input_patterns = {}
-endif
 " Python support
 let g:deoplete#sources#jedi#show_docstring = 1
 let g:deoplete#sources#jedi#statement_length = 35
 let g:deoplete#sources#jedi#python_path = '/usr/bin/python3'
 " OCaml support
-let g:deoplete#omni#input_patterns.ocaml = '[.\w]+'
+call deoplete#custom#var('omni', 'input_patterns', {
+      \ 'ocaml': '[.\w]+'
+      \ })
