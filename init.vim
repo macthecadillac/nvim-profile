@@ -242,6 +242,7 @@ set background=dark
 let g:nord_italic = 1
 let g:nord_italic_comments = 1
 colorscheme nord
+" colorscheme one
 
 " Vim-lightline
 let g:lightline = {
@@ -266,7 +267,7 @@ let g:lightline = {
   \   },
   \   'tabline': {
   \     'left': [['buffers']],
-  \     'right': [['close']],
+  \     'right': [[]],
   \   },
   \   'component': {
   \     'lineinfo': ' %l/%L:%-2c %p%%',
@@ -310,6 +311,7 @@ let g:lightline_gitdiff#indicator_deleted = "\uf068"
 let g:lightline_gitdiff#indicator_modified = "\uf12a"
 let g:lightline_gitdiff#min_winwidth = 90
 let g:lightline#bufferline#modified = " \uf040" 
+let g:lightline#bufferline#filename_modifier = ':t'
 let g:lightline#bufferline#read_only = " \uf023"
 let g:lightline#bufferline#more_buffers = "\u2026"
 let g:lightline#bufferline#show_number = 1
@@ -372,6 +374,7 @@ let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
 let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
 let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
 let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
+" let g:haskell_classic_highlighting = 1
 let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
 
 """""""""" ALE configurations """"""""""
@@ -556,5 +559,5 @@ let g:deoplete#sources#jedi#statement_length = 35
 let g:deoplete#sources#jedi#python_path = '/usr/bin/python3'
 " OCaml support
 call deoplete#custom#var('omni', 'input_patterns', {
-      \ 'ocaml': '[.\w]+'
+      \ 'ocaml': '[^. *\t]\.\w*|\s\w*|#',
       \ })

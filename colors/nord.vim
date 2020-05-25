@@ -601,8 +601,25 @@ call s:hi('rustAttribute', s:nord15_gui, '', s:nord15_term, '', '', '')
 hi! link rustDerive rustAttribute
 hi! link rustDeriveTrait rustDerive
 
-" Ocaml
+" OCaml
 call s:hi('ocamlConstructor', s:nord7_gui, '', s:nord7_term, '', '', '')
 call s:hi('ocamlModule', s:nord8_gui, '', s:nord8_term, '', '', '')
+call s:hi('ocamlInfixOp', s:nord9_gui, '', s:nord9_term, '', '', '')
 hi! link ocamlBoolean ocamlConstructor
 hi! link ocamlModPath ocamlModule
+
+" Haskell (better-haskell support)
+" call s:hi('haskellOperators', s:nord8_gui, '', s:nord8_term, '', '', '')
+" call s:hi('haskellBacktick', s:nord8_gui, '', s:nord8_term, '', '', '')
+" call s:hi('haskellQuote', s:nord8_gui, '', s:nord8_term, '', '', '')
+call s:hi('haskellAssocType', s:nord8_gui, '', s:nord8_term, '', '', '')
+call s:hi('haskellQuotedType', s:nord8_gui, '', s:nord8_term, '', '', '')
+call s:hi('haskellType', s:nord8_gui, '', s:nord8_term, '', '', '')
+call s:hi('haskellDelimiter', s:nord9_gui, '', s:nord9_term, '', '', '')
+call s:hi('haskellIdentifier', s:nord7_gui, '', s:nord7_term, '', '', '')
+call s:hi('haskellPragma', s:nord15_gui, '', s:nord15_term, '', s:italicize_comments, '')
+call s:hi('haskellLiquid', s:nord15_gui, '', s:nord15_term, '', s:italicize_comments, '')
+call s:hi('haskellPreProc', s:nord15_gui, '', s:nord15_term, '', s:italicize_comments, '')
+
+" Haskell (vanilla)
+call s:hi('hsOperator', s:nord8_gui, '', s:nord8_term, '', '', '')

@@ -6,10 +6,10 @@ if exists('g:GuiLoaded')
   GuiTabline 0
 endif
 
+" use light themes for GUI
 let ayucolor='light'
 let lightline.colorscheme = 'ayu'
-" set background=light
-" let lightline.colorscheme = 'one'
+
 call lightline#init()
+
 colorscheme ayu
-" colorscheme one

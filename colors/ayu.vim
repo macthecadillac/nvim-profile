@@ -15,7 +15,7 @@ let g:colors_name = "ayu"
 let s:palette = {}
 
 " let s:palette.bg        = {'dark': "#0F1419",  'light': "#FAFAFA",  'mirage': "#212733"}
-let s:palette.bg        = {'dark': "#0F1419",  'light': "#FAFAFA",  'mirage': "#282c34"}
+let s:palette.bg        = {'dark': "#0F1419",  'light': "#FFFFFF",  'mirage': "#282c34"}
 
 let s:palette.comment   = {'dark': "#5C6773",  'light': "#ABB0B6",  'mirage': "#5C6773"}
 let s:palette.markup    = {'dark': "#F07178",  'light': "#F07178",  'mirage': "#F07178"}
@@ -273,3 +273,31 @@ hi! link diffAdded String
 let &background = s:style
 
 " }}}
+
+" " Rust
+" call s:hi('rustEnumVariant', s:nord7_gui, '', s:nord7_term, '', '', '')
+" call s:hi('rustSelf', s:nord8_gui, '', s:nord8_term, '', '', '')
+" call s:hi('rustAttribute', s:nord15_gui, '', s:nord15_term, '', '', '')
+" hi! link rustDerive rustAttribute
+" hi! link rustDeriveTrait rustDerive
+
+" " OCaml
+" call s:hi('ocamlConstructor', s:nord7_gui, '', s:nord7_term, '', '', '')
+" call s:hi('ocamlModule', s:nord8_gui, '', s:nord8_term, '', '', '')
+" call s:hi('ocamlInfixOp', s:nord8_gui, '', s:nord8_term, '', '', '')
+" hi! link ocamlBoolean ocamlConstructor
+" hi! link ocamlModPath ocamlModule
+
+" " Haskell (better-haskell support)
+" call s:hi('haskellOperators', s:nord8_gui, '', s:nord8_term, '', '', '')
+" call s:hi('haskellBacktick', s:nord8_gui, '', s:nord8_term, '', '', '')
+" call s:hi('haskellQuote', s:nord8_gui, '', s:nord8_term, '', '', '')
+" call s:hi('haskellAssocType', s:nord7_gui, '', s:nord7_term, '', '', '')
+" call s:hi('haskellQuotedType', s:nord7_gui, '', s:nord7_term, '', '', '')
+" call s:hi('haskellType', s:nord7_gui, '', s:nord7_term, '', '', '')
+" call s:hi('haskellDelimiter', s:nord9_gui, '', s:nord9_term, '', '', '')
+
+" exe "hi! haskellDeclKeyword"     .s:fg_keyword       .s:bg_none        .s:fmt_none
+" exe "hi! haskellDecl"            .s:fg_keyword       .s:bg_none        .s:fmt_none
+" exe "hi! haskellKeyword"         .s:fg_keyword       .s:bg_none        .s:fmt_none
+" exe "hi! haskellImportKeywords"   .s:fg_keyword       .s:bg_none        .s:fmt_none
