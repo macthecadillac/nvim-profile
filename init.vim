@@ -118,6 +118,7 @@ set scrolloff=0    " starts scrolling when cursor is 0 lines away from screen ed
 set noshowmode  " we don't need to show the current mode since it is shown in the statusline
 " set ambiwidth=single  " double-width character support
 
+" set <space> to be the leader key. Much easier to reach than the default '\'
 let mapleader = ' '
 
 if has('nvim')
@@ -534,6 +535,7 @@ nnoremap <leader>g :Clap proj_tags<CR>
 nnoremap <leader>h :Clap help_tags<CR>
 nnoremap <leader>i :Clap history<CR>
 nnoremap <leader>b :Clap buffers<CR>
+nnoremap <leader>e :Clap filer<CR>
 
 """""""""" Mundo Settings """"""""""
 let g:mundo_preview_bottom = 1
