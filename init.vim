@@ -501,7 +501,6 @@ let g:markdown_composer_autostart = 0
 let g:clap_theme = 'nord'
 " let g:clap_enable_icon = 0
 let g:clap_layout = {
-  \ 'relative': 'editor',
   \ 'width': '67%',
   \ 'height': '67%',
   \ 'row': '17%',
@@ -522,6 +521,16 @@ let g:clap_provider_grep_opts = '-H --no-heading --vimgrep --smart-case -g "!.gi
 let g:clap_disable_bottom_top = 1
 let g:clap_preview_size = 0
 
+function! CollectWindows()
+  let l:n = 1001
+  while l:n <= 2000
+    if nvim_win_is_valid(l:n)
+      call nvim_win_close(l:n, v:true)
+    endif
+    let l:n += 1
+  endwhile
+endfunction
+
 augroup Clap
   " fix lightline issue
   autocmd!
@@ -536,6 +545,7 @@ nnoremap <leader>h :Clap help_tags<CR>
 nnoremap <leader>i :Clap history<CR>
 nnoremap <leader>b :Clap buffers<CR>
 nnoremap <leader>e :Clap filer<CR>
+nnoremap <leader>l :Clap loclist<CR>
 
 """""""""" Mundo Settings """"""""""
 let g:mundo_preview_bottom = 1
