@@ -7,7 +7,7 @@ set shell=sh  " speeds up the 'system' function and a lot more things
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.config/nvim/vimplug')
 " Tools
-Plug 'ctrlpvim/ctrlp.vim'
+Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
 Plug 'tpope/vim-commentary'
 Plug 'brooth/far.vim', { 'on': ['Far', 'Farp', 'Fardo', 'Refar', 'Rarundo', 'F'] }
 Plug 'w0rp/ale'
@@ -16,6 +16,7 @@ Plug 'equalsraf/neovim-gui-shim'
 Plug '~/axe'
 Plug 'ncm2/float-preview.nvim'
 Plug 'simnalamburt/vim-mundo'
+Plug 'ryanoasis/vim-devicons'
 
 " Customize status line
 Plug 'itchyny/lightline.vim'
@@ -32,7 +33,7 @@ Plug 'rust-lang/rust.vim'
 Plug 'cespare/vim-toml'
 Plug 'rgrinberg/vim-ocaml'
 Plug 'euclio/vim-markdown-composer', { 'do': ':!cargo build --release' }
-Plug 'neovimhaskell/haskell-vim'
+Plug 'macthecadillac/haskell-vim'
 Plug '$OPAM_SWITCH_PREFIX/share/merlin', { 'rtp': 'vim' }
 Plug '$OPAM_SWITCH_PREFIX/share/ocp-index', { 'rtp': 'vim' }
 Plug '$OPAM_SWITCH_PREFIX/share/ocp-indent', { 'rtp': 'vim' }
@@ -65,7 +66,7 @@ Plug 'reedes/vim-textobj-sentence'
 
 " Color themes
 " Plug 'joshdick/onedark.vim'
-Plug 'rakr/vim-one'
+" Plug 'rakr/vim-one'
 call plug#end()
 
 
@@ -115,6 +116,9 @@ set scrolloff=0    " starts scrolling when cursor is 0 lines away from screen ed
 " set showtabline=2
 " set guicursor=''
 set noshowmode  " we don't need to show the current mode since it is shown in the statusline
+" set ambiwidth=single  " double-width character support
+
+let mapleader = ' '
 
 if has('nvim')
   set inccommand=nosplit  " provides live preview of substitute as you type
@@ -311,7 +315,7 @@ let g:lightline_gitdiff#indicator_deleted = "\uf068"
 let g:lightline_gitdiff#indicator_modified = "\uf12a"
 let g:lightline_gitdiff#min_winwidth = 90
 let g:lightline#bufferline#modified = " \uf040" 
-let g:lightline#bufferline#filename_modifier = ':t'
+" let g:lightline#bufferline#filename_modifier = ':t'
 let g:lightline#bufferline#read_only = " \uf023"
 let g:lightline#bufferline#more_buffers = "\u2026"
 let g:lightline#bufferline#show_number = 1
@@ -449,14 +453,14 @@ let g:axe#cmds = {
   \     'build-install': {'cmd': 'dune build @all @install'},
   \     'install': {'cmd': 'dune install'},
   \     'update-tags': {
-  \       'cmd': 'ctags -R -h [".ml"] --exclude={.git,_build}',
+  \       'cmd': 'ctags -R -h [".mli"] --exclude={.git,_build}',
   \       'in_term': 0,
   \       'exe_in_proj_root': 1
   \     },
   \   },
   \ 'haskell': {
   \     'update-tags': {
-  \       'cmd': 'hasktags --ctags .',
+  \       'cmd': 'hasktags --ctags -x .',
   \       'in_term': 0,
   \       'exe_in_proj_root': 1
   \     },
@@ -483,7 +487,7 @@ let g:axe#cmds = {
   \     'rust-doc': {'cmd': 'rustup doc'},
   \     'book': {'cmd': 'rustup doc --book'},
   \     'std-doc': {'cmd': 'rustup doc --std'},
-  \     'update-tags': {'cmd': 'rusty-tags vi --quiet --output tags'},
+  \     'update-tags': {'cmd': 'rusty-tags vi --quiet --output tags', 'exe_in_proj_root': 1},
   \   },
   \ }
 
@@ -492,22 +496,47 @@ let g:axe#cmds = {
 let g:markdown_composer_autostart = 0
 
 
-"""""""""" CtrlP configuration """"""""""
-let g:ctrlp_map = '<c-p>'
-map <C-S> :CtrlPTag<CR>
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/](target|_build|\.(git|hg|svn))$',
-  \ 'file': '\v\.(pyc)$',
+"""""""""" Clap settings """"""""""
+let g:clap_theme = 'nord'
+" let g:clap_enable_icon = 0
+let g:clap_layout = {
+  \ 'relative': 'editor',
+  \ 'width': '67%',
+  \ 'height': '67%',
+  \ 'row': '17%',
+  \ 'col': '17%'
   \ }
-if executable('rg')
-  set grepprg=rg\ --color=never\ --vimgrep
-  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
-  let g:ctrlp_use_caching = 0
-endif
+let g:clap#icon#extensions = extend(g:clap#icon#extensions, {'ml': 'λ', 'mli': 'λ',})
+let g:clap_current_selection_sign = {
+  \ 'text': "\uf432",
+  \ 'texthl': 'ClapCurrentSelectionSign',
+  \ 'linehl': 'ClapCurrentSelection'
+  \ }
+let g:clap_selected_sign = {
+  \ 'text': "\uf444",
+  \ 'texthl': 'ClapSelectedSign',
+  \ 'linehl': 'ClapSelected'
+  \ }
+let g:clap_provider_grep_opts = '-H --no-heading --vimgrep --smart-case -g "!.git/"'
+let g:clap_disable_bottom_top = 1
+let g:clap_preview_size = 0
+
+augroup Clap
+  " fix lightline issue
+  autocmd!
+  autocmd User ClapOnExit call lightline#update()
+augroup end
+
+" Clap mapppings
+nnoremap <leader>c :Clap providers<CR>
+nnoremap <leader>f :Clap files<CR>
+nnoremap <leader>g :Clap proj_tags<CR>
+nnoremap <leader>h :Clap help_tags<CR>
+nnoremap <leader>i :Clap history<CR>
+nnoremap <leader>b :Clap buffers<CR>
 
 """""""""" Mundo Settings """"""""""
 let g:mundo_preview_bottom = 1
-
 
 """""""""""""""""""""""""""""""
 """"""" Autocompletion """"""""
@@ -547,7 +576,7 @@ augroup enable_deoplete
   autocmd!
   autocmd InsertEnter * call deoplete#enable() | autocmd! enable_deoplete
 augroup END
- 
+
 let g:deoplete#sources#syntax#min_keyword_length = 0
 " let g:deoplete#max_list = 0
 call deoplete#custom#option('max_list', 0)
