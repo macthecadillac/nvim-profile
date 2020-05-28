@@ -521,16 +521,6 @@ let g:clap_provider_grep_opts = '-H --no-heading --vimgrep --smart-case -g "!.gi
 let g:clap_disable_bottom_top = 1
 let g:clap_preview_size = 0
 
-function! CollectWindows()
-  let l:n = 1001
-  while l:n <= 2000
-    if nvim_win_is_valid(l:n)
-      call nvim_win_close(l:n, v:true)
-    endif
-    let l:n += 1
-  endwhile
-endfunction
-
 augroup Clap
   " fix lightline issue
   autocmd!
