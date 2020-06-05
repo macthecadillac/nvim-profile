@@ -8,11 +8,11 @@ set shell=sh  " speeds up the 'system' function and a lot more things
 call plug#begin('~/.config/nvim/vimplug')
 " Tools
 Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
+Plug 'liuchengxu/vista.vim'
 Plug 'tpope/vim-commentary'
 Plug 'brooth/far.vim', { 'on': ['Far', 'Farp', 'Fardo', 'Refar', 'Rarundo', 'F'] }
 Plug 'w0rp/ale'
 Plug 'equalsraf/neovim-gui-shim'
-" Plug 'mg979/vim-visual-multi'
 Plug '~/axe'
 Plug 'ncm2/float-preview.nvim'
 Plug 'simnalamburt/vim-mundo'
@@ -44,10 +44,11 @@ Plug 'Shougo/neco-syntax'
 Plug 'Shougo/neco-vim', { 'for': 'vim' }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 Plug 'tweekmonster/deoplete-clang2', { 'for': ['cpp', 'c'] }
+Plug '~/build_src/neco-ghc', { 'for': 'haskell' }
 
 " Language server
 Plug 'autozimu/LanguageClient-neovim', {
-    \ 'for': ['haskell', 'tex', 'plaintex', 'rust'],
+    \ 'for': ['tex', 'plaintex', 'rust'],
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
@@ -221,7 +222,7 @@ augroup tags
   autocmd BufWritePost *.rs :Axe update-tags
   autocmd BufWritePost *.ml :Axe update-tags
   autocmd BufWritePost *.py :Axe update-tags
-  " autocmd BufWritePost *.hs :Axe update-tags
+  autocmd BufWritePost *.hs :Axe update-tags
 augroup END
 
 function! s:format_sentence(start, end)
@@ -390,7 +391,7 @@ let g:ale_linters = {
   \   'bash': ['bash -n '],
   \   'vim': ['vint'],
   \   'fish': [],
-  \   'haskell': ['hdevtools', 'hlint']
+  \   'haskell': ['hlint', 'hdevtools']
   \}
 let g:ale_lint_delay = 1000
 let g:ale_set_highlights = 0
@@ -411,7 +412,6 @@ let g:ale_rust_rls_config = {
   \      'clippy_preference': 'on'
   \   },
   \ }
-let g:ale_haskell_hie_executable = $HOME . '/.local/bin/hie-wrapper'
 
 
 """""""""" vim-operator-surround """"""""""
@@ -450,8 +450,8 @@ let g:axe#cmds = {
   \     },
   \   },
   \ 'ocaml': {
-  \     'build': {'cmd': 'dune build @all'},
-  \     'build-install': {'cmd': 'dune build @all @install'},
+  \     'build': {'cmd': 'dune build @all @doc'},
+  \     'build-install': {'cmd': 'dune build @all @install @doc'},
   \     'install': {'cmd': 'dune install'},
   \     'update-tags': {
   \       'cmd': 'ctags -R -h [".mli"] --exclude={.git,_build}',
@@ -557,7 +557,6 @@ let g:float_preview#docked = 0
 
 """""""""" language servers """""""""""
 let g:LanguageClient_serverCommands = {
-    \ 'haskell': ['hie-wrapper', '--lsp'],
     \ 'rust': ['rustup', 'run', 'stable', 'rls'],
     \ 'tex': ['texlab'],
     \ 'plaintex': ['texlab'],
@@ -573,6 +572,9 @@ augroup END
 """""""""" deoplete configuration """"""""""
 " This augroup keeps vim startup snappy while retaining deoplete
 " functionality on demand
+let g:necoghc_use_stack = 1
+let g:necoghc_enable_detailed_browse = 1
+
 let g:deoplete#enable_at_startup = 0
 augroup enable_deoplete
   autocmd!
