@@ -34,6 +34,8 @@ Plug 'cespare/vim-toml'
 Plug 'rgrinberg/vim-ocaml'
 Plug 'euclio/vim-markdown-composer', { 'do': ':!cargo build --release' }
 Plug 'macthecadillac/haskell-vim'
+Plug '~/Documents/code/ghcmod-vim'
+Plug 'Shougo/vimproc', { 'do': 'make' }
 Plug '$OPAM_SWITCH_PREFIX/share/merlin', { 'rtp': 'vim' }
 Plug '$OPAM_SWITCH_PREFIX/share/ocp-index', { 'rtp': 'vim' }
 Plug '$OPAM_SWITCH_PREFIX/share/ocp-indent', { 'rtp': 'vim' }
@@ -44,7 +46,7 @@ Plug 'Shougo/neco-syntax'
 Plug 'Shougo/neco-vim', { 'for': 'vim' }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 Plug 'tweekmonster/deoplete-clang2', { 'for': ['cpp', 'c'] }
-Plug '~/build_src/neco-ghc', { 'for': 'haskell' }
+Plug 'macthecadillac/neco-ghc', { 'for': 'haskell' }
 
 " Language server
 Plug 'autozimu/LanguageClient-neovim', {
