@@ -231,7 +231,7 @@ augroup END
 
 augroup Type
   autocmd!
-  autocmd FileType haskell nnoremap <buffer> \t :GhcModType<CR>
+  autocmd FileType haskell nnoremap <buffer> \t :Axe type<CR>
 augroup END
 
 function! s:format_sentence(start, end)
