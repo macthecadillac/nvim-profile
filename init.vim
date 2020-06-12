@@ -197,7 +197,7 @@ augroup enable_quickrun
   autocmd FileType tex nnoremap <buffer> <A-r> :Axe build<CR>
   autocmd FileType rust nnoremap <buffer> <A-r> :Axe quick-build<CR>
   autocmd FileType markdown nnoremap <buffer> <A-r> :ComposerStart<CR>
-  autocmd FileType haskell nnoremap <buffer> <A-r> : Axe build<CR>
+  autocmd FileType haskell nnoremap <buffer> <A-r> :Axe build<CR>
 augroup END
 
 " Mapping for bringing up FIXME and TODO comments
@@ -222,9 +222,16 @@ nmap <A-t> :Terminal<CR>
 augroup tags
   autocmd!
   autocmd BufWritePost *.rs :Axe update-tags
+  autocmd BufWritePost *.vim :Axe update-tags
+  autocmd BufWritePost *.nvim :Axe update-tags
   autocmd BufWritePost *.ml :Axe update-tags
   autocmd BufWritePost *.py :Axe update-tags
   autocmd BufWritePost *.hs :Axe update-tags
+augroup END
+
+augroup Type
+  autocmd!
+  autocmd FileType haskell nnoremap <buffer> \t :GhcModType<CR>
 augroup END
 
 function! s:format_sentence(start, end)
@@ -393,7 +400,7 @@ let g:ale_linters = {
   \   'bash': ['bash -n '],
   \   'vim': ['vint'],
   \   'fish': [],
-  \   'haskell': ['hlint', 'hdevtools']
+  \   'haskell': ['hlint', 'stack-ghc']
   \}
 let g:ale_lint_delay = 1000
 let g:ale_set_highlights = 0
@@ -438,61 +445,111 @@ augroup END
 
 """""""""" AXE configuration """"""""""
 let g:axe#filetype_defaults = {
-  \ 'ocaml': {'in_term': 1, 'with_filename': 0},
-  \ 'haskell': {'in_term': 1, 'with_filename': 0},
-  \ 'rust': {'with_filename': 0},
+  \ 'ocaml': {'in_term': 1},
+  \ 'haskell': {'in_term': 1},
   \ }
 let g:axe#cmds = {
-  \ 'python': {
-  \     'run': {'cmd': 'python3', 'in_term': 1},
+  \ 'vim': {
   \     'update-tags': {
-  \       'cmd': 'ctags -R -h [".py"] --exclude={.git,__pycache__,__init__.py}',
-  \       'with_filename': 0,
-  \       'exe_in_proj_root': 1
+  \       'cmd': ['ctags', '-R', '-h', '[".py"]', '--exclude={.git,__pycache__,__init__.py}'],
+  \       'exe_in_proj_root': 1,
+  \       'show_stderr_on_error': 0
+  \     },
+  \   },
+  \ 'nvim': {
+  \     'update-tags': {
+  \       'cmd': ['ctags', '-R', '-h', '[".py"]', '--exclude={.git,__pycache__,__init__.py}'],
+  \       'exe_in_proj_root': 1,
+  \       'show_stderr_on_error': 0
+  \     },
+  \   },
+  \ 'python': {
+  \     'run': {'cmd': ['python3', 'axe#util#filename'], 'in_term': 1},
+  \     'update-tags': {
+  \       'cmd': ['ctags', '-R', '-h', '[".py"]', '--exclude={.git,__pycache__,__init__.py}'],
+  \       'exe_in_proj_root': 1,
+  \       'show_stderr_on_error': 0
   \     },
   \   },
   \ 'ocaml': {
-  \     'build': {'cmd': 'dune build @all @doc'},
-  \     'build-install': {'cmd': 'dune build @all @install @doc'},
-  \     'install': {'cmd': 'dune install'},
+  \     'build': {'cmd': ['dune', 'build', '@all', '@doc']},
+  \     'build-install': {'cmd': ['dune', 'build', '@all', '@install', '@doc']},
+  \     'install': {'cmd': ['dune', 'install']},
   \     'update-tags': {
-  \       'cmd': 'ctags -R -h [".mli"] --exclude={.git,_build}',
+  \       'cmd': ['ctags', '-R', '-h', '[".mli"]', '--exclude={.git,_build}'],
   \       'in_term': 0,
-  \       'exe_in_proj_root': 1
+  \       'exe_in_proj_root': 1,
+  \       'show_stderr_on_error': 0
   \     },
   \   },
   \ 'haskell': {
   \     'update-tags': {
-  \       'cmd': 'hasktags --ctags -x .',
+  \       'cmd': ['hasktags', '--ctags', '-x', '.'],
   \       'in_term': 0,
-  \       'exe_in_proj_root': 1
+  \       'exe_in_proj_root': 1,
+  \       'show_stderr_on_error': 0
   \     },
-  \     'build': {'cmd': 'stack build'},
+  \     'build': {'cmd': ['stack', 'build']},
+  \     'type': {
+  \        'cmd': ['stack', 'exec', 'hhpc', '--', 'type',
+  \                'axe#util#filename', 'axe#util#line', 'axe#util#col'],
+  \        'show_stdout_in_float': 1,
+  \        'in_term': 0,
+  \        'post_execution': 'ProcessTypeResults',
+  \      }
   \   },
   \ 'sh': {
-  \     'run': {'cmd': 'sh', 'in_term': 1},
+  \     'run': {'cmd': ['sh', 'axe#util#filename'], 'in_term': 1},
   \   },
   \ 'fish': {
-  \     'run': {'cmd': 'fish', 'in_term': 1},
+  \     'run': {'cmd': ['fish', 'axe#util#filename'], 'in_term': 1},
   \   },
   \ 'tex': {
-  \     'build': {'cmd': 'latexmk -gg -silent', 'in_term': 1},
-  \     'continuous-build': {'cmd': 'latexmk -pvc -interaction=nonstopmode'},
+  \     'build': {'cmd': ['latexmk', '-gg', '-silent', 'axe#util#filename'], 'in_term': 1},
+  \     'continuous-build': {'cmd': ['latexmk', '-pvc', '-interaction=nonstopmode', 'axe#util#filename']},
   \   },
   \ 'rust': {
-  \     'run': {'cmd': 'cargo run', 'in_term': 1},
-  \     'quick-build': {'cmd': 'cargo build', 'in_term': 1},
-  \     'release-run': {'cmd': 'RUST_BACKTRACE=1 cargo run --release', 'in_term': 1},
-  \     'test': {'cmd': 'RUST_BACKTRACE=1 cargo test', 'in_term': 1},
-  \     'release-build': {'cmd': 'cargo build --release', 'in_term': 1},
-  \     'build-doc': {'cmd': 'cargo doc --document-private-items --no-deps', 'in_term': 1},
-  \     'doc': {'cmd': 'cargo doc --open --document-private-items --no-deps'},
-  \     'rust-doc': {'cmd': 'rustup doc'},
-  \     'book': {'cmd': 'rustup doc --book'},
-  \     'std-doc': {'cmd': 'rustup doc --std'},
-  \     'update-tags': {'cmd': 'rusty-tags vi --quiet --output tags', 'exe_in_proj_root': 1},
+  \     'run': {'cmd': ['cargo', 'run'], 'in_term': 1},
+  \     'quick-build': {'cmd': ['cargo', 'build'], 'in_term': 1},
+  \     'release-run': {'cmd': ['RUST_BACKTRACE=1', 'cargo', 'run', '--release'], 'in_term': 1},
+  \     'test': {'cmd': ['RUST_BACKTRACE=1', 'cargo', 'test'], 'in_term': 1},
+  \     'release-build': {'cmd': ['cargo', 'build', '--release'], 'in_term': 1},
+  \     'build-doc': {'cmd': ['cargo', 'doc', '--document-private-items', '--no-deps'], 'in_term': 1},
+  \     'doc': {'cmd': ['cargo', 'doc', '--open', '--document-private-items', '--no-deps']},
+  \     'rust-doc': {'cmd': ['rustup', 'doc']},
+  \     'book': {'cmd': ['rustup', 'doc', '--book']},
+  \     'std-doc': {'cmd': ['rustup', 'doc', '--std']},
+  \     'update-tags': {
+  \       'cmd': ['rusty-tags', 'vi', '--quiet', '--output', 'tags'],
+  \       'exe_in_proj_root': 1,
+  \       'show_stderr_on_error': 0
+  \     }
   \   },
   \ }
+
+function! ProcessTypeResults(text)
+  let l:o = ['']
+  let l:s = 100000
+  let l:col = col('.')
+  for l:line in a:text
+    let l:output = split(l:line, '"')
+    if l:output !=# []
+      let l:num = split(l:output[0])
+      " if start and end aren't on the same line then it is not just for the
+      " word the cursor is sitting on
+      if l:num[0] ==# l:num[2]
+        let l:d1 = abs(l:num[1] - l:col)
+        let l:d2 = abs(l:num[3] - l:col)
+        let l:s1 = l:d1 + l:d2
+        if l:s1 < l:s
+          let l:o = [l:output[1]]
+          let l:s = l:s1
+        endif
+      endif
+    endif
+  endfor
+  return l:o
+endfunction
 
 
 """""""""" Markdown-composer configuration """"""""""
@@ -556,6 +613,9 @@ set completeopt-=preview
 
 """""""""" float-preview """""""""""
 let g:float_preview#docked = 0
+
+"""""""""" ghcmod """"""""""
+let g:ghcmod_use_stack = 1
 
 """""""""" language servers """""""""""
 let g:LanguageClient_serverCommands = {
