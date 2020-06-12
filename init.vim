@@ -34,7 +34,6 @@ Plug 'cespare/vim-toml'
 Plug 'rgrinberg/vim-ocaml'
 Plug 'euclio/vim-markdown-composer', { 'do': ':!cargo build --release' }
 Plug 'macthecadillac/haskell-vim'
-Plug '~/Documents/code/ghcmod-vim'
 Plug 'Shougo/vimproc', { 'do': 'make' }
 Plug '$OPAM_SWITCH_PREFIX/share/merlin', { 'rtp': 'vim' }
 Plug '$OPAM_SWITCH_PREFIX/share/ocp-index', { 'rtp': 'vim' }
@@ -613,9 +612,6 @@ set completeopt-=preview
 
 """""""""" float-preview """""""""""
 let g:float_preview#docked = 0
-
-"""""""""" ghcmod """"""""""
-let g:ghcmod_use_stack = 1
 
 """""""""" language servers """""""""""
 let g:LanguageClient_serverCommands = {
