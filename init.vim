@@ -586,7 +586,7 @@ augroup Clap
 augroup end
 
 " Clap mapppings
-nnoremap <leader>c :Clap providers<CR>
+nnoremap <leader>p :Clap providers<CR>
 nnoremap <leader>f :Clap files<CR>
 nnoremap <leader>g :Clap proj_tags<CR>
 nnoremap <leader>h :Clap help_tags<CR>
