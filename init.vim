@@ -227,15 +227,17 @@ endfunction
 command! Terminal call s:termopen()
 nmap <A-t> :Terminal<CR>
 
-augroup tags
-  autocmd!
-  autocmd BufWritePost *.rs :Axe update-tags
-  autocmd BufWritePost *.vim :Axe update-tags
-  autocmd BufWritePost *.nvim :Axe update-tags
-  autocmd BufWritePost *.ml :Axe update-tags
-  autocmd BufWritePost *.py :Axe update-tags
-  autocmd BufWritePost *.hs :Axe update-tags
-augroup END
+if has('nvim')
+  augroup tags
+    autocmd!
+    autocmd BufWritePost *.rs :Axe update-tags
+    autocmd BufWritePost *.vim :Axe update-tags
+    autocmd BufWritePost *.nvim :Axe update-tags
+    autocmd BufWritePost *.ml :Axe update-tags
+    autocmd BufWritePost *.py :Axe update-tags
+    autocmd BufWritePost *.hs :Axe update-tags
+  augroup END
+endif
 
 augroup Type
   autocmd!
