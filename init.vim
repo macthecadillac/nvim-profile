@@ -7,14 +7,18 @@ set shell=sh  " speeds up the 'system' function and a lot more things
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.config/nvim/vimplug')
 " Tools
-Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
+if has('nvim-0.4.2') || has('patch-8.1.2114')
+  Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
+endif
 Plug 'liuchengxu/vista.vim'
 Plug 'tpope/vim-commentary'
 Plug 'brooth/far.vim', { 'on': ['Far', 'Farp', 'Fardo', 'Refar', 'Rarundo', 'F'] }
 Plug 'w0rp/ale'
-Plug 'equalsraf/neovim-gui-shim'
-Plug '~/axe'
-Plug 'ncm2/float-preview.nvim'
+if has('nvim')
+  Plug 'equalsraf/neovim-gui-shim'
+  Plug '~/axe'
+endif
+" Plug 'ncm2/float-preview.nvim'
 Plug 'simnalamburt/vim-mundo'
 Plug 'ryanoasis/vim-devicons'
 
@@ -34,13 +38,16 @@ Plug 'cespare/vim-toml'
 Plug 'rgrinberg/vim-ocaml'
 Plug 'euclio/vim-markdown-composer', { 'do': ':!cargo build --release' }
 Plug 'macthecadillac/haskell-vim'
-Plug 'Shougo/vimproc', { 'do': 'make' }
 Plug '$OPAM_SWITCH_PREFIX/share/merlin', { 'rtp': 'vim' }
 Plug '$OPAM_SWITCH_PREFIX/share/ocp-index', { 'rtp': 'vim' }
 Plug '$OPAM_SWITCH_PREFIX/share/ocp-indent', { 'rtp': 'vim' }
 
 " Deoplete & co.
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+if !has('nvim')
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
 Plug 'Shougo/neco-syntax'
 Plug 'Shougo/neco-vim', { 'for': 'vim' }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
@@ -188,16 +195,18 @@ map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 map <A-[> :sp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 " Enables running scripts directly from vim
-augroup enable_quickrun
-  autocmd!
-  autocmd FileType python nnoremap <buffer> <A-r> :Axe run<CR>
-  autocmd FileType ocaml nnoremap <buffer> <A-r> :Axe build<CR>
-  autocmd FileType sh nnoremap <buffer> <A-r> :Axe run<CR>
-  autocmd FileType tex nnoremap <buffer> <A-r> :Axe build<CR>
-  autocmd FileType rust nnoremap <buffer> <A-r> :Axe quick-build<CR>
-  autocmd FileType markdown nnoremap <buffer> <A-r> :ComposerStart<CR>
-  autocmd FileType haskell nnoremap <buffer> <A-r> :Axe build<CR>
-augroup END
+if has('nvim')
+  augroup enable_quickrun
+    autocmd!
+    autocmd FileType python nnoremap <buffer> <A-r> :Axe run<CR>
+    autocmd FileType ocaml nnoremap <buffer> <A-r> :Axe build<CR>
+    autocmd FileType sh nnoremap <buffer> <A-r> :Axe run<CR>
+    autocmd FileType tex nnoremap <buffer> <A-r> :Axe build<CR>
+    autocmd FileType rust nnoremap <buffer> <A-r> :Axe quick-build<CR>
+    autocmd FileType markdown nnoremap <buffer> <A-r> :ComposerStart<CR>
+    autocmd FileType haskell nnoremap <buffer> <A-r> :Axe build<CR>
+  augroup END
+endif
 
 " Mapping for bringing up FIXME and TODO comments
 command! TodoBuffer silent! grep! '(FIXME)\|(TODO)' %:t | cwindow | setlocal nospell | file TODO | redraw!
@@ -443,6 +452,7 @@ augroup END
 
 
 """""""""" AXE configuration """"""""""
+let g:axe#open_term_in_float = 1
 let g:axe#filetype_defaults = {
   \ 'ocaml': {'in_term': 1},
   \ 'haskell': {'in_term': 1},
@@ -494,7 +504,7 @@ let g:axe#cmds = {
   \                'axe#util#filename', 'axe#util#line', 'axe#util#col'],
   \        'show_stdout_in_float': 1,
   \        'in_term': 0,
-  \        'post_execution': 'ProcessTypeResults',
+  \        'callback': 'ProcessTypeResults',
   \      }
   \   },
   \ 'sh': {
@@ -564,6 +574,7 @@ let g:clap_layout = {
   \ 'row': '17%',
   \ 'col': '17%'
   \ }
+let g:clap#icon#extensions = get(g:, 'clap#icon#extensions', {})
 let g:clap#icon#extensions = extend(g:clap#icon#extensions, {'ml': 'λ', 'mli': 'λ',})
 let g:clap_current_selection_sign = {
   \ 'text': "\uf432",
@@ -586,14 +597,16 @@ augroup Clap
 augroup end
 
 " Clap mapppings
-nnoremap <leader>p :Clap providers<CR>
-nnoremap <leader>f :Clap files<CR>
-nnoremap <leader>g :Clap proj_tags<CR>
-nnoremap <leader>h :Clap help_tags<CR>
-nnoremap <leader>i :Clap history<CR>
-nnoremap <leader>b :Clap buffers<CR>
-nnoremap <leader>e :Clap filer<CR>
-nnoremap <leader>l :Clap loclist<CR>
+if has('nvim-0.4.2') || has('patch-8.1.2114')
+  nnoremap <leader>p :Clap providers<CR>
+  nnoremap <leader>f :Clap files<CR>
+  nnoremap <leader>g :Clap proj_tags<CR>
+  nnoremap <leader>h :Clap help_tags<CR>
+  nnoremap <leader>i :Clap history<CR>
+  nnoremap <leader>b :Clap buffers<CR>
+  nnoremap <leader>e :Clap filer<CR>
+  nnoremap <leader>l :Clap loclist<CR>
+endif
 
 """""""""" Mundo Settings """"""""""
 let g:mundo_preview_bottom = 1
