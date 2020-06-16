@@ -198,13 +198,13 @@ map <A-[> :sp <CR>:exec("tag ".expand("<cword>"))<CR>
 if has('nvim')
   augroup enable_quickrun
     autocmd!
-    autocmd FileType python nnoremap <buffer> <A-r> :VimDo run<CR>
-    autocmd FileType ocaml nnoremap <buffer> <A-r> :VimDo build<CR>
-    autocmd FileType sh nnoremap <buffer> <A-r> :VimDo run<CR>
-    autocmd FileType tex nnoremap <buffer> <A-r> :VimDo build<CR>
-    autocmd FileType rust nnoremap <buffer> <A-r> :VimDo quick-build<CR>
+    autocmd FileType python nnoremap <buffer> <A-r> :Vimdo run<CR>
+    autocmd FileType ocaml nnoremap <buffer> <A-r> :Vimdo build<CR>
+    autocmd FileType sh nnoremap <buffer> <A-r> :Vimdo run<CR>
+    autocmd FileType tex nnoremap <buffer> <A-r> :Vimdo build<CR>
+    autocmd FileType rust nnoremap <buffer> <A-r> :Vimdo quick-build<CR>
     autocmd FileType markdown nnoremap <buffer> <A-r> :ComposerStart<CR>
-    autocmd FileType haskell nnoremap <buffer> <A-r> :VimDo build<CR>
+    autocmd FileType haskell nnoremap <buffer> <A-r> :Vimdo build<CR>
   augroup END
 endif
 
@@ -230,18 +230,18 @@ nmap <A-t> :Terminal<CR>
 if has('nvim')
   augroup tags
     autocmd!
-    autocmd BufWritePost *.rs :VimDo update-tags
-    autocmd BufWritePost *.vim :VimDo update-tags
-    autocmd BufWritePost *.nvim :VimDo update-tags
-    autocmd BufWritePost *.ml :VimDo update-tags
-    autocmd BufWritePost *.py :VimDo update-tags
-    autocmd BufWritePost *.hs :VimDo update-tags
+    autocmd BufWritePost *.rs :Vimdo update-tags
+    autocmd BufWritePost *.vim :Vimdo update-tags
+    autocmd BufWritePost *.nvim :Vimdo update-tags
+    autocmd BufWritePost *.ml :Vimdo update-tags
+    autocmd BufWritePost *.py :Vimdo update-tags
+    autocmd BufWritePost *.hs :Vimdo update-tags
   augroup END
 endif
 
 augroup Type
   autocmd!
-  autocmd FileType haskell nnoremap <buffer> \t :VimDo type<CR>
+  autocmd FileType haskell nnoremap <buffer> \t :Vimdo type<CR>
 augroup END
 
 function! s:format_sentence(start, end)
@@ -453,7 +453,7 @@ augroup textobj_sentence
 augroup END
 
 
-"""""""""" VimDo configuration """"""""""
+"""""""""" Vimdo configuration """"""""""
 let g:vimdo#open_term_in_float = 1
 let g:vimdo#filetype_defaults = {
   \ 'ocaml': {'in_term': 1},
