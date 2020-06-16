@@ -12,11 +12,11 @@ if has('nvim-0.4.2') || has('patch-8.1.2114')
 endif
 Plug 'liuchengxu/vista.vim'
 Plug 'tpope/vim-commentary'
-Plug 'brooth/far.vim', { 'on': ['Far', 'Farp', 'Fardo', 'Refar', 'Rarundo', 'F'] }
+Plug 'brooth/far.vim'
 Plug 'w0rp/ale'
 if has('nvim')
   Plug 'equalsraf/neovim-gui-shim'
-  Plug '~/axe'
+  Plug '~/vimdo'
 endif
 " Plug 'ncm2/float-preview.nvim'
 Plug 'simnalamburt/vim-mundo'
@@ -198,13 +198,13 @@ map <A-[> :sp <CR>:exec("tag ".expand("<cword>"))<CR>
 if has('nvim')
   augroup enable_quickrun
     autocmd!
-    autocmd FileType python nnoremap <buffer> <A-r> :Axe run<CR>
-    autocmd FileType ocaml nnoremap <buffer> <A-r> :Axe build<CR>
-    autocmd FileType sh nnoremap <buffer> <A-r> :Axe run<CR>
-    autocmd FileType tex nnoremap <buffer> <A-r> :Axe build<CR>
-    autocmd FileType rust nnoremap <buffer> <A-r> :Axe quick-build<CR>
+    autocmd FileType python nnoremap <buffer> <A-r> :VimDo run<CR>
+    autocmd FileType ocaml nnoremap <buffer> <A-r> :VimDo build<CR>
+    autocmd FileType sh nnoremap <buffer> <A-r> :VimDo run<CR>
+    autocmd FileType tex nnoremap <buffer> <A-r> :VimDo build<CR>
+    autocmd FileType rust nnoremap <buffer> <A-r> :VimDo quick-build<CR>
     autocmd FileType markdown nnoremap <buffer> <A-r> :ComposerStart<CR>
-    autocmd FileType haskell nnoremap <buffer> <A-r> :Axe build<CR>
+    autocmd FileType haskell nnoremap <buffer> <A-r> :VimDo build<CR>
   augroup END
 endif
 
@@ -230,18 +230,18 @@ nmap <A-t> :Terminal<CR>
 if has('nvim')
   augroup tags
     autocmd!
-    autocmd BufWritePost *.rs :Axe update-tags
-    autocmd BufWritePost *.vim :Axe update-tags
-    autocmd BufWritePost *.nvim :Axe update-tags
-    autocmd BufWritePost *.ml :Axe update-tags
-    autocmd BufWritePost *.py :Axe update-tags
-    autocmd BufWritePost *.hs :Axe update-tags
+    autocmd BufWritePost *.rs :VimDo update-tags
+    autocmd BufWritePost *.vim :VimDo update-tags
+    autocmd BufWritePost *.nvim :VimDo update-tags
+    autocmd BufWritePost *.ml :VimDo update-tags
+    autocmd BufWritePost *.py :VimDo update-tags
+    autocmd BufWritePost *.hs :VimDo update-tags
   augroup END
 endif
 
 augroup Type
   autocmd!
-  autocmd FileType haskell nnoremap <buffer> \t :Axe type<CR>
+  autocmd FileType haskell nnoremap <buffer> \t :VimDo type<CR>
 augroup END
 
 function! s:format_sentence(start, end)
@@ -453,13 +453,13 @@ augroup textobj_sentence
 augroup END
 
 
-"""""""""" AXE configuration """"""""""
-let g:axe#open_term_in_float = 1
-let g:axe#filetype_defaults = {
+"""""""""" VimDo configuration """"""""""
+let g:vimdo#open_term_in_float = 1
+let g:vimdo#filetype_defaults = {
   \ 'ocaml': {'in_term': 1},
   \ 'haskell': {'in_term': 1},
   \ }
-let g:axe#cmds = {
+let g:vimdo#cmds = {
   \ 'vim': {
   \     'update-tags': {
   \       'cmd': ['ctags', '-R', '-h', '[".py"]', '--exclude={.git,__pycache__,__init__.py}'],
@@ -475,7 +475,7 @@ let g:axe#cmds = {
   \     },
   \   },
   \ 'python': {
-  \     'run': {'cmd': ['python3', 'axe#util#filename'], 'in_term': 1},
+  \     'run': {'cmd': ['python3', 'vimdo#util#filename'], 'in_term': 1},
   \     'update-tags': {
   \       'cmd': ['ctags', '-R', '-h', '[".py"]', '--exclude={.git,__pycache__,__init__.py}'],
   \       'exe_in_proj_root': 1,
@@ -503,21 +503,21 @@ let g:axe#cmds = {
   \     'build': {'cmd': ['stack', 'build']},
   \     'type': {
   \        'cmd': ['stack', 'exec', 'hhpc', '--', 'type',
-  \                'axe#util#filename', 'axe#util#line', 'axe#util#col'],
+  \                'vimdo#util#filename', 'vimdo#util#line', 'vimdo#util#col'],
   \        'show_stdout_in_float': 1,
   \        'in_term': 0,
   \        'callback': 'ProcessTypeResults',
   \      }
   \   },
   \ 'sh': {
-  \     'run': {'cmd': ['sh', 'axe#util#filename'], 'in_term': 1},
+  \     'run': {'cmd': ['sh', 'vimdo#util#filename'], 'in_term': 1},
   \   },
   \ 'fish': {
-  \     'run': {'cmd': ['fish', 'axe#util#filename'], 'in_term': 1},
+  \     'run': {'cmd': ['fish', 'vimdo#util#filename'], 'in_term': 1},
   \   },
   \ 'tex': {
-  \     'build': {'cmd': ['latexmk', '-gg', '-silent', 'axe#util#filename'], 'in_term': 1},
-  \     'continuous-build': {'cmd': ['latexmk', '-pvc', '-interaction=nonstopmode', 'axe#util#filename']},
+  \     'build': {'cmd': ['latexmk', '-gg', '-silent', 'vimdo#util#filename'], 'in_term': 1},
+  \     'continuous-build': {'cmd': ['latexmk', '-pvc', '-interaction=nonstopmode', 'vimdo#util#filename']},
   \   },
   \ 'rust': {
   \     'run': {'cmd': ['cargo', 'run'], 'in_term': 1},
