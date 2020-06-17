@@ -16,9 +16,9 @@ Plug 'brooth/far.vim'
 Plug 'w0rp/ale'
 if has('nvim')
   Plug 'equalsraf/neovim-gui-shim'
-  Plug '~/vimdo'
+  Plug '~/Documents/code/vimdo'
 endif
-" Plug 'ncm2/float-preview.nvim'
+Plug 'ncm2/float-preview.nvim'
 Plug 'simnalamburt/vim-mundo'
 Plug 'ryanoasis/vim-devicons'
 
@@ -26,7 +26,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'itchyny/lightline.vim'
 Plug 'maximbaz/lightline-ale'
 Plug 'itchyny/vim-gitbranch'
-Plug '~/lightline-gitdiff'
+Plug '~/Documents/code/lightline-gitdiff'
 Plug 'mengelbrecht/lightline-bufferline'
 
 " Language support
