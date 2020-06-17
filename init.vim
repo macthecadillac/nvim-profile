@@ -17,8 +17,8 @@ Plug 'w0rp/ale'
 if has('nvim')
   Plug 'equalsraf/neovim-gui-shim'
   Plug '~/Documents/code/vimdo'
+  Plug 'ncm2/float-preview.nvim'
 endif
-Plug 'ncm2/float-preview.nvim'
 Plug 'simnalamburt/vim-mundo'
 Plug 'ryanoasis/vim-devicons'
 
