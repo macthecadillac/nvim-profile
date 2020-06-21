@@ -18,6 +18,7 @@ if has('nvim')
   Plug 'equalsraf/neovim-gui-shim'
   Plug '~/Documents/code/vimdo'
   Plug 'ncm2/float-preview.nvim'
+  Plug 'glacambre/firenvim', { 'do': ':call firenvim#install(0)' }
 endif
 Plug 'simnalamburt/vim-mundo'
 Plug 'ryanoasis/vim-devicons'
@@ -108,14 +109,20 @@ set tags+=./tags;~    " Add parent directories to vim ctags search path
 set undofile
 set undolevels=4000
 set undodir=~/.config/nvim/undo
-set laststatus=2
+
+if exists('g:started_by_firenvim')
+  set laststatus=0
+else
+  set laststatus=2
+endif
+
 set noswapfile
 set complete+=k
 set fillchars+=vert:\  " fill characters of vertical splits
-set statusline=%<%f\    " filename
-set statusline+=%w%h%m%r  " options
-set statusline+=\ %{getcwd()}
-set statusline+=%=%(\ \ \ line\ %l\ of\ %L,\ col\ %c%)\ \ \ %p%%
+" set statusline=%<%f\    " filename
+" set statusline+=%w%h%m%r  " options
+" set statusline+=\ %{getcwd()}
+" set statusline+=%=%(\ \ \ line\ %l\ of\ %L,\ col\ %c%)\ \ \ %p%%
 " set dictionary+=/usr/share/dict/words     " for dictionary completion
 " set dictionary+=~/.config/nvim/spell/en.utf-8.add
 set lazyredraw
@@ -253,6 +260,7 @@ endfunction
 "   autocmd FileType tex set formatexpr=s:format_sentence(v:lnum, v:lnum + v:count - 1)
 " augroup END
 
+nnoremap <leader>e :Explore<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""" UI specific settings """"""""""""""""""""
@@ -262,12 +270,16 @@ if has('termguicolors')
   set termguicolors
 endif
 
-set background=dark
-
-let g:nord_italic = 1
-let g:nord_italic_comments = 1
-colorscheme nord
-" colorscheme one
+if exists('g:started_by_firenvim')
+  set background=light
+  let g:two_firewatch_italics = 1
+  colorscheme two-firewatch
+else
+  set background=dark
+  let g:nord_italic = 1
+  let g:nord_italic_comments = 1
+  colorscheme nord
+endif
 
 " Vim-lightline
 let g:lightline = {
@@ -376,8 +388,26 @@ endfunction
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""" Plugin Settings """""""""""""""""""""""""
+""""""""""""""""""" Other Plugin Settings """""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Firenvim settings
+if exists('g:started_by_firenvim')
+  augroup Firenvim
+    autocmd!
+    autocmd BufEnter github.com_*.txt set filetype=markdown
+    autocmd TextChanged * ++nested write
+    autocmd TextChangedI * ++nested write
+  augroup END
+endif
+
+let g:firenvim_config = {
+      \   'localSettings': {
+      \     '.*': {
+      \       'takeover': 'never'
+      \     },
+      \   },
+      \ }
+
 " Better python syntax highlighting
 let g:python_highlight_builtins = 1
 let g:python_highlight_builtin_objs = 1
@@ -606,7 +636,6 @@ if has('nvim-0.4.2') || has('patch-8.1.2114')
   nnoremap <leader>h :Clap help_tags<CR>
   nnoremap <leader>i :Clap history<CR>
   nnoremap <leader>b :Clap buffers<CR>
-  nnoremap <leader>e :Clap filer<CR>
   nnoremap <leader>l :Clap loclist<CR>
 endif
 
