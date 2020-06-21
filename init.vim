@@ -216,12 +216,12 @@ if has('nvim')
 endif
 
 " Mapping for bringing up FIXME and TODO comments
-command! TodoBuffer silent! grep! '(FIXME)\|(TODO)' %:t | cwindow | setlocal nospell | file TODO | redraw!
-command! TodoDir silent! grep! '(FIXME)\|(TODO)' %:h | cwindow | setlocal nospell | file TODO | redraw!
+command! TodoBuffer execute "silent grep! '\\(FIXME\\)\\\\|\\(TODO\\)' %" | copen | file TODO
+command! TodoDir execute "silent grep! '\\(FIXME\\)\\\\|\\(TODO\\)' ./*" | copen | file TODO
 
 " Better Grep
-command! -nargs=1 GrepLocal silent! grep! <args> %:t | cwindow | setlocal nospell | file Grep | redraw!
-command! -nargs=+ -complete=file Grep silent! grep! <args> %:h | cwindow | setlocal nospell | file Grep | redraw!
+command! -nargs=1 GrepLocal execute "silent grep! <args> %" | copen | file Grep
+command! -nargs=+ -complete=file Grep execute "silent grep! <args>" | copen | file Grep
 
 " Launch terminal with fish shell
 function! s:termopen()
