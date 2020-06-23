@@ -105,7 +105,7 @@ set shiftwidth=4  " when indenting with '>', use 4 spaces width
 " set foldnestmax=1
 set wrap      " soft wrap
 set linebreak     " wrap text while respecting words
-set tags+=./tags;~    " Add parent directories to vim ctags search path
+set tags=./tags;~    " Add parent directories to vim ctags search path
 set undofile
 set undolevels=4000
 set undodir=~/.config/nvim/undo
@@ -216,6 +216,7 @@ if has('nvim')
 endif
 
 " Mapping for bringing up FIXME and TODO comments
+" TODO: Add versions for project wide search (grep from project root)
 command! TodoBuffer execute "silent grep! '\\(FIXME\\)\\\\|\\(TODO\\)' %" | copen | file TODO | setlocal nospell | redraw!
 command! TodoDir execute "silent grep! -R '\\(FIXME\\)\\\\|\\(TODO\\)' ./*" | copen | file TODO | setlocal nospell | redraw!
 
@@ -490,38 +491,24 @@ let g:vimdo#filetype_defaults = {
   \ 'haskell': {'in_term': 1},
   \ }
 let g:vimdo#cmds = {
-  \ 'vim': {
+  \ '*': {
   \     'update-tags': {
-  \       'cmd': ['ctags', '-R', '-h', '[".py"]', '--exclude={.git,__pycache__,__init__.py}'],
-  \       'exe_in_proj_root': 1,
-  \       'show_stderr_on_error': 0
-  \     },
-  \   },
-  \ 'nvim': {
-  \     'update-tags': {
-  \       'cmd': ['ctags', '-R', '-h', '[".py"]', '--exclude={.git,__pycache__,__init__.py}'],
+  \       'cmd': ['ctags', '-R',
+  \               '--exclude=*target/*',
+  \               '--exclude=__init__.py',
+  \               '--exclude=*__pycache__/*'],
+  \       'in_term': 0,
   \       'exe_in_proj_root': 1,
   \       'show_stderr_on_error': 0
   \     },
   \   },
   \ 'python': {
   \     'run': {'cmd': ['python3', 'vimdo#util#filename'], 'in_term': 1},
-  \     'update-tags': {
-  \       'cmd': ['ctags', '-R', '-h', '[".py"]', '--exclude={.git,__pycache__,__init__.py}'],
-  \       'exe_in_proj_root': 1,
-  \       'show_stderr_on_error': 0
-  \     },
   \   },
   \ 'ocaml': {
   \     'build': {'cmd': ['dune', 'build', '@all', '@doc']},
   \     'build-install': {'cmd': ['dune', 'build', '@all', '@install', '@doc']},
   \     'install': {'cmd': ['dune', 'install']},
-  \     'update-tags': {
-  \       'cmd': ['ctags', '-R', '-h', '[".mli"]', '--exclude={.git,_build}'],
-  \       'in_term': 0,
-  \       'exe_in_proj_root': 1,
-  \       'show_stderr_on_error': 0
-  \     },
   \   },
   \ 'haskell': {
   \     'update-tags': {
@@ -665,10 +652,10 @@ let g:LanguageClient_serverCommands = {
     \ }
 let g:LanguageClient_diagnosticsEnable = 0
 
-augroup LCHover
+augroup TypePopup
   autocmd!
-  autocmd FileType haskell nnoremap <leader>d :call LanguageClient#textDocument_hover()<CR>
   autocmd FileType rust nnoremap <leader>d :call LanguageClient#textDocument_hover()<CR>
+  autocmd FileType ocaml nnoremap <leader>d :MerlinTypeOf<CR>
 augroup END
 
 """""""""" deoplete configuration """"""""""
