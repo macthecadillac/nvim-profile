@@ -371,6 +371,7 @@ function! LightlineFormat()
   return &filetype =~# '^Mundo\|MundoDiff' ? '' : &filetype
 endfunction
 
+" TODO: make the length truly adapt to window width
 function! LightlineFilename()
   let l:readonly = &readonly ? "\uf023" . ' ' : ''
 
@@ -496,7 +497,8 @@ let g:vimdo#cmds = {
   \       'cmd': ['ctags', '-R',
   \               '--exclude=*target/*',
   \               '--exclude=__init__.py',
-  \               '--exclude=*__pycache__/*'],
+  \               '--exclude=*__pycache__/*',
+  \               '--exclude=*undo/*'],
   \       'in_term': 0,
   \       'exe_in_proj_root': 1,
   \       'show_stderr_on_error': 0
