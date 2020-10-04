@@ -77,6 +77,7 @@ Plug 'reedes/vim-textobj-sentence'
 " Color themes
 " Plug 'joshdick/onedark.vim'
 " Plug 'rakr/vim-one'
+Plug 'sainnhe/edge'
 call plug#end()
 
 
@@ -147,6 +148,25 @@ endif
 "   autocmd WinLeave * setlocal nocursorline
 " augroup END
 
+" Bar in front of current line
+function! SetLineSign()
+  try
+    let l:pos = getpos(".")
+    let l:row = l:pos[1]
+    sign unplace 2
+    sign define pipe text=┃ texthl=Keyword
+    exe ":sign place 2 line=" . l:row . " name=pipe file=" . expand("%:p")
+    call setpos(".", l:pos)
+  catch
+  endtry
+endfunction
+
+augroup LineSign
+  autocmd!
+  autocmd BufWinEnter,CursorMoved,CursorMovedI * call SetLineSign()
+  autocmd WinLeave * sign unplace 2
+augroup END
+
 " Automatically switch directory to the directory of the current file.
 augroup bufwrite
   autocmd!
@@ -195,11 +215,11 @@ let g:python3_host_prog = '/usr/bin/python3'
 """"""""""""""""""""" Custom Keybinding """""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Map F7 to toggle relative numbering.
-map <F7> :set relativenumber! number!<CR>
+nnoremap <F7> :set relativenumber! number!<CR>
 
 " Shortcuts for jumping to tags in a specific mannger.
-map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
-map <A-[> :sp <CR>:exec("tag ".expand("<cword>"))<CR>
+nnoremap <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+nnoremap <A-[> :sp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 " Enables running scripts directly from vim
 if has('nvim')
@@ -262,6 +282,8 @@ endfunction
 " augroup END
 
 nnoremap <leader>e :Explore<CR>
+
+nnoremap <A-m> :MundoToggle<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""" UI specific settings """"""""""""""""""""
@@ -494,7 +516,7 @@ let g:vimdo#filetype_defaults = {
 let g:vimdo#cmds = {
   \ '*': {
   \     'update-tags': {
-  \       'cmd': ['ctags', '-R',
+  \       'cmd': ['universal-ctags', '-R',
   \               '--exclude=*target/*',
   \               '--exclude=__init__.py',
   \               '--exclude=*__pycache__/*',
@@ -539,13 +561,13 @@ let g:vimdo#cmds = {
   \     'continuous-build': {'cmd': ['latexmk', '-pvc', '-interaction=nonstopmode', 'vimdo#util#filename']},
   \   },
   \ 'rust': {
-  \     'run': {'cmd': ['cargo', 'run'], 'in_term': 1},
+  \     'run': {'cmd': ['RUST_BACKTRACE=1', 'cargo', 'run'], 'in_term': 1},
   \     'quick-build': {'cmd': ['cargo', 'build'], 'in_term': 1},
   \     'release-run': {'cmd': ['RUST_BACKTRACE=1', 'cargo', 'run', '--release'], 'in_term': 1},
   \     'test': {'cmd': ['RUST_BACKTRACE=1', 'cargo', 'test'], 'in_term': 1},
   \     'release-build': {'cmd': ['cargo', 'build', '--release'], 'in_term': 1},
-  \     'build-doc': {'cmd': ['cargo', 'doc', '--document-private-items', '--no-deps'], 'in_term': 1},
-  \     'doc': {'cmd': ['cargo', 'doc', '--open', '--document-private-items', '--no-deps']},
+  \     'build-doc': {'cmd': ['cargo', 'makedocs', '--document-private-items', '--root'], 'in_term': 1},
+  \     'doc': {'cmd': ['cargo', 'makedocs', '--open', '--document-private-items', '--root']},
   \     'rust-doc': {'cmd': ['rustup', 'doc']},
   \     'book': {'cmd': ['rustup', 'doc', '--book']},
   \     'std-doc': {'cmd': ['rustup', 'doc', '--std']},
