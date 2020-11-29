@@ -53,11 +53,10 @@ Plug 'Shougo/neco-syntax'
 Plug 'Shougo/neco-vim', { 'for': 'vim' }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 Plug 'tweekmonster/deoplete-clang2', { 'for': ['cpp', 'c'] }
-Plug 'macthecadillac/neco-ghc', { 'for': 'haskell' }
 
 " Language server
 Plug 'autozimu/LanguageClient-neovim', {
-    \ 'for': ['tex', 'plaintex', 'rust'],
+    \ 'for': ['tex', 'plaintex', 'rust', 'haskell'],
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
@@ -73,6 +72,7 @@ Plug 'glts/vim-textobj-comment'
 Plug 'kana/vim-textobj-indent'
 Plug 'fvictorio/vim-textobj-backticks'
 Plug 'reedes/vim-textobj-sentence'
+Plug 'rbonvall/vim-textobj-latex'
 
 " Color themes
 " Plug 'joshdick/onedark.vim'
@@ -148,24 +148,24 @@ endif
 "   autocmd WinLeave * setlocal nocursorline
 " augroup END
 
-" Bar in front of current line
-function! SetLineSign()
-  try
-    let l:pos = getpos(".")
-    let l:row = l:pos[1]
-    sign unplace 2
-    sign define pipe text=┃ texthl=Keyword
-    exe ":sign place 2 line=" . l:row . " name=pipe file=" . expand("%:p")
-    call setpos(".", l:pos)
-  catch
-  endtry
-endfunction
+" " Bar in front of current line
+" function! SetLineSign()
+"   try
+"     let l:pos = getpos(".")
+"     let l:row = l:pos[1]
+"     sign unplace 2
+"     sign define pipe text=┃ texthl=Keyword
+"     exe ":sign place 2 line=" . l:row . " name=pipe file=" . expand("%:p")
+"     call setpos(".", l:pos)
+"   catch
+"   endtry
+" endfunction
 
-augroup LineSign
-  autocmd!
-  autocmd BufWinEnter,CursorMoved,CursorMovedI * call SetLineSign()
-  autocmd WinLeave * sign unplace 2
-augroup END
+" augroup LineSign
+"   autocmd!
+"   autocmd BufWinEnter,CursorMoved,CursorMovedI * call SetLineSign()
+"   autocmd WinLeave * sign unplace 2
+" augroup END
 
 " Automatically switch directory to the directory of the current file.
 augroup bufwrite
@@ -197,14 +197,13 @@ augroup basic_filetype_settings
   autocmd Filetype text set spell spelllang=en_us
   autocmd Filetype ocaml call MiscSettings(2)
   autocmd Filetype haskell call MiscSettings(2)
+  autocmd Filetype lhaskell call MiscSettings(2)
   autocmd Filetype yaml call MiscSettings(2)
   autocmd Filetype vim call MiscSettings(2)
   " For vim-commentary
   autocmd Filetype ocaml set commentstring=(*\ %s\ *)
   " Use spaces instead of the tabulator when pressing 'tab'
-  autocmd Filetype c,cpp,fish,markdown,ocaml,plaintex,python,sh,tex,text,vim,html,css,haskell set expandtab
-  " open LaTeX documentation for package under cursor
-  autocmd Filetype tex nmap <leader>doc :silent !texdoc <cword><CR>
+  autocmd Filetype c,cpp,fish,markdown,ocaml,plaintex,python,sh,tex,text,vim,html,css,haskell,lhaskell set expandtab
 augroup END
 
 let g:python_host_prog = '/usr/bin/python'
@@ -302,6 +301,8 @@ else
   let g:nord_italic = 1
   let g:nord_italic_comments = 1
   colorscheme nord
+  " set background=light
+  " colorscheme edge
 endif
 
 " Vim-lightline
@@ -464,7 +465,8 @@ let g:ale_linters = {
   \   'bash': ['bash -n '],
   \   'vim': ['vint'],
   \   'fish': [],
-  \   'haskell': ['hlint', 'stack-ghc']
+  \   'haskell': ['hlint', 'stack-ghc'],
+  \   'lhaskell': ['hlint', 'stack-ghc']
   \}
 let g:ale_lint_delay = 1000
 let g:ale_set_highlights = 0
@@ -539,16 +541,9 @@ let g:vimdo#cmds = {
   \       'cmd': ['hasktags', '--ctags', '-x', '.'],
   \       'in_term': 0,
   \       'exe_in_proj_root': 1,
-  \       'show_stderr_on_error': 0
+  \       'show_stderr_on_error': 1
   \     },
-  \     'build': {'cmd': ['stack', 'build']},
-  \     'type': {
-  \        'cmd': ['stack', 'exec', 'hhpc', '--', 'type',
-  \                'vimdo#util#filename', 'vimdo#util#line', 'vimdo#util#col'],
-  \        'show_stdout_in_float': 1,
-  \        'in_term': 0,
-  \        'callback': 'ProcessTypeResults',
-  \      }
+  \     'build': {'cmd': ['stack', 'build', '--fast']},
   \   },
   \ 'sh': {
   \     'run': {'cmd': ['sh', 'vimdo#util#filename'], 'in_term': 1},
@@ -579,37 +574,13 @@ let g:vimdo#cmds = {
   \   },
   \ }
 
-function! ProcessTypeResults(text)
-  let l:o = ['']
-  let l:s = 100000
-  let l:col = col('.')
-  for l:line in a:text
-    let l:output = split(l:line, '"')
-    if l:output !=# []
-      let l:num = split(l:output[0])
-      " if start and end aren't on the same line then it is not just for the
-      " word the cursor is sitting on
-      if l:num[0] ==# l:num[2]
-        let l:d1 = abs(l:num[1] - l:col)
-        let l:d2 = abs(l:num[3] - l:col)
-        let l:s1 = l:d1 + l:d2
-        if l:s1 < l:s
-          let l:o = [l:output[1]]
-          let l:s = l:s1
-        endif
-      endif
-    endif
-  endfor
-  return l:o
-endfunction
-
-
 """""""""" Markdown-composer configuration """"""""""
 let g:markdown_composer_autostart = 0
 
 
 """""""""" Clap settings """"""""""
 let g:clap_theme = 'nord'
+" let g:clap_theme = 'edge'
 " let g:clap_enable_icon = 0
 let g:clap_layout = {
   \ 'width': '67%',
@@ -673,12 +644,14 @@ let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'stable', 'rls'],
     \ 'tex': ['texlab'],
     \ 'plaintex': ['texlab'],
+    \ 'haskell': ['haskell-language-server-wrapper', '--lsp'],
+    \ 'lhaskell': ['haskell-language-server-wrapper', '--lsp'],
     \ }
 let g:LanguageClient_diagnosticsEnable = 0
 
 augroup TypePopup
   autocmd!
-  autocmd FileType rust nnoremap <leader>d :call LanguageClient#textDocument_hover()<CR>
+  autocmd FileType rust,haskell,lhaskell nnoremap <leader>d :call LanguageClient#textDocument_hover()<CR>
   autocmd FileType ocaml nnoremap <leader>d :MerlinTypeOf<CR>
 augroup END
 

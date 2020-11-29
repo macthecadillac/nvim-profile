@@ -7,9 +7,9 @@ if exists('g:GuiLoaded')
 endif
 
 " use light themes for GUI
-let ayucolor='light'
-let lightline.colorscheme = 'ayu'
+set background=light
+let lightline.colorscheme = 'edge'
 
 call lightline#init()
 
-colorscheme ayu
+colorscheme edge
