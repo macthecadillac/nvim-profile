@@ -17,7 +17,6 @@ Plug 'w0rp/ale'
 if has('nvim')
   Plug 'equalsraf/neovim-gui-shim'
   Plug '~/Documents/code/vimdo'
-  Plug 'ncm2/float-preview.nvim'
   Plug 'glacambre/firenvim', { 'do': ':call firenvim#install(0)' }
 endif
 Plug 'simnalamburt/vim-mundo'
@@ -39,24 +38,23 @@ Plug 'cespare/vim-toml'
 Plug 'rgrinberg/vim-ocaml'
 Plug 'euclio/vim-markdown-composer', { 'do': ':!cargo build --release' }
 Plug 'macthecadillac/haskell-vim'
+Plug 'leafgarland/typescript-vim'
 Plug '$OPAM_SWITCH_PREFIX/share/merlin', { 'rtp': 'vim' }
-Plug '$OPAM_SWITCH_PREFIX/share/ocp-index', { 'rtp': 'vim' }
-Plug '$OPAM_SWITCH_PREFIX/share/ocp-indent', { 'rtp': 'vim' }
 
 " Deoplete & co.
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 if !has('nvim')
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
+  " Plug 'ncm2/float-preview.nvim'
 endif
 Plug 'Shougo/neco-syntax'
 Plug 'Shougo/neco-vim', { 'for': 'vim' }
-Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 Plug 'tweekmonster/deoplete-clang2', { 'for': ['cpp', 'c'] }
 
 " Language server
 Plug 'autozimu/LanguageClient-neovim', {
-    \ 'for': ['tex', 'plaintex', 'rust', 'haskell'],
+    \ 'for': ['tex', 'c', 'cpp', 'css', 'plaintex', 'rust', 'haskell', 'ocaml', 'python', 'typescript'],
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
@@ -200,10 +198,11 @@ augroup basic_filetype_settings
   autocmd Filetype lhaskell call MiscSettings(2)
   autocmd Filetype yaml call MiscSettings(2)
   autocmd Filetype vim call MiscSettings(2)
+  autocmd Filetype typescript call MiscSettings(2)
   " For vim-commentary
   autocmd Filetype ocaml set commentstring=(*\ %s\ *)
   " Use spaces instead of the tabulator when pressing 'tab'
-  autocmd Filetype c,cpp,fish,markdown,ocaml,plaintex,python,sh,tex,text,vim,html,css,haskell,lhaskell set expandtab
+  autocmd Filetype c,cpp,fish,markdown,ocaml,plaintex,python,sh,tex,text,vim,html,css,haskell,lhaskell,typescript set expandtab
 augroup END
 
 let g:python_host_prog = '/usr/bin/python'
@@ -332,7 +331,6 @@ let g:lightline = {
   \   },
   \   'component': {
   \     'lineinfo': ' %l/%L:%-2c %p%%',
-  \     'filetype': '%<%{&filetype}',
   \     'gitstatus': '%<%{lightline_gitdiff#get_status()}',
   \     'close': ' ' . "\uf00d" . ' ',
   \   },
@@ -382,6 +380,10 @@ let g:lightline#bufferline#min_buffer_count = 2
 
 function! LightlineFileFormat()
   return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! LightlineFileType()
+  return &filetype
 endfunction
 
 function! DisplayGitBranchName()
@@ -466,7 +468,8 @@ let g:ale_linters = {
   \   'vim': ['vint'],
   \   'fish': [],
   \   'haskell': ['hlint', 'stack-ghc'],
-  \   'lhaskell': ['hlint', 'stack-ghc']
+  \   'lhaskell': ['hlint', 'stack-ghc'],
+  \   'typescript': ['typescript-language-server'],
   \}
 let g:ale_lint_delay = 1000
 let g:ale_set_highlights = 0
@@ -628,10 +631,10 @@ let g:mundo_preview_bottom = 1
 """"""" Autocompletion """"""""
 """""""""""""""""""""""""""""""
 " autoclose preview window
-augroup autoclose_prev_win
-  autocmd!
-  autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
-augroup end
+" augroup autoclose_prev_win
+"   autocmd!
+"   autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
+" augroup end
 
 set completeopt+=noselect
 set completeopt-=preview
@@ -643,15 +646,22 @@ let g:float_preview#docked = 0
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'stable', 'rls'],
     \ 'tex': ['texlab'],
+    \ 'ocaml': ['ocamllsp'],
     \ 'plaintex': ['texlab'],
+    \ 'python': ['pyls'],
     \ 'haskell': ['haskell-language-server-wrapper', '--lsp'],
     \ 'lhaskell': ['haskell-language-server-wrapper', '--lsp'],
+    \ 'typescript': ['typescript-language-server', '--stdio'],
+    \ 'c': ['clangd'],
+    \ 'cpp': ['clangd'],
+    \ 'css': ['css-languageserver',  '--stdio'],
     \ }
 let g:LanguageClient_diagnosticsEnable = 0
+let g:LanguageClient_useVirtualText = "No"
 
-augroup TypePopup
+augroup HoverPreview
   autocmd!
-  autocmd FileType rust,haskell,lhaskell nnoremap <leader>d :call LanguageClient#textDocument_hover()<CR>
+  autocmd FileType rust,haskell,lhaskell,python nnoremap <leader>d :call LanguageClient#textDocument_hover()<CR>
   autocmd FileType ocaml nnoremap <leader>d :MerlinTypeOf<CR>
 augroup END
 
@@ -672,11 +682,3 @@ let g:deoplete#sources#syntax#min_keyword_length = 0
 call deoplete#custom#option('max_list', 0)
 call deoplete#custom#option('auto_refresh_delay', 1)
 let g:deoplete#max_abbr_width = 35
-" Python support
-let g:deoplete#sources#jedi#show_docstring = 1
-let g:deoplete#sources#jedi#statement_length = 35
-let g:deoplete#sources#jedi#python_path = '/usr/bin/python3'
-" OCaml support
-call deoplete#custom#var('omni', 'input_patterns', {
-      \ 'ocaml': '[^. *\t]\.\w*|\s\w*|#',
-      \ })
