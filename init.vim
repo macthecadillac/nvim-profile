@@ -46,11 +46,9 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 if !has('nvim')
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
-  " Plug 'ncm2/float-preview.nvim'
 endif
 Plug 'Shougo/neco-syntax'
 Plug 'Shougo/neco-vim', { 'for': 'vim' }
-Plug 'tweekmonster/deoplete-clang2', { 'for': ['cpp', 'c'] }
 
 " Language server
 Plug 'autozimu/LanguageClient-neovim', {
@@ -71,11 +69,6 @@ Plug 'kana/vim-textobj-indent'
 Plug 'fvictorio/vim-textobj-backticks'
 Plug 'reedes/vim-textobj-sentence'
 Plug 'rbonvall/vim-textobj-latex'
-
-" Color themes
-" Plug 'joshdick/onedark.vim'
-" Plug 'rakr/vim-one'
-Plug 'sainnhe/edge'
 call plug#end()
 
 
@@ -118,12 +111,6 @@ endif
 set noswapfile
 set complete+=k
 set fillchars+=vert:\  " fill characters of vertical splits
-" set statusline=%<%f\    " filename
-" set statusline+=%w%h%m%r  " options
-" set statusline+=\ %{getcwd()}
-" set statusline+=%=%(\ \ \ line\ %l\ of\ %L,\ col\ %c%)\ \ \ %p%%
-" set dictionary+=/usr/share/dict/words     " for dictionary completion
-" set dictionary+=~/.config/nvim/spell/en.utf-8.add
 set lazyredraw
 set mouse=a
 set hidden      " no force save bufer when going to definition
@@ -131,7 +118,6 @@ set scrolloff=0    " starts scrolling when cursor is 0 lines away from screen ed
 " set showtabline=2
 " set guicursor=''
 set noshowmode  " we don't need to show the current mode since it is shown in the statusline
-" set ambiwidth=single  " double-width character support
 
 " set <space> to be the leader key. Much easier to reach than the default '\'
 let mapleader = ' '
@@ -139,31 +125,6 @@ let mapleader = ' '
 if has('nvim')
   set inccommand=nosplit  " provides live preview of substitute as you type
 endif
-
-" augroup CursorLineActiveOnly
-"   autocmd!
-"   autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-"   autocmd WinLeave * setlocal nocursorline
-" augroup END
-
-" " Bar in front of current line
-" function! SetLineSign()
-"   try
-"     let l:pos = getpos(".")
-"     let l:row = l:pos[1]
-"     sign unplace 2
-"     sign define pipe text=┃ texthl=Keyword
-"     exe ":sign place 2 line=" . l:row . " name=pipe file=" . expand("%:p")
-"     call setpos(".", l:pos)
-"   catch
-"   endtry
-" endfunction
-
-" augroup LineSign
-"   autocmd!
-"   autocmd BufWinEnter,CursorMoved,CursorMovedI * call SetLineSign()
-"   autocmd WinLeave * sign unplace 2
-" augroup END
 
 " Automatically switch directory to the directory of the current file.
 augroup bufwrite
@@ -199,6 +160,7 @@ augroup basic_filetype_settings
   autocmd Filetype yaml call MiscSettings(2)
   autocmd Filetype vim call MiscSettings(2)
   autocmd Filetype typescript call MiscSettings(2)
+  autocmd Filetype wast call MiscSettings(2)
   " For vim-commentary
   autocmd Filetype ocaml set commentstring=(*\ %s\ *)
   " Use spaces instead of the tabulator when pressing 'tab'
@@ -230,6 +192,7 @@ if has('nvim')
     autocmd FileType rust nnoremap <buffer> <A-r> :Vimdo quick-build<CR>
     autocmd FileType markdown nnoremap <buffer> <A-r> :ComposerStart<CR>
     autocmd FileType haskell nnoremap <buffer> <A-r> :Vimdo build<CR>
+    autocmd FileType wast nnoremap <buffer> <A-r> :Vimdo assemble-and-run<CR>
   augroup END
 endif
 
@@ -274,13 +237,7 @@ function! s:format_sentence(start, end)
     silent execute a:start.','.a:end.'s/[.!?]\zs /\r/g'
 endfunction
 
-" augroup autoformat
-"   autocmd!
-"   autocmd FileType tex set formatexpr=s:format_sentence(v:lnum, v:lnum + v:count - 1)
-" augroup END
-
 nnoremap <leader>e :Explore<CR>
-
 nnoremap <A-m> :MundoToggle<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -300,8 +257,6 @@ else
   let g:nord_italic = 1
   let g:nord_italic_comments = 1
   colorscheme nord
-  " set background=light
-  " colorscheme edge
 endif
 
 " Vim-lightline
@@ -456,7 +411,6 @@ let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
 let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
 let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
 let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
-" let g:haskell_classic_highlighting = 1
 let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
 
 """""""""" ALE configurations """"""""""
@@ -469,7 +423,7 @@ let g:ale_linters = {
   \   'fish': [],
   \   'haskell': ['hlint', 'stack-ghc'],
   \   'lhaskell': ['hlint', 'stack-ghc'],
-  \   'typescript': ['typescript-language-server'],
+  \   'typescript': ['tsserver']
   \}
 let g:ale_lint_delay = 1000
 let g:ale_set_highlights = 0
@@ -478,11 +432,6 @@ let g:ale_sign_warning = "\uf12a"
 let g:ale_lint_on_enter = 0
 " let g:ale_max_signs = 100
 " rust specific options for ALE
-" let g:ale_rust_cargo_use_check = 1
-" let g:ale_rust_cargo_check_all_targets = 1
-" let g:ale_rust_cargo_check_tests = 1
-" let g:ale_rust_cargo_check_examples = 1
-" let g:ale_rust_cargo_use_clippy = 1
 let g:ale_rust_rls_executable = $HOME . '/.cargo/bin/rls'
 let g:ale_rust_rls_toolchain = 'stable'
 let g:ale_rust_rls_config = {
@@ -513,10 +462,18 @@ augroup END
 
 
 """""""""" Vimdo configuration """"""""""
+" convenience function for dealing with wast files
+function! WasmFileName()
+  let l:fullname = vimdo#util#filename()
+  let l:filename_noext = split(l:fullname, '\.')[0]
+  return l:filename_noext . '.wasm'
+endfunction
+
 let g:vimdo#open_term_in_float = 1
 let g:vimdo#filetype_defaults = {
   \ 'ocaml': {'in_term': 1},
   \ 'haskell': {'in_term': 1},
+  \ 'wast': {'in_term': 1},
   \ }
 let g:vimdo#cmds = {
   \ '*': {
@@ -575,6 +532,9 @@ let g:vimdo#cmds = {
   \       'show_stderr_on_error': 0
   \     }
   \   },
+  \ 'wast': {
+  \     'assemble-and-run': {'cmd': ['wat2wasm', 'vimdo#util#filename', ';', 'wasm-interp', 'WasmFileName', '--run-all-exports']},
+  \   },
   \ }
 
 """""""""" Markdown-composer configuration """"""""""
@@ -583,8 +543,6 @@ let g:markdown_composer_autostart = 0
 
 """""""""" Clap settings """"""""""
 let g:clap_theme = 'nord'
-" let g:clap_theme = 'edge'
-" let g:clap_enable_icon = 0
 let g:clap_layout = {
   \ 'width': '67%',
   \ 'height': '67%',
@@ -630,17 +588,8 @@ let g:mundo_preview_bottom = 1
 """""""""""""""""""""""""""""""
 """"""" Autocompletion """"""""
 """""""""""""""""""""""""""""""
-" autoclose preview window
-" augroup autoclose_prev_win
-"   autocmd!
-"   autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
-" augroup end
-
 set completeopt+=noselect
 set completeopt-=preview
-
-"""""""""" float-preview """""""""""
-let g:float_preview#docked = 0
 
 """""""""" language servers """""""""""
 let g:LanguageClient_serverCommands = {
@@ -668,9 +617,6 @@ augroup END
 """""""""" deoplete configuration """"""""""
 " This augroup keeps vim startup snappy while retaining deoplete
 " functionality on demand
-let g:necoghc_use_stack = 1
-let g:necoghc_enable_detailed_browse = 1
-
 let g:deoplete#enable_at_startup = 0
 augroup enable_deoplete
   autocmd!
@@ -678,7 +624,6 @@ augroup enable_deoplete
 augroup END
 
 let g:deoplete#sources#syntax#min_keyword_length = 0
-" let g:deoplete#max_list = 0
 call deoplete#custom#option('max_list', 0)
 call deoplete#custom#option('auto_refresh_delay', 1)
 let g:deoplete#max_abbr_width = 35
