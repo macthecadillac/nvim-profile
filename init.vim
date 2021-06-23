@@ -8,7 +8,7 @@ set shell=sh  " speeds up the 'system' function and a lot more things
 call plug#begin('~/.config/nvim/vimplug')
 " Tools
 if has('nvim-0.4.2') || has('patch-8.1.2114')
-  Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
+  Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary', 'tag': 'v0.22' }
 endif
 Plug 'liuchengxu/vista.vim'
 Plug 'tpope/vim-commentary'
@@ -17,7 +17,7 @@ Plug 'w0rp/ale'
 if has('nvim')
   Plug 'equalsraf/neovim-gui-shim'
   Plug '~/Documents/code/vimdo'
-  Plug 'glacambre/firenvim', { 'do': ':call firenvim#install(0)' }
+  Plug 'glacambre/firenvim', { 'do': { _ -> 'firenvim#install(0)' } }
 endif
 Plug 'simnalamburt/vim-mundo'
 Plug 'ryanoasis/vim-devicons'
@@ -39,7 +39,7 @@ Plug 'rgrinberg/vim-ocaml'
 Plug 'euclio/vim-markdown-composer', { 'do': ':!cargo build --release' }
 Plug 'macthecadillac/haskell-vim'
 Plug 'leafgarland/typescript-vim'
-Plug '$OPAM_SWITCH_PREFIX/share/merlin', { 'rtp': 'vim' }
+Plug 'JuliaEditorSupport/julia-vim'
 
 " Deoplete & co.
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -52,7 +52,7 @@ Plug 'Shougo/neco-vim', { 'for': 'vim' }
 
 " Language server
 Plug 'autozimu/LanguageClient-neovim', {
-    \ 'for': ['tex', 'c', 'cpp', 'css', 'plaintex', 'rust', 'haskell', 'ocaml', 'python', 'typescript'],
+    \ 'for': ['tex', 'c', 'cpp', 'css', 'plaintex', 'rust', 'haskell', 'ocaml', 'python', 'typescript', 'julia'],
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
@@ -111,7 +111,7 @@ endif
 set noswapfile
 set complete+=k
 set fillchars+=vert:\  " fill characters of vertical splits
-set lazyredraw
+" set lazyredraw
 set mouse=a
 set hidden      " no force save bufer when going to definition
 set scrolloff=0    " starts scrolling when cursor is 0 lines away from screen edge
@@ -152,6 +152,7 @@ augroup basic_filetype_settings
   autocmd Filetype plaintex call MiscSettings(2, 1)
   autocmd Filetype python call MiscSettings(4)
   autocmd Filetype rust call MiscSettings(4)
+  autocmd Filetype julia call MiscSettings(4)
   autocmd FileType rust set tags+=$RUST_SRC_PATH/tags  " add rust src to tags path
   autocmd Filetype text set spell spelllang=en_us
   autocmd Filetype ocaml call MiscSettings(2)
@@ -164,7 +165,7 @@ augroup basic_filetype_settings
   " For vim-commentary
   autocmd Filetype ocaml set commentstring=(*\ %s\ *)
   " Use spaces instead of the tabulator when pressing 'tab'
-  autocmd Filetype c,cpp,fish,markdown,ocaml,plaintex,python,sh,tex,text,vim,html,css,haskell,lhaskell,typescript set expandtab
+  autocmd Filetype c,cpp,fish,markdown,ocaml,plaintex,python,sh,tex,text,vim,html,css,haskell,lhaskell,typescript,julia set expandtab
 augroup END
 
 let g:python_host_prog = '/usr/bin/python'
@@ -186,6 +187,7 @@ if has('nvim')
   augroup enable_quickrun
     autocmd!
     autocmd FileType python nnoremap <buffer> <A-r> :Vimdo run<CR>
+    autocmd FileType julia nnoremap <buffer> <A-r> :Vimdo run<CR>
     autocmd FileType ocaml nnoremap <buffer> <A-r> :Vimdo build<CR>
     autocmd FileType sh nnoremap <buffer> <A-r> :Vimdo run<CR>
     autocmd FileType tex nnoremap <buffer> <A-r> :Vimdo build<CR>
@@ -385,7 +387,8 @@ endif
 let g:firenvim_config = {
       \   'localSettings': {
       \     '.*': {
-      \       'takeover': 'never'
+      \       'takeover': 'never',
+      \       'cmdline': 'neovim',
       \     },
       \   },
       \ }
@@ -423,7 +426,7 @@ let g:ale_linters = {
   \   'fish': [],
   \   'haskell': ['hlint', 'stack-ghc'],
   \   'lhaskell': ['hlint', 'stack-ghc'],
-  \   'typescript': ['tsserver']
+  \   'typescript': ['tsserver'],
   \}
 let g:ale_lint_delay = 1000
 let g:ale_set_highlights = 0
@@ -478,7 +481,7 @@ let g:vimdo#filetype_defaults = {
 let g:vimdo#cmds = {
   \ '*': {
   \     'update-tags': {
-  \       'cmd': ['universal-ctags', '-R',
+  \       'cmd': ['ctags', '-R',
   \               '--exclude=*target/*',
   \               '--exclude=__init__.py',
   \               '--exclude=*__pycache__/*',
@@ -501,7 +504,7 @@ let g:vimdo#cmds = {
   \       'cmd': ['hasktags', '--ctags', '-x', '.'],
   \       'in_term': 0,
   \       'exe_in_proj_root': 1,
-  \       'show_stderr_on_error': 1
+  \       'show_stderr_on_error': 0
   \     },
   \     'build': {'cmd': ['stack', 'build', '--fast']},
   \   },
@@ -535,6 +538,9 @@ let g:vimdo#cmds = {
   \ 'wast': {
   \     'assemble-and-run': {'cmd': ['wat2wasm', 'vimdo#util#filename', ';', 'wasm-interp', 'WasmFileName', '--run-all-exports']},
   \   },
+  \ 'julia': {
+  \     'run': {'cmd': ['julia', 'vimdo#util#filename'], 'in_term': 1},
+  \   }
   \ }
 
 """""""""" Markdown-composer configuration """"""""""
@@ -564,6 +570,7 @@ let g:clap_selected_sign = {
 let g:clap_provider_grep_opts = '-H --no-heading --vimgrep --smart-case -g "!.git/"'
 let g:clap_disable_bottom_top = 1
 let g:clap_preview_size = 0
+let g:clap_enable_background_shadow = 0
 
 augroup Clap
   " fix lightline issue
@@ -592,6 +599,8 @@ set completeopt+=noselect
 set completeopt-=preview
 
 """""""""" language servers """""""""""
+let g:default_julia_version = '1.6'
+
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'stable', 'rls'],
     \ 'tex': ['texlab'],
@@ -604,14 +613,23 @@ let g:LanguageClient_serverCommands = {
     \ 'c': ['clangd'],
     \ 'cpp': ['clangd'],
     \ 'css': ['css-languageserver',  '--stdio'],
+    \ 'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
+    \   using LanguageServer;
+    \   using Pkg;
+    \   import StaticLint;
+    \   import SymbolServer;
+    \   env_path = dirname(Pkg.Types.Context().env.project_file);
+    \   
+    \   server = LanguageServer.LanguageServerInstance(stdin, stdout, env_path, "");
+    \   server.runlinter = true;
+    \   run(server);']
     \ }
 let g:LanguageClient_diagnosticsEnable = 0
 let g:LanguageClient_useVirtualText = "No"
 
 augroup HoverPreview
   autocmd!
-  autocmd FileType rust,haskell,lhaskell,python nnoremap <leader>d :call LanguageClient#textDocument_hover()<CR>
-  autocmd FileType ocaml nnoremap <leader>d :MerlinTypeOf<CR>
+  autocmd FileType rust,haskell,lhaskell,python,ocaml,julia nnoremap <leader>d :call LanguageClient#textDocument_hover()<CR>
 augroup END
 
 """""""""" deoplete configuration """"""""""
