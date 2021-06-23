@@ -168,7 +168,6 @@ augroup basic_filetype_settings
   autocmd Filetype c,cpp,fish,markdown,ocaml,plaintex,python,sh,tex,text,vim,html,css,haskell,lhaskell,typescript,julia set expandtab
 augroup END
 
-let g:python_host_prog = '/usr/bin/python'
 let g:python3_host_prog = '/usr/bin/python3'
 
 
