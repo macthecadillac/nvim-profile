@@ -181,8 +181,7 @@ let g:lightline = {
   \              ['filename'],
   \              ['gitbranch', 'gitstatus']],
   \     'right': [
-  \       [ 'linter_checking',
-  \         'linter_errors',
+  \       [ 'linter_errors',
   \         'linter_warnings',
   \         'linter_ok',
   \         'linter_infos',
@@ -220,7 +219,6 @@ let g:lightline = {
   \     'filename': 'LightlineFilename',
   \   },
   \   'component_type': {
-  \     'linter_checking': 'left',
   \     'linter_warnings': 'warning',
   \     'linter_errors': 'error',
   \     'linter_ok': 'left',
