@@ -425,10 +425,11 @@ let g:vimdo#cmds = {
 
 """""""""" Telescope Settings """"""""""
 nnoremap <leader>p :Telescope<CR>
-nnoremap <leader>f :Telescope find_files<CR>
-nnoremap <leader>b :Telescope buffers<CR>
-nnoremap <leader>h :Telescope help_tags<CR>
-nnoremap <leader>i :Telescope oldfiles<CR>
+nnoremap <leader>f :Telescope find_files theme=get_dropdown previewer=false<CR>
+nnoremap <leader>g :Telescope git_files theme=get_dropdown previewer=false<CR>
+nnoremap <leader>b :Telescope buffers theme=get_dropdown previewer=false<CR>
+nnoremap <leader>h :Telescope help_tags theme=get_dropdown previewer=false<CR>
+nnoremap <leader>i :Telescope frecency theme=get_dropdown previewer=false<CR>
 nnoremap <leader>l :Telescope lsp_document_diagnostics<CR>
 nnoremap <leader>e :Telescope file_browser<CR>
 
@@ -464,7 +465,8 @@ sign define LspDiagnosticsSignHint text= texthl=LspDiagnosticsSignHint linehl
 
 augroup HoverPreview
   autocmd!
-  autocmd FileType rust,haskell,lhaskell,python,ocaml,julia nnoremap <leader>d :lua vim.lsp.buf.hover()<CR>
+  autocmd FileType rust,haskell,lhaskell,python,ocaml,julia nnoremap <leader>t :lua vim.lsp.buf.hover()<CR>
+  autocmd FileType rust,haskell,lhaskell,python,ocaml,julia nnoremap <leader>d :lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
   autocmd FileType rust,haskell,lhaskell,python,ocaml,julia nnoremap gD :lua vim.lsp.buf.declaration()<CR>
   autocmd FileType rust,haskell,lhaskell,python,ocaml,julia nnoremap gd :lua vim.lsp.buf.definition()<CR>
   autocmd FileType rust,haskell,lhaskell,python,ocaml,julia nnoremap [d :lua vim.lsp.diagnostic.goto_prev()<CR>

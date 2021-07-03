@@ -16,10 +16,19 @@ require('packer').startup({function()
   use 'brooth/far.vim'
   use 'equalsraf/neovim-gui-shim'
   use '~/Documents/code/vimdo'
-  use {'glacambre/firenvim', run = ':call firenvim#install(0)'}
   use 'simnalamburt/vim-mundo'
   use 'ryanoasis/vim-devicons'
-  use {'nvim-telescope/telescope.nvim', requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}}
+  use {
+    'nvim-telescope/telescope.nvim',
+    requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}},
+  }
+  use {
+    "nvim-telescope/telescope-frecency.nvim",
+    requires = {{'tami5/sql.nvim'}},
+    config = function()
+      require"telescope".load_extension("frecency")
+    end
+  }
 
   -- Customize status line
   use 'itchyny/lightline.vim'
@@ -35,7 +44,6 @@ require('packer').startup({function()
   use 'macthecadillac/haskell-vim'
   use 'cespare/vim-toml'
   use 'rgrinberg/vim-ocaml'
-  use 'leafgarland/typescript-vim'
   use 'JuliaEditorSupport/julia-vim'
 
   -- Language server
@@ -71,9 +79,22 @@ config = {
 require('telescope').setup{
   defaults = {
     sort_lastused = true,
-    winblend = 5,
+    winblend = 10,
     sorting_strategy = "ascending",
     layout_config = {
+
+      width = function(_, max_columns, _)
+        if max_columns < 120 then
+          return math.min(max_columns - 20, 68)
+        else
+          return math.min(max_columns - 20, 120)
+        end
+      end,
+
+      height = function(_, _, max_lines)
+        return math.min(max_lines - 20, 30)
+      end,
+
       horizontal = {
         prompt_position = "top"
       },
@@ -113,19 +134,23 @@ function lsp_setup()
   nvim_lsp.pyls.setup{}
   nvim_lsp.rls.setup{}
   nvim_lsp.texlab.setup{}
+
+  -- disable virtual text and underline
   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
-      -- Disable signs
-      -- signs = false,
       virtual_text = false,
       underline = false
     }
   )
+
+  -- remove separator in hover pop-ups
   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
     vim.lsp.handlers.hover, {
       separator = false
     }
   )
+
+  -- populate quickfix
   local default_handler = vim.lsp.handlers["textDocument/publishDiagnostics"]
   vim.lsp.handlers["textDocument/publishDiagnostics"] = function(err, method, result, client_id, bufnr, config)
     default_handler(err, method, result, client_id, bufnr, config)

@@ -552,6 +552,9 @@ call s:hi('plugDeleted', s:nord11_gui, '', '', s:nord11_term, '', '')
 " > kshenoy/vim-signature
 call s:hi('SignatureMarkText', s:nord8_gui, '', s:nord8_term, '', '', '')
 
+" telescope
+call s:hi('TelescopeBorder', s:nord3_gui, '', s:nord1_term, '', '', '')
+
 " +--- Languages ---+
 " JavaScript
 " > pangloss/vim-javascript
