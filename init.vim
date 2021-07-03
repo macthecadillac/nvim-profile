@@ -430,6 +430,7 @@ nnoremap <leader>b :Telescope buffers<CR>
 nnoremap <leader>h :Telescope help_tags<CR>
 nnoremap <leader>i :Telescope oldfiles<CR>
 nnoremap <leader>l :Telescope lsp_document_diagnostics<CR>
+nnoremap <leader>e :Telescope file_browser<CR>
 
 """""""""" Mundo Settings """"""""""
 let g:mundo_preview_bottom = 1
