@@ -2,75 +2,7 @@ set encoding=utf8
 scriptencoding "utf-8"
 set shell=sh  " speeds up the 'system' function and a lot more things
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""""""" Vim-Plug Plugins """""""""""""""""""""
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-call plug#begin('~/.config/nvim/vimplug')
-" Tools
-if has('nvim-0.4.2') || has('patch-8.1.2114')
-  Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary', 'tag': 'v0.22' }
-endif
-Plug 'liuchengxu/vista.vim'
-Plug 'tpope/vim-commentary'
-Plug 'brooth/far.vim'
-Plug 'w0rp/ale'
-if has('nvim')
-  Plug 'equalsraf/neovim-gui-shim'
-  Plug '~/Documents/code/vimdo'
-  Plug 'glacambre/firenvim', { 'do': { _ -> 'firenvim#install(0)' } }
-endif
-Plug 'simnalamburt/vim-mundo'
-Plug 'ryanoasis/vim-devicons'
-
-" Customize status line
-Plug 'itchyny/lightline.vim'
-Plug 'maximbaz/lightline-ale'
-Plug 'itchyny/vim-gitbranch'
-Plug '~/Documents/code/lightline-gitdiff'
-Plug 'mengelbrecht/lightline-bufferline'
-
-" Language support
-Plug 'aliva/vim-fish'
-Plug 'vim-python/python-syntax', { 'for': 'python' }
-Plug 'othree/csscomplete.vim', { 'for': 'css' }
-Plug 'rust-lang/rust.vim'
-Plug 'cespare/vim-toml'
-Plug 'rgrinberg/vim-ocaml'
-Plug 'euclio/vim-markdown-composer', { 'do': ':!cargo build --release' }
-Plug 'macthecadillac/haskell-vim'
-Plug 'leafgarland/typescript-vim'
-Plug 'JuliaEditorSupport/julia-vim'
-
-" Deoplete & co.
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-if !has('nvim')
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-Plug 'Shougo/neco-syntax'
-Plug 'Shougo/neco-vim', { 'for': 'vim' }
-
-" Language server
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'for': ['tex', 'c', 'cpp', 'css', 'plaintex', 'rust', 'haskell', 'ocaml', 'python', 'typescript', 'julia'],
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-
-" Operators
-Plug 'kana/vim-operator-user'
-Plug 'rhysd/vim-operator-surround'
-
-" Text objects
-Plug 'kana/vim-textobj-user'
-Plug 'thinca/vim-textobj-between'
-Plug 'glts/vim-textobj-comment'
-Plug 'kana/vim-textobj-indent'
-Plug 'fvictorio/vim-textobj-backticks'
-Plug 'reedes/vim-textobj-sentence'
-Plug 'rbonvall/vim-textobj-latex'
-call plug#end()
-
+lua require('config')
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""" General settings """"""""""""""""""""""
@@ -97,16 +29,9 @@ set shiftwidth=4  " when indenting with '>', use 4 spaces width
 " set foldnestmax=1
 set wrap      " soft wrap
 set linebreak     " wrap text while respecting words
-set tags=./tags;~    " Add parent directories to vim ctags search path
 set undofile
 set undolevels=4000
 set undodir=~/.config/nvim/undo
-
-if exists('g:started_by_firenvim')
-  set laststatus=0
-else
-  set laststatus=2
-endif
 
 set noswapfile
 set complete+=k
@@ -118,13 +43,16 @@ set scrolloff=0    " starts scrolling when cursor is 0 lines away from screen ed
 " set showtabline=2
 " set guicursor=''
 set noshowmode  " we don't need to show the current mode since it is shown in the statusline
+set inccommand=nosplit  " provides live preview of substitute as you type
+
+if exists('g:started_by_firenvim')
+  set laststatus=0
+else
+  set laststatus=2
+endif
 
 " set <space> to be the leader key. Much easier to reach than the default '\'
 let mapleader = ' '
-
-if has('nvim')
-  set inccommand=nosplit  " provides live preview of substitute as you type
-endif
 
 " Automatically switch directory to the directory of the current file.
 augroup bufwrite
@@ -153,7 +81,6 @@ augroup basic_filetype_settings
   autocmd Filetype python call MiscSettings(4)
   autocmd Filetype rust call MiscSettings(4)
   autocmd Filetype julia call MiscSettings(4)
-  autocmd FileType rust set tags+=$RUST_SRC_PATH/tags  " add rust src to tags path
   autocmd Filetype text set spell spelllang=en_us
   autocmd Filetype ocaml call MiscSettings(2)
   autocmd Filetype haskell call MiscSettings(2)
@@ -162,10 +89,11 @@ augroup basic_filetype_settings
   autocmd Filetype vim call MiscSettings(2)
   autocmd Filetype typescript call MiscSettings(2)
   autocmd Filetype wast call MiscSettings(2)
+  autocmd Filetype lua call MiscSettings(2)
   " For vim-commentary
   autocmd Filetype ocaml set commentstring=(*\ %s\ *)
   " Use spaces instead of the tabulator when pressing 'tab'
-  autocmd Filetype c,cpp,fish,markdown,ocaml,plaintex,python,sh,tex,text,vim,html,css,haskell,lhaskell,typescript,julia set expandtab
+  autocmd Filetype c,cpp,fish,markdown,ocaml,plaintex,python,sh,tex,text,vim,html,css,haskell,lhaskell,typescript,julia,lua set expandtab
 augroup END
 
 let g:python3_host_prog = '/usr/bin/python3'
@@ -177,25 +105,22 @@ let g:python3_host_prog = '/usr/bin/python3'
 " Map F7 to toggle relative numbering.
 nnoremap <F7> :set relativenumber! number!<CR>
 
-" Shortcuts for jumping to tags in a specific mannger.
-nnoremap <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
-nnoremap <A-[> :sp <CR>:exec("tag ".expand("<cword>"))<CR>
+" Map F5 to toggle Mundo
+nnoremap <F5> :MundoToggle<CR>
 
 " Enables running scripts directly from vim
-if has('nvim')
-  augroup enable_quickrun
-    autocmd!
-    autocmd FileType python nnoremap <buffer> <A-r> :Vimdo run<CR>
-    autocmd FileType julia nnoremap <buffer> <A-r> :Vimdo run<CR>
-    autocmd FileType ocaml nnoremap <buffer> <A-r> :Vimdo build<CR>
-    autocmd FileType sh nnoremap <buffer> <A-r> :Vimdo run<CR>
-    autocmd FileType tex nnoremap <buffer> <A-r> :Vimdo build<CR>
-    autocmd FileType rust nnoremap <buffer> <A-r> :Vimdo quick-build<CR>
-    autocmd FileType markdown nnoremap <buffer> <A-r> :ComposerStart<CR>
-    autocmd FileType haskell nnoremap <buffer> <A-r> :Vimdo build<CR>
-    autocmd FileType wast nnoremap <buffer> <A-r> :Vimdo assemble-and-run<CR>
-  augroup END
-endif
+augroup enable_quickrun
+  autocmd!
+  autocmd FileType python nnoremap <buffer> <A-r> :Vimdo run<CR>
+  autocmd FileType julia nnoremap <buffer> <A-r> :Vimdo run<CR>
+  autocmd FileType ocaml nnoremap <buffer> <A-r> :Vimdo build<CR>
+  autocmd FileType sh nnoremap <buffer> <A-r> :Vimdo run<CR>
+  autocmd FileType tex nnoremap <buffer> <A-r> :Vimdo build<CR>
+  autocmd FileType rust nnoremap <buffer> <A-r> :Vimdo quick-build<CR>
+  autocmd FileType markdown nnoremap <buffer> <A-r> :ComposerStart<CR>
+  autocmd FileType haskell nnoremap <buffer> <A-r> :Vimdo build<CR>
+  autocmd FileType wast nnoremap <buffer> <A-r> :Vimdo assemble-and-run<CR>
+augroup END
 
 " Mapping for bringing up FIXME and TODO comments
 " TODO: Add versions for project wide search (grep from project root)
@@ -216,18 +141,6 @@ endfunction
 
 command! Terminal call s:termopen()
 nmap <A-t> :Terminal<CR>
-
-if has('nvim')
-  augroup tags
-    autocmd!
-    autocmd BufWritePost *.rs :Vimdo update-tags
-    autocmd BufWritePost *.vim :Vimdo update-tags
-    autocmd BufWritePost *.nvim :Vimdo update-tags
-    autocmd BufWritePost *.ml :Vimdo update-tags
-    autocmd BufWritePost *.py :Vimdo update-tags
-    autocmd BufWritePost *.hs :Vimdo update-tags
-  augroup END
-endif
 
 augroup Type
   autocmd!
@@ -272,6 +185,8 @@ let g:lightline = {
   \         'linter_errors',
   \         'linter_warnings',
   \         'linter_ok',
+  \         'linter_infos',
+  \         'linter_hints',
   \         'lineinfo'],
   \       ['fileformat'],
   \       ['filetype']
@@ -291,10 +206,11 @@ let g:lightline = {
   \     'close': ' ' . "\uf00d" . ' ',
   \   },
   \   'component_expand': {
-  \     'linter_checking': 'lightline#ale#checking',
-  \     'linter_warnings': 'lightline#ale#warnings',
-  \     'linter_errors': 'lightline#ale#errors',
-  \     'linter_ok': 'lightline#ale#ok',
+  \     'linter_hints': 'lightline#lsp#hints',
+  \     'linter_infos': 'lightline#lsp#infos',
+  \     'linter_warnings': 'lightline#lsp#warnings',
+  \     'linter_errors': 'lightline#lsp#errors',
+  \     'linter_ok': 'lightline#lsp#ok',
   \     'buffers': 'lightline#bufferline#buffers',
   \   },
   \   'component_function': {
@@ -308,6 +224,8 @@ let g:lightline = {
   \     'linter_warnings': 'warning',
   \     'linter_errors': 'error',
   \     'linter_ok': 'left',
+  \     'linter_hints': 'right',
+  \     'linter_infos': 'left',
   \     'buffers': 'tabsel',
   \   },
   \   'component_visible_condition': {
@@ -317,10 +235,11 @@ let g:lightline = {
   \   'subseparator': {'left': '', 'right': ''},
   \ }
 
-let g:lightline#ale#indicator_checking = ''
-let g:lightline#ale#indicator_ok = ''
-let g:lightline#ale#indicator_errors = "\uf05e "
-let g:lightline#ale#indicator_warnings = "\uf071 "
+let g:lightline#lsp#indicator_ok = ''
+let g:lightline#lsp#indicator_errors = "\uf05e "
+let g:lightline#lsp#indicator_warnings = "\uf071 "
+let g:lightline#lsp#indicator_hints = "\uf129 "
+let g:lightline#lsp#indicator_infos = "\uf129 "
 let g:lightline_gitdiff#indicator_added = "\uf067"
 let g:lightline_gitdiff#indicator_deleted = "\uf068"
 let g:lightline_gitdiff#indicator_modified = "\uf12a"
@@ -369,7 +288,6 @@ function! LightlineFilename()
   return l:readonly . l:filename . l:modified
 endfunction
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""""" Other Plugin Settings """""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -393,55 +311,41 @@ let g:firenvim_config = {
       \ }
 
 " Better python syntax highlighting
-let g:python_highlight_builtins = 1
-let g:python_highlight_builtin_objs = 1
-let g:python_highlight_builtin_funcs = 1
-let g:python_highlight_builtin_funcs_kwarg = 1
-let g:python_highlight_exceptions = 1
-let g:python_highlight_string_formatting = 1
-let g:python_highlight_string_format = 1
-let g:python_highlight_string_templates = 1
-let g:python_highlight_doctests = 1
-let g:python_highlight_class_vars = 1
-let g:python_highlight_operators = 1
-let g:python_slow_sync = 0
+function! PythonHL()
+  let g:python_highlight_builtins = 1
+  let g:python_highlight_builtin_objs = 1
+  let g:python_highlight_builtin_funcs = 1
+  let g:python_highlight_builtin_funcs_kwarg = 1
+  let g:python_highlight_exceptions = 1
+  let g:python_highlight_string_formatting = 1
+  let g:python_highlight_string_format = 1
+  let g:python_highlight_string_templates = 1
+  let g:python_highlight_doctests = 1
+  let g:python_highlight_class_vars = 1
+  let g:python_highlight_operators = 1
+  let g:python_slow_sync = 0
+endfunction
+
+augroup PythonHighlight
+  autocmd!
+  autocmd FileType python call PythonHL()
+augroup END
 
 " Better haskell syntax highlighting
-let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
-let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
-let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
-let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
-let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
-let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
-let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
+function! HaskellHL()
+  let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
+  let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
+  let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
+  let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
+  let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
+  let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
+  let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
+endfunction
 
-"""""""""" ALE configurations """"""""""
-let g:ale_linters = {
-  \   'python': ['flake8'],
-  \   'latex': ['chktex'],
-  \   'rust': ['rls'],
-  \   'bash': ['bash -n '],
-  \   'vim': ['vint'],
-  \   'fish': [],
-  \   'haskell': ['hlint', 'stack-ghc'],
-  \   'lhaskell': ['hlint', 'stack-ghc'],
-  \   'typescript': ['tsserver'],
-  \}
-let g:ale_lint_delay = 1000
-let g:ale_set_highlights = 0
-let g:ale_sign_error = "\uf00d"
-let g:ale_sign_warning = "\uf12a"
-let g:ale_lint_on_enter = 0
-" let g:ale_max_signs = 100
-" rust specific options for ALE
-let g:ale_rust_rls_executable = $HOME . '/.cargo/bin/rls'
-let g:ale_rust_rls_toolchain = 'stable'
-let g:ale_rust_rls_config = {
-  \   'rust': {
-  \      'clippy_preference': 'on'
-  \   },
-  \ }
-
+augroup HaskellHighlight
+  autocmd!
+  autocmd FileType Haskell call HaskellHL()
+augroup END
 
 """""""""" vim-operator-surround """"""""""
 " operator mappings
@@ -478,18 +382,6 @@ let g:vimdo#filetype_defaults = {
   \ 'wast': {'in_term': 1},
   \ }
 let g:vimdo#cmds = {
-  \ '*': {
-  \     'update-tags': {
-  \       'cmd': ['ctags', '-R',
-  \               '--exclude=*target/*',
-  \               '--exclude=__init__.py',
-  \               '--exclude=*__pycache__/*',
-  \               '--exclude=*undo/*'],
-  \       'in_term': 0,
-  \       'exe_in_proj_root': 1,
-  \       'show_stderr_on_error': 0
-  \     },
-  \   },
   \ 'python': {
   \     'run': {'cmd': ['python3', 'vimdo#util#filename'], 'in_term': 1},
   \   },
@@ -499,12 +391,6 @@ let g:vimdo#cmds = {
   \     'install': {'cmd': ['dune', 'install']},
   \   },
   \ 'haskell': {
-  \     'update-tags': {
-  \       'cmd': ['hasktags', '--ctags', '-x', '.'],
-  \       'in_term': 0,
-  \       'exe_in_proj_root': 1,
-  \       'show_stderr_on_error': 0
-  \     },
   \     'build': {'cmd': ['stack', 'build', '--fast']},
   \   },
   \ 'sh': {
@@ -528,11 +414,6 @@ let g:vimdo#cmds = {
   \     'rust-doc': {'cmd': ['rustup', 'doc']},
   \     'book': {'cmd': ['rustup', 'doc', '--book']},
   \     'std-doc': {'cmd': ['rustup', 'doc', '--std']},
-  \     'update-tags': {
-  \       'cmd': ['rusty-tags', 'vi', '--quiet', '--output', 'tags'],
-  \       'exe_in_proj_root': 1,
-  \       'show_stderr_on_error': 0
-  \     }
   \   },
   \ 'wast': {
   \     'assemble-and-run': {'cmd': ['wat2wasm', 'vimdo#util#filename', ';', 'wasm-interp', 'WasmFileName', '--run-all-exports']},
@@ -542,51 +423,13 @@ let g:vimdo#cmds = {
   \   }
   \ }
 
-"""""""""" Markdown-composer configuration """"""""""
-let g:markdown_composer_autostart = 0
-
-
-"""""""""" Clap settings """"""""""
-let g:clap_theme = 'nord'
-let g:clap_layout = {
-  \ 'width': '67%',
-  \ 'height': '67%',
-  \ 'row': '17%',
-  \ 'col': '17%'
-  \ }
-let g:clap#icon#extensions = get(g:, 'clap#icon#extensions', {})
-let g:clap#icon#extensions = extend(g:clap#icon#extensions, {'ml': 'λ', 'mli': 'λ',})
-let g:clap_current_selection_sign = {
-  \ 'text': "\uf432",
-  \ 'texthl': 'ClapCurrentSelectionSign',
-  \ 'linehl': 'ClapCurrentSelection'
-  \ }
-let g:clap_selected_sign = {
-  \ 'text': "\uf444",
-  \ 'texthl': 'ClapSelectedSign',
-  \ 'linehl': 'ClapSelected'
-  \ }
-let g:clap_provider_grep_opts = '-H --no-heading --vimgrep --smart-case -g "!.git/"'
-let g:clap_disable_bottom_top = 1
-let g:clap_preview_size = 0
-let g:clap_enable_background_shadow = 0
-
-augroup Clap
-  " fix lightline issue
-  autocmd!
-  autocmd User ClapOnExit call lightline#update()
-augroup end
-
-" Clap mapppings
-if has('nvim-0.4.2') || has('patch-8.1.2114')
-  nnoremap <leader>p :Clap providers<CR>
-  nnoremap <leader>f :Clap files<CR>
-  nnoremap <leader>g :Clap proj_tags<CR>
-  nnoremap <leader>h :Clap help_tags<CR>
-  nnoremap <leader>i :Clap history<CR>
-  nnoremap <leader>b :Clap buffers<CR>
-  nnoremap <leader>l :Clap loclist<CR>
-endif
+"""""""""" Telescope Settings """"""""""
+nnoremap <leader>p :Telescope<CR>
+nnoremap <leader>f :Telescope find_files<CR>
+nnoremap <leader>b :Telescope buffers<CR>
+nnoremap <leader>h :Telescope help_tags<CR>
+nnoremap <leader>i :Telescope oldfiles<CR>
+nnoremap <leader>l :Telescope lsp_document_diagnostics<CR>
 
 """""""""" Mundo Settings """"""""""
 let g:mundo_preview_bottom = 1
@@ -595,52 +438,34 @@ let g:mundo_preview_bottom = 1
 """"""" Autocompletion """"""""
 """""""""""""""""""""""""""""""
 set completeopt+=noselect
+set completeopt+=menuone
 set completeopt-=preview
+
+let g:compe = {}
+let g:compe.enabled = 1
+let g:compe.autocomplete = 1
+let g:compe.documentation = 1
+let g:compe.incomplete_delay = 0
+let g:compe.throttle_time = 0
+let g:compe.source = {}
+let g:compe.source.path = 1
+let g:compe.source.buffer = 1
+let g:compe.source.nvim_lsp = 1
+let g:compe.source.nvim_lua = 1
 
 """""""""" language servers """""""""""
 let g:default_julia_version = '1.6'
 
-let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
-    \ 'tex': ['texlab'],
-    \ 'ocaml': ['ocamllsp'],
-    \ 'plaintex': ['texlab'],
-    \ 'python': ['pyls'],
-    \ 'haskell': ['haskell-language-server-wrapper', '--lsp'],
-    \ 'lhaskell': ['haskell-language-server-wrapper', '--lsp'],
-    \ 'typescript': ['typescript-language-server', '--stdio'],
-    \ 'c': ['clangd'],
-    \ 'cpp': ['clangd'],
-    \ 'css': ['css-languageserver',  '--stdio'],
-    \ 'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
-    \   using LanguageServer;
-    \   using Pkg;
-    \   import StaticLint;
-    \   import SymbolServer;
-    \   env_path = dirname(Pkg.Types.Context().env.project_file);
-    \   
-    \   server = LanguageServer.LanguageServerInstance(stdin, stdout, env_path, "");
-    \   server.runlinter = true;
-    \   run(server);']
-    \ }
-let g:LanguageClient_diagnosticsEnable = 0
-let g:LanguageClient_useVirtualText = "No"
+sign define LspDiagnosticsSignError text= texthl=LspDiagnosticsSignError linehl= numhl=
+sign define LspDiagnosticsSignWarning text= texthl=LspDiagnosticsSignWarning linehl= numhl=
+sign define LspDiagnosticsSignInformation text= texthl=LspDiagnosticsSignInformation linehl= numhl=
+sign define LspDiagnosticsSignHint text= texthl=LspDiagnosticsSignHint linehl= numhl=
 
 augroup HoverPreview
   autocmd!
-  autocmd FileType rust,haskell,lhaskell,python,ocaml,julia nnoremap <leader>d :call LanguageClient#textDocument_hover()<CR>
+  autocmd FileType rust,haskell,lhaskell,python,ocaml,julia nnoremap <leader>d :lua vim.lsp.buf.hover()<CR>
+  autocmd FileType rust,haskell,lhaskell,python,ocaml,julia nnoremap gD :lua vim.lsp.buf.declaration()<CR>
+  autocmd FileType rust,haskell,lhaskell,python,ocaml,julia nnoremap gd :lua vim.lsp.buf.definition()<CR>
+  autocmd FileType rust,haskell,lhaskell,python,ocaml,julia nnoremap [d :lua vim.lsp.diagnostic.goto_prev()<CR>
+  autocmd FileType rust,haskell,lhaskell,python,ocaml,julia nnoremap ]d :lua vim.lsp.diagnostic.goto_next()<CR>
 augroup END
-
-"""""""""" deoplete configuration """"""""""
-" This augroup keeps vim startup snappy while retaining deoplete
-" functionality on demand
-let g:deoplete#enable_at_startup = 0
-augroup enable_deoplete
-  autocmd!
-  autocmd InsertEnter * call deoplete#enable() | autocmd! enable_deoplete
-augroup END
-
-let g:deoplete#sources#syntax#min_keyword_length = 0
-call deoplete#custom#option('max_list', 0)
-call deoplete#custom#option('auto_refresh_delay', 1)
-let g:deoplete#max_abbr_width = 35

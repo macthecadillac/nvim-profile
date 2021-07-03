@@ -1,5 +1,12 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
-let g:netrw_dirhist_1='/home/mac/Dropbox/csun_python'
-let g:netrw_dirhist_2='/home/mac/Dropbox/csun_python/aubry_andre_hamiltonian'
-let g:netrw_dirhist_3='/home/mac/.vim'
+let g:netrw_dirhistcnt =0
+let g:netrw_dirhist_0='/home/mac/Documents/code/grader/src'
+let g:netrw_dirhist_9='/home/mac/Documents/PhysicsCVs'
+let g:netrw_dirhist_8='/home/mac/Documents'
+let g:netrw_dirhist_7='/home/mac/Documents/UCSD'
+let g:netrw_dirhist_6='/home/mac/Documents/UCSD/TA'
+let g:netrw_dirhist_5='/home/mac/Documents/UCSD/TA/SummerI212BL'
+let g:netrw_dirhist_4='/home/mac/Documents/UCSD/TA/SummerI212BL/session_4'
+let g:netrw_dirhist_3='/home/mac/Documents/UCSD/TA/S202BL/week3'
+let g:netrw_dirhist_2='/home/mac/Documents/UCSD/TA/S202BL'
+let g:netrw_dirhist_1='/home/mac/Documents/UCSD/TA'

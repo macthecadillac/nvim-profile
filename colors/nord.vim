@@ -71,6 +71,15 @@ let s:nord3_gui_brightened = [
   \ '#7b88a1',
 \ ]
 
+if !exists("g:nord_bold")
+  let g:nord_bold = 1
+endif
+
+let s:bold = "bold,"
+if g:nord_bold == 0
+  let s:bold = ""
+endif
+
 if !exists('g:nord_italic')
   if has('gui_running') || $TERM_ITALICS ==# 'true'
     let g:nord_italic=1
@@ -101,7 +110,7 @@ if !exists('g:nord_uniform_status_lines')
 endif
 
 if !exists('g:nord_comment_brightness')
-  let g:nord_comment_brightness = 0
+  let g:nord_comment_brightness = 10
 endif
 
 if !exists('g:nord_uniform_diff_background')
@@ -495,6 +504,17 @@ call s:hi('GitGutterAdd', s:nord14_gui, '', s:nord14_term, '', '', '')
 call s:hi('GitGutterChange', s:nord13_gui, '', s:nord13_term, '', '', '')
 call s:hi('GitGutterChangeDelete', s:nord11_gui, '', s:nord11_term, '', '', '')
 call s:hi('GitGutterDelete', s:nord11_gui, '', s:nord11_term, '', '', '')
+
+" Neovim LSP
+" > neovim/nvim-lspconfig
+call s:hi("LspDiagnosticsDefaultWarning", s:nord13_gui, "", s:nord13_term, "", "", "")
+call s:hi("LspDiagnosticsDefaultError" , s:nord11_gui, "", s:nord11_term, "", "", "")
+call s:hi("LspDiagnosticsDefaultInformation" , s:nord8_gui, "", s:nord8_term, "", "", "")
+call s:hi("LspDiagnosticsDefaultHint" , s:nord10_gui, "", s:nord10_term, "", "", "")
+call s:hi("LspDiagnosticsUnderlineWarning" , s:nord13_gui, "", s:nord13_term, "", "undercurl", "")
+call s:hi("LspDiagnosticsUnderlineError" , s:nord11_gui, "", s:nord11_term, "", "undercurl", "")
+call s:hi("LspDiagnosticsUnderlineInformation" , s:nord8_gui, "", s:nord8_term, "", "undercurl", "")
+call s:hi("LspDiagnosticsUnderlineHint" , s:nord10_gui, "", s:nord10_term, "", "undercurl", "")
 
 " Signify
 " > mhinz/vim-signify
