@@ -70,18 +70,14 @@ config = {
 
 require('telescope').setup{
   defaults = {
-    previewer = false,
     sort_lastused = true,
-    theme = "dropdown",
-    winblend = 10,
+    winblend = 5,
+    sorting_strategy = "ascending",
     layout_config = {
       horizontal = {
-        mirror = true,
+        prompt_position = "top"
       },
-      vertical = {
-        mirror = false,
-      }
-    }
+    },
   }
 }
 
