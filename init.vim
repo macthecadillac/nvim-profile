@@ -430,6 +430,7 @@ nnoremap <leader>h :Telescope help_tags theme=get_dropdown previewer=false<CR>
 nnoremap <leader>i :Telescope frecency theme=get_dropdown previewer=false<CR>
 nnoremap <leader>l :Telescope lsp_document_diagnostics<CR>
 nnoremap <leader>e :Telescope file_browser<CR>
+nnoremap <leader>c :Telescope commands theme=get_dropdown<CR>
 
 """""""""" Mundo Settings """"""""""
 let g:mundo_preview_bottom = 1

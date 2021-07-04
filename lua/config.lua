@@ -35,7 +35,7 @@ require('packer').startup({function()
   use {'spywhere/lightline-lsp', event = "InsertEnter"}
   use 'itchyny/vim-gitbranch'
   use '~/Documents/code/lightline-gitdiff'
-  use 'mengelbrecht/lightline-bufferline'
+  use {'mengelbrecht/lightline-bufferline', commit = "510c8be"}
 
   -- Language support
   use 'aliva/vim-fish'
