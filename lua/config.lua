@@ -18,6 +18,7 @@ require('packer').startup({function()
   use '~/Documents/code/vimdo'
   use 'simnalamburt/vim-mundo'
   use 'ryanoasis/vim-devicons'
+  use 'voldikss/vim-floaterm'
   use {
     'nvim-telescope/telescope.nvim',
     requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}},
@@ -79,7 +80,6 @@ config = {
 require('telescope').setup{
   defaults = {
     sort_lastused = true,
-    winblend = 10,
     sorting_strategy = "ascending",
     layout_config = {
 

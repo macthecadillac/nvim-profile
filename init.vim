@@ -131,22 +131,6 @@ command! TodoDir execute "silent grep! -R '\\(FIXME\\)\\\\|\\(TODO\\)' ./*" | co
 command! -nargs=1 GrepLocal execute "silent grep! <args> %" | copen | file Grep | setlocal nospell | redraw!
 command! -nargs=+ -complete=file Grep execute "silent grep! -R <args>" | copen | file Grep | setlocal nospell | redraw!
 
-" Launch terminal with fish shell
-function! s:termopen()
-  setlocal shell=fish
-  term
-  setlocal number!
-  setlocal nospell
-endfunction
-
-command! Terminal call s:termopen()
-nmap <A-t> :Terminal<CR>
-
-augroup Type
-  autocmd!
-  autocmd FileType haskell nnoremap <buffer> \t :Vimdo type<CR>
-augroup END
-
 function! s:format_sentence(start, end)
     silent execute a:start.','.a:end.'s/[.!?]\zs /\r/g'
 endfunction
@@ -289,25 +273,6 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """"""""""""""""""" Other Plugin Settings """""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Firenvim settings
-if exists('g:started_by_firenvim')
-  augroup Firenvim
-    autocmd!
-    autocmd BufEnter github.com_*.txt set filetype=markdown
-    autocmd TextChanged * ++nested write
-    autocmd TextChangedI * ++nested write
-  augroup END
-endif
-
-let g:firenvim_config = {
-      \   'localSettings': {
-      \     '.*': {
-      \       'takeover': 'never',
-      \       'cmdline': 'neovim',
-      \     },
-      \   },
-      \ }
-
 " Better python syntax highlighting
 function! PythonHL()
   let g:python_highlight_builtins = 1
@@ -434,6 +399,18 @@ nnoremap <leader>c :Telescope commands theme=get_dropdown<CR>
 
 """""""""" Mundo Settings """"""""""
 let g:mundo_preview_bottom = 1
+
+"""""""""" Floaterm """"""""""
+let g:floaterm_position = 'bottomright'
+let g:floaterm_borderchars = '─│─│╭╮╯╰'
+let g:floaterm_shell = 'fish'
+let g:floaterm_autoinsert = 0
+let g:floaterm_width = min([float2nr(0.8 * &columns), 80])
+let g:floaterm_height = min([float2nr(0.8 * &columns), 23])
+let g:floaterm_title = '──Terminal: $1/$2'
+nmap <A-t> :FloatermToggle<CR>
+imap <A-t> <ESC>:FloatermToggle<CR>
+tmap <A-t> <C-\><C-n>:FloatermToggle<CR>
 
 """""""""""""""""""""""""""""""
 """"""" Autocompletion """"""""

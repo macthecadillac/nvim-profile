@@ -555,6 +555,9 @@ call s:hi('SignatureMarkText', s:nord8_gui, '', s:nord8_term, '', '', '')
 " telescope
 call s:hi('TelescopeBorder', s:nord3_gui, '', s:nord1_term, '', '', '')
 
+" floaterm
+call s:hi('Floatermborder', s:nord3_gui, '', s:nord1_term, '', '', '')
+
 " +--- Languages ---+
 " JavaScript
 " > pangloss/vim-javascript
