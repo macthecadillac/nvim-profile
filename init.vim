@@ -404,10 +404,9 @@ let g:mundo_preview_bottom = 1
 let g:floaterm_position = 'bottomright'
 let g:floaterm_borderchars = '─│─│╭╮╯╰'
 let g:floaterm_shell = 'fish'
-let g:floaterm_autoinsert = 0
 let g:floaterm_width = min([float2nr(0.8 * &columns), 80])
 let g:floaterm_height = min([float2nr(0.8 * &columns), 23])
-let g:floaterm_title = '──Terminal: $1/$2'
+let g:floaterm_title = '── Terminal: $1/$2 '
 nmap <A-t> :FloatermToggle<CR>
 imap <A-t> <ESC>:FloatermToggle<CR>
 tmap <A-t> <C-\><C-n>:FloatermToggle<CR>
