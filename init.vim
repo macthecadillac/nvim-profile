@@ -338,6 +338,26 @@ function! WasmFileName()
   return l:filename_noext . '.wasm'
 endfunction
 
+function! ExeWithJulia()
+  function! _ExeWithJuliaAux()
+    let l:filename = expand('%:p')
+    if !exists("g:julia_term")
+      let g:julia_term = "julia"
+      :FloatermNew --width=&columns --title=Julia --name=g:julia_term julia
+    else
+      redir => l:error
+      :FloatermShow g:julia_term
+      redir END
+      if l:error[1:] == "[vim-floaterm] No floaterms with the bufnr or name"
+        :FloatermNew --width=&columns --title=Julia --name=g:julia_term julia
+      endif
+      unlet l:error
+    endif
+    execute "FloatermSend --name=" . g:julia_term . " include(\"" . l:filename . "\")"
+  endfunction
+  execute "silent call _ExeWithJuliaAux()"
+endfunction
+
 let g:vimdo#open_term_in_float = 1
 let g:vimdo#filetype_defaults = {
   \ 'ocaml': {'in_term': 1},
@@ -383,7 +403,7 @@ let g:vimdo#cmds = {
   \     'assemble-and-run': {'cmd': ['wat2wasm', 'vimdo#util#filename', ';', 'wasm-interp', 'WasmFileName', '--run-all-exports']},
   \   },
   \ 'julia': {
-  \     'run': {'cmd': ['julia', 'vimdo#util#filename'], 'in_term': 1},
+  \     'run': {'cmd': ['julia', 'ExeWithJulia'], 'show_stderr_on_error': 0},
   \   }
   \ }
 
@@ -442,10 +462,10 @@ sign define LspDiagnosticsSignHint text= texthl=LspDiagnosticsSignHint linehl
 
 augroup HoverPreview
   autocmd!
-  autocmd FileType rust,haskell,lhaskell,python,ocaml,julia nnoremap <leader>t :lua vim.lsp.buf.hover()<CR>
-  autocmd FileType rust,haskell,lhaskell,python,ocaml,julia nnoremap <leader>d :lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
-  autocmd FileType rust,haskell,lhaskell,python,ocaml,julia nnoremap gD :lua vim.lsp.buf.declaration()<CR>
-  autocmd FileType rust,haskell,lhaskell,python,ocaml,julia nnoremap gd :lua vim.lsp.buf.definition()<CR>
-  autocmd FileType rust,haskell,lhaskell,python,ocaml,julia nnoremap [d :lua vim.lsp.diagnostic.goto_prev()<CR>
-  autocmd FileType rust,haskell,lhaskell,python,ocaml,julia nnoremap ]d :lua vim.lsp.diagnostic.goto_next()<CR>
+  autocmd FileType rust,haskell,lhaskell,python,ocaml,julia,tex nnoremap <leader>t :lua vim.lsp.buf.hover()<CR>
+  autocmd FileType rust,haskell,lhaskell,python,ocaml,julia,tex nnoremap <leader>d :lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
+  autocmd FileType rust,haskell,lhaskell,python,ocaml,julia,tex nnoremap gD :lua vim.lsp.buf.declaration()<CR>
+  autocmd FileType rust,haskell,lhaskell,python,ocaml,julia,tex nnoremap gd :lua vim.lsp.buf.definition()<CR>
+  autocmd FileType rust,haskell,lhaskell,python,ocaml,julia,tex nnoremap [d :lua vim.lsp.diagnostic.goto_prev()<CR>
+  autocmd FileType rust,haskell,lhaskell,python,ocaml,julia,tex nnoremap ]d :lua vim.lsp.diagnostic.goto_next()<CR>
 augroup END
