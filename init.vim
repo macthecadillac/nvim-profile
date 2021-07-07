@@ -355,6 +355,7 @@ let g:vimdo#cmds = {
   \   },
   \ 'haskell': {
   \     'build': {'cmd': ['stack', 'build', '--fast']},
+  \     'test': {'cmd': ['stack', 'test', '--fast']},
   \   },
   \ 'sh': {
   \     'run': {'cmd': ['sh', 'vimdo#util#filename'], 'in_term': 1},
@@ -405,6 +406,7 @@ let g:floaterm_position = 'bottomright'
 let g:floaterm_borderchars = '─│─│╭╮╯╰'
 let g:floaterm_shell = 'fish'
 let g:floaterm_width = min([float2nr(0.8 * &columns), 80])
+let g:floaterm_autoclose = 1
 let g:floaterm_height = min([float2nr(0.8 * &columns), 23])
 let g:floaterm_title = '── Terminal: $1/$2 '
 nmap <A-t> :FloatermToggle<CR>

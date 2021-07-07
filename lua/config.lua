@@ -57,6 +57,7 @@ require('packer').startup({function()
     print(lsp_status.status())
   end}
   use {'hrsh7th/nvim-compe', event = "InsertEnter"}
+  use 'ray-x/lsp_signature.nvim'
 
   -- Operators
   use 'kana/vim-operator-user'
@@ -102,38 +103,49 @@ require('telescope').setup{
   }
 }
 
+function signature_setup(_, _)
+  require('lsp_signature').on_attach({
+    bind = true, -- This is mandatory, otherwise border config won't get registered.
+    hint_enable = false,
+    max_width = 77,
+    handler_opts = {
+      border = "none"
+    }
+  })
+end
+
 function lsp_setup()
   local nvim_lsp = require('lspconfig')
-  nvim_lsp.clangd.setup{}
-  nvim_lsp.cssls.setup{}
-  nvim_lsp.hls.setup{}
-  nvim_lsp.julials.setup{
-    on_new_config = function(new_config, new_root_dir)
-      server_path = "/path/to/directory/containing/LanguageServer.jl/src"
+  nvim_lsp.clangd.setup({ on_attach = signature_setup })
+  nvim_lsp.cssls.setup({ on_attach = signature_setup })
+  nvim_lsp.hls.setup({})
+  nvim_lsp.julials.setup({
+    on_attach = signature_setup,
+    on_new_config = function(new_config,new_root_dir)
       cmd = {
         "julia",
-        "--project="..server_path,
         "--startup-file=no",
         "--history-file=no",
         "-e", [[
-            using LanguageServer;
-            using Pkg;
-            import StaticLint;
-            import SymbolServer;
-            env_path = dirname(Pkg.Types.Context().env.project_file);
-            
-            server = LanguageServer.LanguageServerInstance(stdin, stdout, env_path, "");
-            server.runlinter = true;
-            run(server);
-                  \]]
-      };
+          using Pkg;
+          Pkg.instantiate()
+          using LanguageServer; using SymbolServer;
+          depot_path = get(ENV, "JULIA_DEPOT_PATH", "")
+          project_path = dirname(something(Base.current_project(pwd()), Base.load_path_expand(LOAD_PATH[2])))
+          # Make sure that we only load packages from this environment specifically.
+          @info "Running language server" env=Base.load_path()[1] pwd() project_path depot_path
+          server = LanguageServer.LanguageServerInstance(stdin, stdout, project_path, depot_path);
+          server.runlinter = true;
+          run(server);
+        \]]
+    };
       new_config.cmd = cmd
     end
-  }
-  nvim_lsp.ocamllsp.setup{}
-  nvim_lsp.pyls.setup{}
-  nvim_lsp.rls.setup{}
-  nvim_lsp.texlab.setup{}
+  })
+  nvim_lsp.ocamllsp.setup({})
+  nvim_lsp.pyls.setup({ on_attach = signature_setup })
+  nvim_lsp.rls.setup({ on_attach = signature_setup })
+  nvim_lsp.texlab.setup({})
 
   -- disable virtual text and underline
   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
