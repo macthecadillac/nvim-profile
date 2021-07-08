@@ -2,7 +2,58 @@ set encoding=utf8
 scriptencoding "utf-8"
 set shell=sh  " speeds up the 'system' function and a lot more things
 
-lua require('config')
+let data_dir = stdpath('data') . '/site'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo ' . data_dir . '/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.config/nvim/vimplug')
+  Plug 'tpope/vim-commentary'
+  Plug 'brooth/far.vim'
+  Plug '~/Documents/code/vimdo'
+  Plug 'simnalamburt/vim-mundo', { 'on': ['MundoToggle', 'MundoShow', 'MundoHide'] }
+  Plug 'ryanoasis/vim-devicons'
+  Plug 'voldikss/vim-floaterm'
+  Plug 'nvim-lua/popup.nvim', { 'on': [] }  " delayed load
+  Plug 'nvim-lua/plenary.nvim', { 'on': [] }
+  Plug 'nvim-telescope/telescope.nvim', { 'on': [] }
+  Plug 'tami5/sql.nvim', { 'on': [] }
+  Plug 'nvim-telescope/telescope-frecency.nvim', { 'on': [] }
+
+  " Customize status line
+  Plug 'itchyny/lightline.vim'
+  Plug 'itchyny/vim-gitbranch'
+  Plug '~/Documents/code/lightline-gitdiff'
+  Plug 'mengelbrecht/lightline-bufferline', { 'commit': '510c8be' }
+  Plug 'spywhere/lightline-lsp', { 'on': [] }
+
+  " Language support
+  Plug 'aliva/vim-fish'
+  Plug 'vim-python/python-syntax', { 'for': 'python' }
+  Plug 'rust-lang/rust.vim'
+  Plug 'macthecadillac/haskell-vim'
+  Plug 'cespare/vim-toml'
+  Plug 'rgrinberg/vim-ocaml'
+  Plug 'JuliaEditorSupport/julia-vim'
+
+  " Language server
+  Plug 'neovim/nvim-lspconfig', { 'on': [] }
+  Plug 'nvim-lua/lsp-status.nvim', { 'on': [] } 
+  Plug 'hrsh7th/nvim-compe', { 'on': [] }
+  Plug 'ray-x/lsp_signature.nvim', { 'on': [] }
+
+  " Operators
+  Plug 'kana/vim-operator-user'
+  Plug 'rhysd/vim-operator-surround'
+
+  " Text objects
+  Plug 'kana/vim-textobj-user'
+  Plug 'thinca/vim-textobj-between'
+  Plug 'glts/vim-textobj-comment'
+  Plug 'reedes/vim-textobj-sentence'
+  Plug 'gibiansky/vim-latex-objects'
+call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""" General settings """"""""""""""""""""""
@@ -408,6 +459,16 @@ let g:vimdo#cmds = {
   \ }
 
 """""""""" Telescope Settings """"""""""
+function! LoadTelescope()
+  call plug#load('popup.nvim', 'plenary.nvim', 'telescope.nvim', 'sql.nvim', 'telescope-frecency.nvim')
+  lua require('telescope-setup')
+endfunction
+
+augroup Telescope
+  autocmd!
+  autocmd CmdUndefined Telescope call LoadTelescope()
+augroup END
+
 nnoremap <leader>p :Telescope<CR>
 nnoremap <leader>f :Telescope find_files theme=get_dropdown previewer=false<CR>
 nnoremap <leader>g :Telescope git_files theme=get_dropdown previewer=false<CR>
@@ -436,6 +497,22 @@ tmap <A-t> <C-\><C-n>:FloatermToggle<CR>
 """""""""""""""""""""""""""""""
 """"""" Autocompletion """"""""
 """""""""""""""""""""""""""""""
+let g:lsp_init_status = 0
+
+function! LoadNeovimLSP()
+  if !g:lsp_init_status
+    let g:lsp_init_status = 1
+    call plug#load('nvim-lspconfig', 'lsp-status.nvim', 'nvim-compe', 'lsp_signature.nvim')
+    lua require('lsp-setup')
+    execute 'LspStart'
+  endif
+endfunction
+
+augroup NeovimLSP
+  autocmd!
+  autocmd InsertEnter * call LoadNeovimLSP()
+augroup END
+
 set completeopt+=noselect
 set completeopt+=menuone
 set completeopt-=preview

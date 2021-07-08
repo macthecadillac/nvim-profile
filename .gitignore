@@ -1,8 +1,5 @@
 *.swp
-/..vimrc.un~
-**/*.pyc
-/autoload/plug.vim.old
-**/.ropeproject/*
+/autoload/plug.vim
 /undo/*
 **/tags
-/plugin/*
+/vimplug/*
