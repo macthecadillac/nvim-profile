@@ -2,4 +2,5 @@
 /autoload/plug.vim
 /undo/*
 **/tags
+**/.directory
 /vimplug/*
