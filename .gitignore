@@ -4,3 +4,5 @@
 **/tags
 **/.directory
 /vimplug/*
+/pack/*
+/lua/load-packages.lua

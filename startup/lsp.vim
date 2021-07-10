@@ -3,7 +3,11 @@ let g:lsp_init_status = 0
 function! LoadNeovimLSP()
   if !g:lsp_init_status
     let g:lsp_init_status = 1
-    call plug#load('nvim-lspconfig', 'lsp-status.nvim', 'nvim-compe', 'lsp_signature.nvim', 'lightline-lsp')
+    execute 'packadd nvim-lspconfig'
+    execute 'packadd lsp-status.nvim'
+    execute 'packadd nvim-compe'
+    execute 'packadd lsp_signature.nvim'
+    execute 'packadd lightline-lsp'
     lua require('lsp-setup')
     execute 'LspStart'
   endif

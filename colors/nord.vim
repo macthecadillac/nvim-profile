@@ -5,285 +5,294 @@
 " Repository: https://github.com/arcticicestudio/nord-vim
 " License: MIT
 
-if v:version > 580
-  hi clear
-  if exists('syntax_on')
-    syntax reset
-  endif
-endif
-
-let g:colors_name = 'nord'
-let s:nord_vim_version='0.9.0'
-set background=dark
-
-let s:nord0_gui = '#2E3440'
-let s:nord1_gui = '#3B4252'
-let s:nord2_gui = '#434C5E'
-let s:nord3_gui = '#4C566A'
-let s:nord4_gui = '#D8DEE9'
-let s:nord5_gui = '#E5E9F0'
-let s:nord6_gui = '#ECEFF4'
-let s:nord7_gui = '#8FBCBB'
-let s:nord8_gui = '#88C0D0'
-let s:nord9_gui = '#81A1C1'
-let s:nord10_gui = '#5E81AC'
-let s:nord11_gui = '#BF616A'
-let s:nord12_gui = '#D08770'
-let s:nord13_gui = '#EBCB8B'
-let s:nord14_gui = '#A3BE8C'
-let s:nord15_gui = '#B48EAD'
-
-let s:nord1_term = '0'
-let s:nord3_term = '8'
-let s:nord5_term = '7'
-let s:nord6_term = '15'
-let s:nord7_term = '14'
-let s:nord8_term = '6'
-let s:nord9_term = '4'
-let s:nord10_term = '12'
-let s:nord11_term = '1'
-let s:nord12_term = '11'
-let s:nord13_term = '3'
-let s:nord14_term = '2'
-let s:nord15_term = '5'
-
-let s:nord3_gui_brightened = [
-  \ s:nord3_gui,
-  \ '#4e586d',
-  \ '#505b70',
-  \ '#525d73',
-  \ '#556076',
-  \ '#576279',
-  \ '#59647c',
-  \ '#5b677f',
-  \ '#5d6982',
-  \ '#5f6c85',
-  \ '#616e88',
-  \ '#63718b',
-  \ '#66738e',
-  \ '#687591',
-  \ '#6a7894',
-  \ '#6d7a96',
-  \ '#6f7d98',
-  \ '#72809a',
-  \ '#75829c',
-  \ '#78859e',
-  \ '#7b88a1',
-\ ]
-
-if !exists("g:nord_bold")
-  let g:nord_bold = 1
-endif
-
-let s:bold = "bold,"
-if g:nord_bold == 0
-  let s:bold = ""
-endif
-
-if !exists('g:nord_italic')
-  if has('gui_running') || $TERM_ITALICS ==# 'true'
-    let g:nord_italic=1
-  else
-    let g:nord_italic=0
-  endif
-endif
-
-let s:italic = 'italic,'
-if g:nord_italic ==# 0
-  let s:italic = ''
-endif
-
-let s:underline = 'underline,'
-if ! get(g:, 'nord_underline', 1)
-  let s:underline = 'NONE,'
-endif
-
-let s:italicize_comments = ''
-if exists('g:nord_italic_comments')
-  if g:nord_italic_comments ==# 1
-    let s:italicize_comments = s:italic
-  endif
-endif
-
-if !exists('g:nord_uniform_status_lines')
-  let g:nord_uniform_status_lines = 0
-endif
-
-if !exists('g:nord_comment_brightness')
-  let g:nord_comment_brightness = 10
-endif
-
-if !exists('g:nord_uniform_diff_background')
-  let g:nord_uniform_diff_background = 0
-endif
-
-if !exists('g:nord_cursor_line_number_background')
-  let g:nord_cursor_line_number_background = 0
-endif
-
-function! s:hi(group, guifg, guibg, ctermfg, ctermbg, attr, guisp)
-  if a:guifg !=# ''
-    exec 'hi ' . a:group . ' guifg=' . a:guifg
-  endif
-  if a:guibg !=# ''
-    exec 'hi ' . a:group . ' guibg=' . a:guibg
-  endif
-  if a:ctermfg !=# ''
-    exec 'hi ' . a:group . ' ctermfg=' . a:ctermfg
-  endif
-  if a:ctermbg !=# ''
-    exec 'hi ' . a:group . ' ctermbg=' . a:ctermbg
-  endif
-  if a:attr !=# ''
-    exec 'hi ' . a:group . ' gui=' . a:attr . ' cterm=' . substitute(a:attr, 'undercurl', s:underline, '')
-  endif
-  if a:guisp !=# ''
-    exec 'hi ' . a:group . ' guisp=' . a:guisp
-  endif
-endfunction
-
 " +---------------+
 " + UI Components +
 " +---------------+
 " +--- Attributes ---+
-call s:hi('Bold', '', '', '', '', 'bold', '')
-call s:hi('Italic', '', '', '', '', s:italic, '')
-call s:hi('Underline', '', '', '', '', s:underline, '')
+hi Bold gui=bold cterm=bold
+hi Italic gui=italic, cterm=italic,
+hi Underline gui=underline, cterm=underline,
 
 " +--- Editor ---+
-call s:hi('ColorColumn', '', s:nord1_gui, 'NONE', s:nord1_term, '', '')
-call s:hi('Cursor', s:nord0_gui, s:nord4_gui, '', 'NONE', '', '')
-call s:hi('CursorLine', '', s:nord1_gui, 'NONE', s:nord1_term, 'NONE', '')
-call s:hi('Error', s:nord0_gui, s:nord11_gui, '', s:nord11_term, '', '')
-call s:hi('iCursor', s:nord0_gui, s:nord4_gui, '', 'NONE', '', '')
-call s:hi('LineNr', s:nord3_gui, s:nord0_gui, s:nord3_term, 'NONE', '', '')
-call s:hi('MatchParen', s:nord8_gui, s:nord3_gui, s:nord8_term, s:nord3_term, '', '')
-call s:hi('NonText', s:nord2_gui, '', s:nord3_term, '', '', '')
-call s:hi('Normal', s:nord4_gui, s:nord0_gui, 'NONE', 'NONE', '', '')
-call s:hi('PMenu', s:nord4_gui, s:nord1_gui, 'NONE', s:nord1_term, 'NONE', '')
-call s:hi('PmenuSbar', s:nord4_gui, s:nord2_gui, 'NONE', s:nord1_term, '', '')
-call s:hi('PMenuSel', s:nord5_gui, s:nord3_gui, s:nord8_term, s:nord3_term, '', '')
-call s:hi('PmenuThumb', s:nord8_gui, s:nord3_gui, 'NONE', s:nord3_term, '', '')
-call s:hi('SpecialKey', s:nord3_gui, '', s:nord3_term, '', '', '')
-call s:hi('SpellBad', s:nord11_gui, s:nord0_gui, s:nord11_term, 'NONE', 'undercurl', s:nord11_gui)
-call s:hi('SpellCap', s:nord13_gui, s:nord0_gui, s:nord13_term, 'NONE', 'undercurl', s:nord13_gui)
-call s:hi('SpellLocal', s:nord5_gui, s:nord0_gui, s:nord5_term, 'NONE', 'undercurl', s:nord5_gui)
-call s:hi('SpellRare', s:nord6_gui, s:nord0_gui, s:nord6_term, 'NONE', 'undercurl', s:nord6_gui)
-call s:hi('Visual', '', s:nord2_gui, '', s:nord1_term, '', '')
-call s:hi('VisualNOS', '', s:nord2_gui, '', s:nord1_term, '', '')
-" +- Neovim Support -+
-call s:hi('healthError', s:nord11_gui, s:nord1_gui, s:nord11_term, s:nord1_term, '', '')
-call s:hi('healthSuccess', s:nord14_gui, s:nord1_gui, s:nord14_term, s:nord1_term, '', '')
-call s:hi('healthWarning', s:nord13_gui, s:nord1_gui, s:nord13_term, s:nord1_term, '', '')
-call s:hi('TermCursorNC', '', s:nord1_gui, '', s:nord1_term, '', '')
+hi ColorColumn guibg=#3B4252
+hi ColorColumn ctermfg=NONE
+hi ColorColumn ctermbg=0
+hi Cursor guifg=#2E3440
+hi Cursor guibg=#D8DEE9
+hi Cursor ctermbg=NONE
+hi CursorLine guibg=#3B4252
+hi CursorLine ctermfg=NONE
+hi CursorLine ctermbg=0
+hi CursorLine gui=NONE cterm=NONE
+hi Error guifg=#2E3440
+hi Error guibg=#BF616A
+hi Error ctermbg=1
+hi iCursor guifg=#2E3440
+hi iCursor guibg=#D8DEE9
+hi iCursor ctermbg=NONE
+hi LineNr guifg=#4C566A
+hi LineNr guibg=#2E3440
+hi LineNr ctermfg=8
+hi LineNr ctermbg=NONE
+hi MatchParen guifg=#88C0D0
+hi MatchParen guibg=#4C566A
+hi MatchParen ctermfg=6
+hi MatchParen ctermbg=8
+hi NonText guifg=#434C5E
+hi NonText ctermfg=8
+hi Normal guifg=#D8DEE9
+hi Normal guibg=#2E3440
+hi Normal ctermfg=NONE
+hi Normal ctermbg=NONE
+hi PMenu guifg=#D8DEE9
+hi PMenu guibg=#3B4252
+hi PMenu ctermfg=NONE
+hi PMenu ctermbg=0
+hi PMenu gui=NONE cterm=NONE
+hi PmenuSbar guifg=#D8DEE9
+hi PmenuSbar guibg=#434C5E
+hi PmenuSbar ctermfg=NONE
+hi PmenuSbar ctermbg=0
+hi PMenuSel guifg=#E5E9F0
+hi PMenuSel guibg=#4C566A
+hi PMenuSel ctermfg=6
+hi PMenuSel ctermbg=8
+hi PmenuThumb guifg=#88C0D0
+hi PmenuThumb guibg=#4C566A
+hi PmenuThumb ctermfg=NONE
+hi PmenuThumb ctermbg=8
+hi SpecialKey guifg=#4C566A
+hi SpecialKey ctermfg=8
+hi SpellBad guifg=#BF616A
+hi SpellBad guibg=#2E3440
+hi SpellBad ctermfg=1
+hi SpellBad ctermbg=NONE
+hi SpellBad gui=undercurl cterm=underline,
+hi SpellBad guisp=#BF616A
+hi SpellCap guifg=#EBCB8B
+hi SpellCap guibg=#2E3440
+hi SpellCap ctermfg=3
+hi SpellCap ctermbg=NONE
+hi SpellCap gui=undercurl cterm=underline,
+hi SpellCap guisp=#EBCB8B
+hi SpellLocal guifg=#E5E9F0
+hi SpellLocal guibg=#2E3440
+hi SpellLocal ctermfg=7
+hi SpellLocal ctermbg=NONE
+hi SpellLocal gui=undercurl cterm=underline,
+hi SpellLocal guisp=#E5E9F0
+hi SpellRare guifg=#ECEFF4
+hi SpellRare guibg=#2E3440
+hi SpellRare ctermfg=15
+hi SpellRare ctermbg=NONE
+hi SpellRare gui=undercurl cterm=underline,
+hi SpellRare guisp=#ECEFF4
+hi Visual guibg=#434C5E
+hi Visual ctermbg=0
+hi VisualNOS guibg=#434C5E
+hi VisualNOS ctermbg=0
 
-" +- Neovim Terminal Colors -+
-if has('nvim')
-  let g:terminal_color_0 = s:nord1_gui
-  let g:terminal_color_1 = s:nord11_gui
-  let g:terminal_color_2 = s:nord14_gui
-  let g:terminal_color_3 = s:nord13_gui
-  let g:terminal_color_4 = s:nord9_gui
-  let g:terminal_color_5 = s:nord15_gui
-  let g:terminal_color_6 = s:nord8_gui
-  let g:terminal_color_7 = s:nord5_gui
-  let g:terminal_color_8 = s:nord3_gui
-  let g:terminal_color_9 = s:nord11_gui
-  let g:terminal_color_10 = s:nord14_gui
-  let g:terminal_color_11 = s:nord13_gui
-  let g:terminal_color_12 = s:nord9_gui
-  let g:terminal_color_13 = s:nord15_gui
-  let g:terminal_color_14 = s:nord7_gui
-  let g:terminal_color_15 = s:nord6_gui
-endif
+" +- Neovim Support -+
+hi healthError guifg=#BF616A
+hi healthError guibg=#3B4252
+hi healthError ctermfg=1
+hi healthError ctermbg=0
+hi healthSuccess guifg=#A3BE8C
+hi healthSuccess guibg=#3B4252
+hi healthSuccess ctermfg=2
+hi healthSuccess ctermbg=0
+hi healthWarning guifg=#EBCB8B
+hi healthWarning guibg=#3B4252
+hi healthWarning ctermfg=3
+hi healthWarning ctermbg=0
+hi TermCursorNC guibg=#3B4252
+hi TermCursorNC ctermbg=0
 
 " +--- Gutter ---+
-call s:hi('CursorColumn', '', s:nord1_gui, 'NONE', s:nord1_term, '', '')
-if g:nord_cursor_line_number_background ==# 0
-  call s:hi('CursorLineNr', s:nord4_gui, s:nord0_gui, 'NONE', '', '', '')
-else
-  call s:hi('CursorLineNr', s:nord4_gui, s:nord1_gui, 'NONE', s:nord1_term, '', '')
-endif
-call s:hi('Folded', s:nord3_gui, s:nord1_gui, s:nord3_term, s:nord1_term, 'bold', '')
-call s:hi('FoldColumn', s:nord3_gui, s:nord0_gui, s:nord3_term, 'NONE', '', '')
-call s:hi('SignColumn', s:nord1_gui, s:nord0_gui, s:nord1_term, 'NONE', '', '')
+hi CursorColumn guibg=#3B4252
+hi CursorColumn ctermfg=NONE
+hi CursorColumn ctermbg=0
+hi CursorLineNr guifg=#D8DEE9
+hi CursorLineNr guibg=#2E3440
+hi CursorLineNr ctermfg=NONE
+hi Folded guifg=#4C566A
+hi Folded guibg=#3B4252
+hi Folded ctermfg=8
+hi Folded ctermbg=0
+hi Folded gui=bold cterm=bold
+hi FoldColumn guifg=#4C566A
+hi FoldColumn guibg=#2E3440
+hi FoldColumn ctermfg=8
+hi FoldColumn ctermbg=NONE
+hi SignColumn guifg=#3B4252
+hi SignColumn guibg=#2E3440
+hi SignColumn ctermfg=0
+hi SignColumn ctermbg=NONE
 
 " +--- Navigation ---+
-call s:hi('Directory', s:nord8_gui, '', s:nord8_term, 'NONE', '', '')
+hi Directory guifg=#88C0D0
+hi Directory ctermfg=6
+hi Directory ctermbg=NONE
 
 " +--- Prompt/Status ---+
-call s:hi('EndOfBuffer', s:nord1_gui, '', s:nord1_term, 'NONE', '', '')
-call s:hi('ErrorMsg', s:nord4_gui, s:nord11_gui, 'NONE', s:nord11_term, '', '')
-call s:hi('ModeMsg', s:nord4_gui, '', '', '', '', '')
-call s:hi('MoreMsg', s:nord4_gui, '', '', '', '', '')
-call s:hi('Question', s:nord4_gui, '', 'NONE', '', '', '')
-if g:nord_uniform_status_lines ==# 0
-  call s:hi('StatusLine', s:nord4_gui, s:nord3_gui, s:nord5_term, s:nord3_term, 'NONE', '')
-  call s:hi('StatusLineNC', s:nord4_gui, s:nord1_gui, 'NONE', s:nord1_term, 'NONE', '')
-  call s:hi('StatusLineTerm', s:nord4_gui, s:nord3_gui, s:nord5_term, s:nord3_term, 'NONE', '')
-  call s:hi('StatusLineTermNC', s:nord4_gui, s:nord1_gui, 'NONE', s:nord1_term, 'NONE', '')
-else
-  call s:hi('StatusLine', s:nord4_gui, s:nord3_gui, s:nord5_term, s:nord3_term, 'NONE', '')
-  call s:hi('StatusLineNC', s:nord4_gui, s:nord3_gui, 'NONE', s:nord3_term, 'NONE', '')
-  call s:hi('StatusLineTerm', s:nord4_gui, s:nord3_gui, s:nord5_term, s:nord3_term, 'NONE', '')
-  call s:hi('StatusLineTermNC', s:nord4_gui, s:nord3_gui, 'NONE', s:nord3_term, 'NONE', '')
-endif
-call s:hi('WarningMsg', s:nord0_gui, s:nord13_gui, s:nord1_term, s:nord13_term, '', '')
-call s:hi('WildMenu', s:nord1_gui, s:nord8_gui, s:nord8_term, s:nord1_term, '', '')
+hi EndOfBuffer guifg=#3B4252
+hi EndOfBuffer ctermfg=0
+hi EndOfBuffer ctermbg=NONE
+hi ErrorMsg guifg=#D8DEE9
+hi ErrorMsg guibg=#BF616A
+hi ErrorMsg ctermfg=NONE
+hi ErrorMsg ctermbg=1
+hi ModeMsg guifg=#D8DEE9
+hi MoreMsg guifg=#D8DEE9
+hi Question guifg=#D8DEE9
+hi Question ctermfg=NONE
+hi StatusLine guifg=#D8DEE9
+hi StatusLine guibg=#4C566A
+hi StatusLine ctermfg=7
+hi StatusLine ctermbg=8
+hi StatusLine gui=NONE cterm=NONE
+hi StatusLineNC guifg=#D8DEE9
+hi StatusLineNC guibg=#3B4252
+hi StatusLineNC ctermfg=NONE
+hi StatusLineNC ctermbg=0
+hi StatusLineNC gui=NONE cterm=NONE
+hi StatusLineTerm guifg=#D8DEE9
+hi StatusLineTerm guibg=#4C566A
+hi StatusLineTerm ctermfg=7
+hi StatusLineTerm ctermbg=8
+hi StatusLineTerm gui=NONE cterm=NONE
+hi StatusLineTermNC guifg=#D8DEE9
+hi StatusLineTermNC guibg=#3B4252
+hi StatusLineTermNC ctermfg=NONE
+hi StatusLineTermNC ctermbg=0
+hi StatusLineTermNC gui=NONE cterm=NONE
+hi WarningMsg guifg=#2E3440
+hi WarningMsg guibg=#EBCB8B
+hi WarningMsg ctermfg=0
+hi WarningMsg ctermbg=3
+hi WildMenu guifg=#3B4252
+hi WildMenu guibg=#88C0D0
+hi WildMenu ctermfg=6
+hi WildMenu ctermbg=0
 
 " +--- Search ---+
-call s:hi('IncSearch', s:nord1_gui, s:nord8_gui, s:nord1_term, s:nord8_term, 'NONE', '')
-call s:hi('Search', s:nord1_gui, s:nord8_gui, s:nord1_term, s:nord8_term, 'NONE', '')
+hi IncSearch guifg=#3B4252
+hi IncSearch guibg=#88C0D0
+hi IncSearch ctermfg=0
+hi IncSearch ctermbg=6
+hi IncSearch gui=NONE cterm=NONE
+hi Search guifg=#3B4252
+hi Search guibg=#88C0D0
+hi Search ctermfg=0
+hi Search ctermbg=6
+hi Search gui=NONE cterm=NONE
 
 " +--- Tabs ---+
-call s:hi('TabLine', s:nord4_gui, s:nord1_gui, 'NONE', s:nord1_term, 'NONE', '')
-call s:hi('TabLineFill', s:nord4_gui, s:nord1_gui, 'NONE', s:nord1_term, 'NONE', '')
-call s:hi('TabLineSel', s:nord8_gui, s:nord3_gui, s:nord8_term, s:nord3_term, 'NONE', '')
+hi TabLine guifg=#D8DEE9
+hi TabLine guibg=#3B4252
+hi TabLine ctermfg=NONE
+hi TabLine ctermbg=0
+hi TabLine gui=NONE cterm=NONE
+hi TabLineFill guifg=#D8DEE9
+hi TabLineFill guibg=#3B4252
+hi TabLineFill ctermfg=NONE
+hi TabLineFill ctermbg=0
+hi TabLineFill gui=NONE cterm=NONE
+hi TabLineSel guifg=#88C0D0
+hi TabLineSel guibg=#4C566A
+hi TabLineSel ctermfg=6
+hi TabLineSel ctermbg=8
+hi TabLineSel gui=NONE cterm=NONE
 
 " +--- Window ---+
-call s:hi('Title', s:nord4_gui, '', 'NONE', '', 'NONE', '')
-call s:hi('VertSplit', s:nord0_gui, s:nord0_gui, s:nord1_term, s:nord1_term, 'NONE', '')
+hi Title guifg=#D8DEE9
+hi Title ctermfg=NONE
+hi Title gui=NONE cterm=NONE
+hi VertSplit guifg=#2E3440
+hi VertSplit guibg=#2E3440
+hi VertSplit ctermfg=0
+hi VertSplit ctermbg=0
+hi VertSplit gui=NONE cterm=NONE
 
 " +----------------------+
 " + Language Base Groups +
 " +----------------------+
-call s:hi('Boolean', s:nord9_gui, '', s:nord9_term, '', '', '')
-call s:hi('Character', s:nord14_gui, '', s:nord14_term, '', '', '')
-call s:hi('Comment', s:nord3_gui_brightened[g:nord_comment_brightness], '', s:nord3_term, '', s:italicize_comments, '')
-call s:hi('Conditional', s:nord9_gui, '', s:nord9_term, '', '', '')
-call s:hi('Constant', s:nord4_gui, '', 'NONE', '', '', '')
-call s:hi('Define', s:nord9_gui, '', s:nord9_term, '', '', '')
-call s:hi('Delimiter', s:nord6_gui, '', s:nord6_term, '', '', '')
-call s:hi('Exception', s:nord9_gui, '', s:nord9_term, '', '', '')
-call s:hi('Float', s:nord15_gui, '', s:nord15_term, '', '', '')
-call s:hi('Function', s:nord8_gui, '', s:nord8_term, '', '', '')
-call s:hi('Identifier', s:nord4_gui, '', 'NONE', '', 'NONE', '')
-call s:hi('Include', s:nord9_gui, '', s:nord9_term, '', '', '')
-call s:hi('Keyword', s:nord9_gui, '', s:nord9_term, '', '', '')
-call s:hi('Label', s:nord9_gui, '', s:nord9_term, '', '', '')
-call s:hi('Number', s:nord15_gui, '', s:nord15_term, '', '', '')
-call s:hi('Operator', s:nord9_gui, '', s:nord9_term, '', 'NONE', '')
-call s:hi('PreProc', s:nord9_gui, '', s:nord9_term, '', 'NONE', '')
-call s:hi('Repeat', s:nord9_gui, '', s:nord9_term, '', '', '')
-call s:hi('Special', s:nord4_gui, '', 'NONE', '', '', '')
-call s:hi('SpecialChar', s:nord13_gui, '', s:nord13_term, '', '', '')
-call s:hi('SpecialComment', s:nord8_gui, '', s:nord8_term, '', s:italicize_comments, '')
-call s:hi('Statement', s:nord9_gui, '', s:nord9_term, '', '', '')
-call s:hi('StorageClass', s:nord9_gui, '', s:nord9_term, '', '', '')
-call s:hi('String', s:nord14_gui, '', s:nord14_term, '', '', '')
-call s:hi('Structure', s:nord9_gui, '', s:nord9_term, '', '', '')
-call s:hi('Tag', s:nord4_gui, '', '', '', '', '')
-call s:hi('Todo', s:nord13_gui, 'NONE', s:nord13_term, 'NONE', '', '')
-call s:hi('Type', s:nord9_gui, '', s:nord9_term, '', 'NONE', '')
-call s:hi('Typedef', s:nord9_gui, '', s:nord9_term, '', '', '')
-call s:hi('Macro', s:nord7_gui, '', s:nord7_term, '', '', '')
-hi! link PreCondit PreProc
+hi Boolean guifg=#81A1C1
+hi Boolean ctermfg=4
+hi Character guifg=#A3BE8C
+hi Character ctermfg=2
+hi Comment guifg=#616e88
+hi Comment ctermfg=8
+hi Comment gui=italic, cterm=italic,
+hi Conditional guifg=#81A1C1
+hi Conditional ctermfg=4
+hi Constant guifg=#D8DEE9
+hi Constant ctermfg=NONE
+hi Define guifg=#81A1C1
+hi Define ctermfg=4
+hi Delimiter guifg=#ECEFF4
+hi Delimiter ctermfg=15
+hi Exception guifg=#81A1C1
+hi Exception ctermfg=4
+hi Float guifg=#B48EAD
+hi Float ctermfg=5
+hi Function guifg=#88C0D0
+hi Function ctermfg=6
+hi Identifier guifg=#D8DEE9
+hi Identifier ctermfg=NONE
+hi Identifier gui=NONE cterm=NONE
+hi Include guifg=#81A1C1
+hi Include ctermfg=4
+hi Keyword guifg=#81A1C1
+hi Keyword ctermfg=4
+hi Label guifg=#81A1C1
+hi Label ctermfg=4
+hi Number guifg=#B48EAD
+hi Number ctermfg=5
+hi Operator guifg=#81A1C1
+hi Operator ctermfg=4
+hi Operator gui=NONE cterm=NONE
+hi PreProc guifg=#81A1C1
+hi PreProc ctermfg=4
+hi PreProc gui=NONE cterm=NONE
+hi Repeat guifg=#81A1C1
+hi Repeat ctermfg=4
+hi Special guifg=#D8DEE9
+hi Special ctermfg=NONE
+hi SpecialChar guifg=#EBCB8B
+hi SpecialChar ctermfg=3
+hi SpecialComment guifg=#88C0D0
+hi SpecialComment ctermfg=6
+hi SpecialComment gui=italic, cterm=italic,
+hi Statement guifg=#81A1C1
+hi Statement ctermfg=4
+hi StorageClass guifg=#81A1C1
+hi StorageClass ctermfg=4
+hi String guifg=#A3BE8C
+hi String ctermfg=2
+hi Structure guifg=#81A1C1
+hi Structure ctermfg=4
+hi Tag guifg=#D8DEE9
+hi Todo guifg=#EBCB8B
+hi Todo guibg=NONE
+hi Todo ctermfg=3
+hi Todo ctermbg=NONE
+hi Type guifg=#81A1C1
+hi Type ctermfg=4
+hi Type gui=NONE cterm=NONE
+hi Typedef guifg=#81A1C1
+hi Typedef ctermfg=4
+hi Macro guifg=#8FBCBB
+hi Macro ctermfg=14
 
 " +-----------+
 " + Languages +
 " +-----------+
-call s:hi('awkCharClass', s:nord7_gui, '', s:nord7_term, '', '', '')
-call s:hi('awkPatterns', s:nord9_gui, '', s:nord9_term, '', 'bold', '')
+hi awkCharClass guifg=#8FBCBB
+hi awkCharClass ctermfg=14
+hi awkPatterns guifg=#81A1C1
+hi awkPatterns ctermfg=4
+hi awkPatterns gui=bold cterm=bold
 hi! link awkArrayElement Identifier
 hi! link awkBoolLogic Keyword
 hi! link awkBrktRegExp SpecialChar
@@ -299,7 +308,8 @@ hi! link awkSpecialCharacter SpecialChar
 hi! link awkSpecialPrintf SpecialChar
 hi! link awkVariables Identifier
 
-call s:hi('cIncluded', s:nord7_gui, '', s:nord7_term, '', '', '')
+hi cIncluded guifg=#8FBCBB
+hi cIncluded ctermfg=14
 hi! link cOperator Operator
 hi! link cPreCondit PreCondit
 
@@ -307,10 +317,16 @@ hi! link csPreCondit PreCondit
 hi! link csType Type
 hi! link csXmlTag SpecialComment
 
-call s:hi('cssAttributeSelector', s:nord7_gui, '', s:nord7_term, '', '', '')
-call s:hi('cssDefinition', s:nord7_gui, '', s:nord7_term, '', 'NONE', '')
-call s:hi('cssIdentifier', s:nord7_gui, '', s:nord7_term, '', s:underline, '')
-call s:hi('cssStringQ', s:nord7_gui, '', s:nord7_term, '', '', '')
+hi cssAttributeSelector guifg=#8FBCBB
+hi cssAttributeSelector ctermfg=14
+hi cssDefinition guifg=#8FBCBB
+hi cssDefinition ctermfg=14
+hi cssDefinition gui=NONE cterm=NONE
+hi cssIdentifier guifg=#8FBCBB
+hi cssIdentifier ctermfg=14
+hi cssIdentifier gui=underline, cterm=underline,
+hi cssStringQ guifg=#8FBCBB
+hi cssStringQ ctermfg=14
 hi! link cssAttr Keyword
 hi! link cssBraces Delimiter
 hi! link cssClassName cssDefinition
@@ -320,44 +336,65 @@ hi! link cssPseudoClass cssDefinition
 hi! link cssPseudoClassId cssPseudoClass
 hi! link cssVendor Keyword
 
-call s:hi('dosiniHeader', s:nord8_gui, '', s:nord8_term, '', '', '')
+hi dosiniHeader guifg=#88C0D0
+hi dosiniHeader ctermfg=6
 hi! link dosiniLabel Type
 
-call s:hi('dtBooleanKey', s:nord7_gui, '', s:nord7_term, '', '', '')
-call s:hi('dtExecKey', s:nord7_gui, '', s:nord7_term, '', '', '')
-call s:hi('dtLocaleKey', s:nord7_gui, '', s:nord7_term, '', '', '')
-call s:hi('dtNumericKey', s:nord7_gui, '', s:nord7_term, '', '', '')
-call s:hi('dtTypeKey', s:nord7_gui, '', s:nord7_term, '', '', '')
+hi dtBooleanKey guifg=#8FBCBB
+hi dtBooleanKey ctermfg=14
+hi dtExecKey guifg=#8FBCBB
+hi dtExecKey ctermfg=14
+hi dtLocaleKey guifg=#8FBCBB
+hi dtLocaleKey ctermfg=14
+hi dtNumericKey guifg=#8FBCBB
+hi dtNumericKey ctermfg=14
+hi dtTypeKey guifg=#8FBCBB
+hi dtTypeKey ctermfg=14
 hi! link dtDelim Delimiter
 hi! link dtLocaleValue Keyword
 hi! link dtTypeValue Keyword
 
-if g:nord_uniform_diff_background ==# 0
-  call s:hi('DiffAdd', s:nord14_gui, s:nord0_gui, s:nord14_term, 'NONE', 'inverse', '')
-  call s:hi('DiffChange', s:nord13_gui, s:nord0_gui, s:nord13_term, 'NONE', 'inverse', '')
-  call s:hi('DiffDelete', s:nord11_gui, s:nord0_gui, s:nord11_term, 'NONE', 'inverse', '')
-  call s:hi('DiffText', s:nord9_gui, s:nord0_gui, s:nord9_term, 'NONE', 'inverse', '')
-else
-  call s:hi('DiffAdd', s:nord14_gui, s:nord1_gui, s:nord14_term, s:nord1_term, '', '')
-  call s:hi('DiffChange', s:nord13_gui, s:nord1_gui, s:nord13_term, s:nord1_term, '', '')
-  call s:hi('DiffDelete', s:nord11_gui, s:nord1_gui, s:nord11_term, s:nord1_term, '', '')
-  call s:hi('DiffText', s:nord9_gui, s:nord1_gui, s:nord9_term, s:nord1_term, '', '')
-endif
+hi DiffAdd guifg=#A3BE8C
+hi DiffAdd guibg=#2E3440
+hi DiffAdd ctermfg=2
+hi DiffAdd ctermbg=NONE
+hi DiffAdd gui=inverse cterm=inverse
+hi DiffChange guifg=#EBCB8B
+hi DiffChange guibg=#2E3440
+hi DiffChange ctermfg=3
+hi DiffChange ctermbg=NONE
+hi DiffChange gui=inverse cterm=inverse
+hi DiffDelete guifg=#BF616A
+hi DiffDelete guibg=#2E3440
+hi DiffDelete ctermfg=1
+hi DiffDelete ctermbg=NONE
+hi DiffDelete gui=inverse cterm=inverse
+hi DiffText guifg=#81A1C1
+hi DiffText guibg=#2E3440
+hi DiffText ctermfg=4
+hi DiffText ctermbg=NONE
+hi DiffText gui=inverse cterm=inverse
 " Legacy groups for official git.vim and diff.vim syntax
 hi! link diffAdded DiffAdd
 hi! link diffChanged DiffChange
 hi! link diffRemoved DiffDelete
 
-call s:hi('gitconfigVariable', s:nord7_gui, '', s:nord7_term, '', '', '')
-
-call s:hi('goBuiltins', s:nord7_gui, '', s:nord7_term, '', '', '')
+hi gitconfigVariable guifg=#8FBCBB
+hi gitconfigVariable ctermfg=14
+hi goBuiltins guifg=#8FBCBB
+hi goBuiltins ctermfg=14
 hi! link goConstants Keyword
 
-call s:hi('helpBar', s:nord3_gui, '', s:nord3_term, '', '', '')
-call s:hi('helpHyperTextJump', s:nord8_gui, '', s:nord8_term, '', s:underline, '')
-
-call s:hi('htmlArg', s:nord7_gui, '', s:nord7_term, '', '', '')
-call s:hi('htmlLink', s:nord4_gui, '', '', '', 'NONE', 'NONE')
+hi helpBar guifg=#4C566A
+hi helpBar ctermfg=8
+hi helpHyperTextJump guifg=#88C0D0
+hi helpHyperTextJump ctermfg=6
+hi helpHyperTextJump gui=underline, cterm=underline,
+hi htmlArg guifg=#8FBCBB
+hi htmlArg ctermfg=14
+hi htmlLink guifg=#D8DEE9
+hi htmlLink gui=NONE cterm=NONE
+hi htmlLink guisp=NONE
 hi! link htmlBold Bold
 hi! link htmlEndTag htmlTag
 hi! link htmlItalic Italic
@@ -371,15 +408,17 @@ hi! link htmlSpecialChar SpecialChar
 hi! link htmlTag Keyword
 hi! link htmlTagN htmlTag
 
-call s:hi('javaDocTags', s:nord7_gui, '', s:nord7_term, '', '', '')
+hi javaDocTags guifg=#8FBCBB
+hi javaDocTags ctermfg=14
 hi! link javaCommentTitle Comment
 hi! link javaScriptBraces Delimiter
 hi! link javaScriptIdentifier Keyword
 hi! link javaScriptNumber Number
 
-call s:hi('jsonKeyword', s:nord7_gui, '', s:nord7_term, '', '', '')
-
-call s:hi('lessClass', s:nord7_gui, '', s:nord7_term, '', '', '')
+hi jsonKeyword guifg=#8FBCBB
+hi jsonKeyword ctermfg=14
+hi lessClass guifg=#8FBCBB
+hi lessClass ctermfg=14
 hi! link lessAmpersand Keyword
 hi! link lessCssAttribute Delimiter
 hi! link lessFunction Function
@@ -393,15 +432,25 @@ hi! link lispFunc Function
 
 hi! link luaFunc Function
 
-call s:hi('markdownBlockquote', s:nord7_gui, '', s:nord7_term, '', '', '')
-call s:hi('markdownCode', s:nord7_gui, '', s:nord7_term, '', '', '')
-call s:hi('markdownCodeDelimiter', s:nord7_gui, '', s:nord7_term, '', '', '')
-call s:hi('markdownFootnote', s:nord7_gui, '', s:nord7_term, '', '', '')
-call s:hi('markdownId', s:nord7_gui, '', s:nord7_term, '', '', '')
-call s:hi('markdownIdDeclaration', s:nord7_gui, '', s:nord7_term, '', '', '')
-call s:hi('markdownH1', s:nord8_gui, '', s:nord8_term, '', '', '')
-call s:hi('markdownLinkText', s:nord8_gui, '', s:nord8_term, '', '', '')
-call s:hi('markdownUrl', s:nord4_gui, '', 'NONE', '', 'NONE', '')
+hi markdownBlockquote guifg=#8FBCBB
+hi markdownBlockquote ctermfg=14
+hi markdownCode guifg=#8FBCBB
+hi markdownCode ctermfg=14
+hi markdownCodeDelimiter guifg=#8FBCBB
+hi markdownCodeDelimiter ctermfg=14
+hi markdownFootnote guifg=#8FBCBB
+hi markdownFootnote ctermfg=14
+hi markdownId guifg=#8FBCBB
+hi markdownId ctermfg=14
+hi markdownIdDeclaration guifg=#8FBCBB
+hi markdownIdDeclaration ctermfg=14
+hi markdownH1 guifg=#88C0D0
+hi markdownH1 ctermfg=6
+hi markdownLinkText guifg=#88C0D0
+hi markdownLinkText ctermfg=6
+hi markdownUrl guifg=#D8DEE9
+hi markdownUrl ctermfg=NONE
+hi markdownUrl gui=NONE cterm=NONE
 hi! link markdownBold Bold
 hi! link markdownBoldDelimiter Keyword
 hi! link markdownFootnoteDefinition markdownFootnote
@@ -419,22 +468,29 @@ hi! link markdownListMarker Keyword
 hi! link markdownRule Keyword
 hi! link markdownHeadingDelimiter Keyword
 
-call s:hi('perlPackageDecl', s:nord7_gui, '', s:nord7_term, '', '', '')
-
-call s:hi('phpClasses', s:nord7_gui, '', s:nord7_term, '', '', '')
-call s:hi('phpDocTags', s:nord7_gui, '', s:nord7_term, '', '', '')
+hi perlPackageDecl guifg=#8FBCBB
+hi perlPackageDecl ctermfg=14
+hi phpClasses guifg=#8FBCBB
+hi phpClasses ctermfg=14
+hi phpDocTags guifg=#8FBCBB
+hi phpDocTags ctermfg=14
 hi! link phpDocCustomTags phpDocTags
 hi! link phpMemberSelector Keyword
 
-call s:hi('podCmdText', s:nord7_gui, '', s:nord7_term, '', '', '')
-call s:hi('podVerbatimLine', s:nord4_gui, '', 'NONE', '', '', '')
+hi podCmdText guifg=#8FBCBB
+hi podCmdText ctermfg=14
+hi podVerbatimLine guifg=#D8DEE9
+hi podVerbatimLine ctermfg=NONE
 hi! link podFormat Keyword
 
 hi! link pythonBuiltin Type
 hi! link pythonEscape SpecialChar
 
-call s:hi('rubyConstant', s:nord7_gui, '', s:nord7_term, '', '', '')
-call s:hi('rubySymbol', s:nord6_gui, '', s:nord6_term, '', 'bold', '')
+hi rubyConstant guifg=#8FBCBB
+hi rubyConstant ctermfg=14
+hi rubySymbol guifg=#ECEFF4
+hi rubySymbol ctermfg=15
+hi rubySymbol gui=bold cterm=bold
 hi! link rubyAttribute Identifier
 hi! link rubyBlockParameterList Operator
 hi! link rubyInterpolationDelimiter Keyword
@@ -443,8 +499,11 @@ hi! link rubyLocalVariableOrMethod Function
 hi! link rubyPseudoVariable Keyword
 hi! link rubyRegexp SpecialChar
 
-call s:hi('sassClass', s:nord7_gui, '', s:nord7_term, '', '', '')
-call s:hi('sassId', s:nord7_gui, '', s:nord7_term, '', s:underline, '')
+hi sassClass guifg=#8FBCBB
+hi sassClass ctermfg=14
+hi sassId guifg=#8FBCBB
+hi sassId ctermfg=14
+hi sassId gui=underline, cterm=underline,
 hi! link sassAmpersand Keyword
 hi! link sassClassChar Delimiter
 hi! link sassControl Keyword
@@ -467,16 +526,23 @@ hi! link shDerefVar Identifier
 hi! link sqlKeyword Keyword
 hi! link sqlSpecial Keyword
 
-call s:hi('vimAugroup', s:nord7_gui, '', s:nord7_term, '', '', '')
-call s:hi('vimMapRhs', s:nord7_gui, '', s:nord7_term, '', '', '')
-call s:hi('vimNotation', s:nord7_gui, '', s:nord7_term, '', '', '')
+hi vimAugroup guifg=#8FBCBB
+hi vimAugroup ctermfg=14
+hi vimMapRhs guifg=#8FBCBB
+hi vimMapRhs ctermfg=14
+hi vimNotation guifg=#8FBCBB
+hi vimNotation ctermfg=14
 hi! link vimFunc Function
 hi! link vimFunction Function
 hi! link vimUserFunc Function
 
-call s:hi('xmlAttrib', s:nord7_gui, '', s:nord7_term, '', '', '')
-call s:hi('xmlCdataStart', s:nord3_gui, '', s:nord3_term, '', 'bold', '')
-call s:hi('xmlNamespace', s:nord7_gui, '', s:nord7_term, '', '', '')
+hi xmlAttrib guifg=#8FBCBB
+hi xmlAttrib ctermfg=14
+hi xmlCdataStart guifg=#4C566A
+hi xmlCdataStart ctermfg=8
+hi xmlCdataStart gui=bold cterm=bold
+hi xmlNamespace guifg=#8FBCBB
+hi xmlNamespace ctermfg=14
 hi! link xmlAttribPunct Delimiter
 hi! link xmlCdata Comment
 hi! link xmlCdataCdata xmlCdataStart
@@ -485,7 +551,8 @@ hi! link xmlEndTag xmlTagName
 hi! link xmlProcessingDelim Keyword
 hi! link xmlTagName Keyword
 
-call s:hi('yamlBlockMappingKey', s:nord7_gui, '', s:nord7_term, '', '', '')
+hi yamlBlockMappingKey guifg=#8FBCBB
+hi yamlBlockMappingKey ctermfg=14
 hi! link yamlBool Keyword
 hi! link yamlDocumentStart Keyword
 
@@ -495,49 +562,79 @@ hi! link yamlDocumentStart Keyword
 " +--- UI ---+
 " ALE
 " > w0rp/ale
-call s:hi('ALEWarningSign', s:nord13_gui, '', s:nord13_term, '', '', '')
-call s:hi('ALEErrorSign', s:nord11_gui, '', s:nord11_term, '', '', '')
+hi ALEWarningSign guifg=#EBCB8B
+hi ALEWarningSign ctermfg=3
+hi ALEErrorSign guifg=#BF616A
+hi ALEErrorSign ctermfg=1
 
 " GitGutter
 " > airblade/vim-gitgutter
-call s:hi('GitGutterAdd', s:nord14_gui, '', s:nord14_term, '', '', '')
-call s:hi('GitGutterChange', s:nord13_gui, '', s:nord13_term, '', '', '')
-call s:hi('GitGutterChangeDelete', s:nord11_gui, '', s:nord11_term, '', '', '')
-call s:hi('GitGutterDelete', s:nord11_gui, '', s:nord11_term, '', '', '')
+hi GitGutterAdd guifg=#A3BE8C
+hi GitGutterAdd ctermfg=2
+hi GitGutterChange guifg=#EBCB8B
+hi GitGutterChange ctermfg=3
+hi GitGutterChangeDelete guifg=#BF616A
+hi GitGutterChangeDelete ctermfg=1
+hi GitGutterDelete guifg=#BF616A
+hi GitGutterDelete ctermfg=1
 
 " Neovim LSP
 " > neovim/nvim-lspconfig
-call s:hi("LspDiagnosticsDefaultWarning", s:nord13_gui, "", s:nord13_term, "", "", "")
-call s:hi("LspDiagnosticsDefaultError" , s:nord11_gui, "", s:nord11_term, "", "", "")
-call s:hi("LspDiagnosticsDefaultInformation" , s:nord8_gui, "", s:nord8_term, "", "", "")
-call s:hi("LspDiagnosticsDefaultHint" , s:nord10_gui, "", s:nord10_term, "", "", "")
-call s:hi("LspDiagnosticsUnderlineWarning" , s:nord13_gui, "", s:nord13_term, "", "undercurl", "")
-call s:hi("LspDiagnosticsUnderlineError" , s:nord11_gui, "", s:nord11_term, "", "undercurl", "")
-call s:hi("LspDiagnosticsUnderlineInformation" , s:nord8_gui, "", s:nord8_term, "", "undercurl", "")
-call s:hi("LspDiagnosticsUnderlineHint" , s:nord10_gui, "", s:nord10_term, "", "undercurl", "")
+hi LspDiagnosticsDefaultWarning guifg=#EBCB8B
+hi LspDiagnosticsDefaultWarning ctermfg=3
+hi LspDiagnosticsDefaultError guifg=#BF616A
+hi LspDiagnosticsDefaultError ctermfg=1
+hi LspDiagnosticsDefaultInformation guifg=#88C0D0
+hi LspDiagnosticsDefaultInformation ctermfg=6
+hi LspDiagnosticsDefaultHint guifg=#5E81AC
+hi LspDiagnosticsDefaultHint ctermfg=12
+hi LspDiagnosticsUnderlineWarning guifg=#EBCB8B
+hi LspDiagnosticsUnderlineWarning ctermfg=3
+hi LspDiagnosticsUnderlineWarning gui=undercurl cterm=underline,
+hi LspDiagnosticsUnderlineError guifg=#BF616A
+hi LspDiagnosticsUnderlineError ctermfg=1
+hi LspDiagnosticsUnderlineError gui=undercurl cterm=underline,
+hi LspDiagnosticsUnderlineInformation guifg=#88C0D0
+hi LspDiagnosticsUnderlineInformation ctermfg=6
+hi LspDiagnosticsUnderlineInformation gui=undercurl cterm=underline,
+hi LspDiagnosticsUnderlineHint guifg=#5E81AC
+hi LspDiagnosticsUnderlineHint ctermfg=12
+hi LspDiagnosticsUnderlineHint gui=undercurl cterm=underline,
 
 " Signify
 " > mhinz/vim-signify
-call s:hi('SignifySignAdd', s:nord14_gui, '', s:nord14_term, '', '', '')
-call s:hi('SignifySignChange', s:nord13_gui, '', s:nord13_term, '', '', '')
-call s:hi('SignifySignChangeDelete', s:nord11_gui, '', s:nord11_term, '', '', '')
-call s:hi('SignifySignDelete', s:nord11_gui, '', s:nord11_term, '', '', '')
+hi SignifySignAdd guifg=#A3BE8C
+hi SignifySignAdd ctermfg=2
+hi SignifySignChange guifg=#EBCB8B
+hi SignifySignChange ctermfg=3
+hi SignifySignChangeDelete guifg=#BF616A
+hi SignifySignChangeDelete ctermfg=1
+hi SignifySignDelete guifg=#BF616A
+hi SignifySignDelete ctermfg=1
 
 " fugitive.vim
 " > tpope/vim-fugitive
-call s:hi('gitcommitDiscardedFile', s:nord11_gui, '', s:nord11_term, '', '', '')
-call s:hi('gitcommitUntrackedFile', s:nord11_gui, '', s:nord11_term, '', '', '')
-call s:hi('gitcommitSelectedFile', s:nord14_gui, '', s:nord14_term, '', '', '')
+hi gitcommitDiscardedFile guifg=#BF616A
+hi gitcommitDiscardedFile ctermfg=1
+hi gitcommitUntrackedFile guifg=#BF616A
+hi gitcommitUntrackedFile ctermfg=1
+hi gitcommitSelectedFile guifg=#A3BE8C
+hi gitcommitSelectedFile ctermfg=2
 
 " davidhalter/jedi-vim
-call s:hi('jediFunction', s:nord4_gui, s:nord3_gui, '', s:nord3_term, '', '')
-call s:hi('jediFat', s:nord8_gui, s:nord3_gui, s:nord8_term, s:nord3_term, s:underline.'bold', '')
+hi jediFunction guifg=#D8DEE9
+hi jediFunction guibg=#4C566A
+hi jediFunction ctermbg=8
+hi jediFat guifg=#88C0D0
+hi jediFat guibg=#4C566A
+hi jediFat ctermfg=6
+hi jediFat ctermbg=8
+hi jediFat gui=underline,bold cterm=underline,bold
 
 " NERDTree
 " > scrooloose/nerdtree
-call s:hi('NERDTreeExecFile', s:nord7_gui, '', s:nord7_term, '', '', '')
-hi! link NERDTreeDirSlash Keyword
-hi! link NERDTreeHelp Comment
+hi NERDTreeExecFile guifg=#8FBCBB
+hi NERDTreeExecFile ctermfg=14
 
 " CtrlP
 " > ctrlpvim/ctrlp.vim
@@ -546,22 +643,28 @@ hi! link CtrlPBufferHid Normal
 
 " vim-plug
 " > junegunn/vim-plug
-call s:hi('plugDeleted', s:nord11_gui, '', '', s:nord11_term, '', '')
+hi plugDeleted guifg=#BF616A
+hi plugDeleted ctermbg=1
 
 " vim-signature
 " > kshenoy/vim-signature
-call s:hi('SignatureMarkText', s:nord8_gui, '', s:nord8_term, '', '', '')
+hi SignatureMarkText guifg=#88C0D0
+hi SignatureMarkText ctermfg=6
 
 " telescope
-call s:hi('TelescopeBorder', s:nord3_gui, '', s:nord1_term, '', '', '')
+hi TelescopeBorder guifg=#4C566A
+hi TelescopeBorder ctermfg=0
 
 " floaterm
-call s:hi('Floatermborder', s:nord3_gui, '', s:nord1_term, '', '', '')
+hi Floatermborder guifg=#4C566A
+hi Floatermborder ctermfg=0
 
 " +--- Languages ---+
 " JavaScript
 " > pangloss/vim-javascript
-call s:hi('jsGlobalNodeObjects', s:nord8_gui, '', s:nord8_term, '', s:italic, '')
+hi jsGlobalNodeObjects guifg=#88C0D0
+hi jsGlobalNodeObjects ctermfg=6
+hi jsGlobalNodeObjects gui=italic, cterm=italic,
 hi! link jsBrackets Delimiter
 hi! link jsFuncCall Function
 hi! link jsFuncParens Delimiter
@@ -572,10 +675,14 @@ hi! link jsRegexpString SpecialChar
 
 " Markdown
 " > plasticboy/vim-markdown
-call s:hi('mkdCode', s:nord7_gui, '', s:nord7_term, '', '', '')
-call s:hi('mkdFootnote', s:nord8_gui, '', s:nord8_term, '', '', '')
-call s:hi('mkdRule', s:nord10_gui, '', s:nord10_term, '', '', '')
-call s:hi('mkdLineBreak', s:nord9_gui, '', s:nord9_term, '', '', '')
+hi mkdCode guifg=#8FBCBB
+hi mkdCode ctermfg=14
+hi mkdFootnote guifg=#88C0D0
+hi mkdFootnote ctermfg=6
+hi mkdRule guifg=#5E81AC
+hi mkdRule ctermfg=12
+hi mkdLineBreak guifg=#81A1C1
+hi mkdLineBreak ctermfg=4
 hi! link mkdBold Bold
 hi! link mkdItalic Italic
 hi! link mkdString Keyword
@@ -596,56 +703,81 @@ hi! link mkdDelimiter Keyword
 
 " Vimwiki
 " > vimwiki/vimwiki
-if !exists('g:vimwiki_hl_headers') || g:vimwiki_hl_headers ==# 0
-  for s:i in range(1,6)
-    call s:hi('VimwikiHeader'.s:i, s:nord8_gui, '', s:nord8_term, '', 'bold', '')
-  endfor
-else
-  let s:vimwiki_hcolor_guifg = [s:nord7_gui, s:nord8_gui, s:nord9_gui, s:nord10_gui, s:nord14_gui, s:nord15_gui]
-  let s:vimwiki_hcolor_ctermfg = [s:nord7_term, s:nord8_term, s:nord9_term, s:nord10_term, s:nord14_term, s:nord15_term]
-  for s:i in range(1,6)
-    call s:hi('VimwikiHeader'.s:i, s:vimwiki_hcolor_guifg[s:i-1] , '', s:vimwiki_hcolor_ctermfg[s:i-1], '', 'bold', '')
-  endfor
-endif
-
-call s:hi('VimwikiLink', s:nord8_gui, '', s:nord8_term, '', s:underline, '')
+hi VimwikiHeader1 guifg=#88C0D0
+hi VimwikiHeader1 ctermfg=6
+hi VimwikiHeader1 gui=bold cterm=bold
+hi VimwikiHeader2 guifg=#88C0D0
+hi VimwikiHeader2 ctermfg=6
+hi VimwikiHeader2 gui=bold cterm=bold
+hi VimwikiHeader3 guifg=#88C0D0
+hi VimwikiHeader3 ctermfg=6
+hi VimwikiHeader3 gui=bold cterm=bold
+hi VimwikiHeader4 guifg=#88C0D0
+hi VimwikiHeader4 ctermfg=6
+hi VimwikiHeader4 gui=bold cterm=bold
+hi VimwikiHeader5 guifg=#88C0D0
+hi VimwikiHeader5 ctermfg=6
+hi VimwikiHeader5 gui=bold cterm=bold
+hi VimwikiHeader6 guifg=#88C0D0
+hi VimwikiHeader6 ctermfg=6
+hi VimwikiHeader6 gui=bold cterm=bold
+hi VimwikiLink guifg=#88C0D0
+hi VimwikiLink ctermfg=6
+hi VimwikiLink gui=underline, cterm=underline,
 hi! link VimwikiHeaderChar markdownHeadingDelimiter
 hi! link VimwikiHR Keyword
 hi! link VimwikiList markdownListMarker
 
 " YAML
 " > stephpy/vim-yaml
-call s:hi('yamlKey', s:nord7_gui, '', s:nord7_term, '', '', '')
+hi yamlKey guifg=#8FBCBB
+hi yamlKey ctermfg=14
 
 " Python
-call s:hi('pythonClassVar', s:nord8_gui, '', s:nord8_term, '', '', '')
+hi pythonClassVar guifg=#88C0D0
+hi pythonClassVar ctermfg=6
 
 " Rust
-call s:hi('rustEnumVariant', s:nord7_gui, '', s:nord7_term, '', '', '')
-call s:hi('rustSelf', s:nord8_gui, '', s:nord8_term, '', '', '')
-call s:hi('rustAttribute', s:nord15_gui, '', s:nord15_term, '', '', '')
+hi rustEnumVariant guifg=#8FBCBB
+hi rustEnumVariant ctermfg=14
+hi rustSelf guifg=#88C0D0
+hi rustSelf ctermfg=6
+hi rustAttribute guifg=#B48EAD
+hi rustAttribute ctermfg=5
 hi! link rustDerive rustAttribute
 hi! link rustDeriveTrait rustDerive
 
 " OCaml
-call s:hi('ocamlConstructor', s:nord7_gui, '', s:nord7_term, '', '', '')
-call s:hi('ocamlModule', s:nord8_gui, '', s:nord8_term, '', '', '')
-call s:hi('ocamlInfixOp', s:nord9_gui, '', s:nord9_term, '', '', '')
+hi ocamlConstructor guifg=#8FBCBB
+hi ocamlConstructor ctermfg=14
+hi ocamlModule guifg=#88C0D0
+hi ocamlModule ctermfg=6
+hi ocamlInfixOp guifg=#81A1C1
+hi ocamlInfixOp ctermfg=4
 hi! link ocamlBoolean ocamlConstructor
 hi! link ocamlModPath ocamlModule
 
 " Haskell (better-haskell support)
-" call s:hi('haskellOperators', s:nord8_gui, '', s:nord8_term, '', '', '')
-" call s:hi('haskellBacktick', s:nord8_gui, '', s:nord8_term, '', '', '')
-" call s:hi('haskellQuote', s:nord8_gui, '', s:nord8_term, '', '', '')
-call s:hi('haskellAssocType', s:nord8_gui, '', s:nord8_term, '', '', '')
-call s:hi('haskellQuotedType', s:nord8_gui, '', s:nord8_term, '', '', '')
-call s:hi('haskellType', s:nord8_gui, '', s:nord8_term, '', '', '')
-call s:hi('haskellDelimiter', s:nord9_gui, '', s:nord9_term, '', '', '')
-call s:hi('haskellIdentifier', s:nord7_gui, '', s:nord7_term, '', '', '')
-call s:hi('haskellPragma', s:nord15_gui, '', s:nord15_term, '', s:italicize_comments, '')
-call s:hi('haskellLiquid', s:nord15_gui, '', s:nord15_term, '', s:italicize_comments, '')
-call s:hi('haskellPreProc', s:nord15_gui, '', s:nord15_term, '', s:italicize_comments, '')
+hi haskellAssocType guifg=#88C0D0
+hi haskellAssocType ctermfg=6
+hi haskellQuotedType guifg=#88C0D0
+hi haskellQuotedType ctermfg=6
+hi haskellType guifg=#88C0D0
+hi haskellType ctermfg=6
+hi haskellDelimiter guifg=#81A1C1
+hi haskellDelimiter ctermfg=4
+hi haskellIdentifier guifg=#8FBCBB
+hi haskellIdentifier ctermfg=14
+hi haskellPragma guifg=#B48EAD
+hi haskellPragma ctermfg=5
+hi haskellPragma gui=italic, cterm=italic,
+hi haskellLiquid guifg=#B48EAD
+hi haskellLiquid ctermfg=5
+hi haskellLiquid gui=italic, cterm=italic,
+hi haskellPreProc guifg=#B48EAD
+hi haskellPreProc ctermfg=5
+hi haskellPreProc gui=italic, cterm=italic,
 
 " Haskell (vanilla)
-call s:hi('hsOperator', s:nord8_gui, '', s:nord8_term, '', '', '')
+hi hsOperator guifg=#88C0D0
+hi hsOperator ctermfg=6

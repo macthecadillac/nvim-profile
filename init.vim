@@ -1,14 +1,10 @@
+filetype plugin indent on
 set encoding=utf8
 scriptencoding "utf-8"
 set shell=sh  " speeds up the 'system' function and a lot more things
 
-let config_dir = stdpath('config') . '/startup'
-execute 'source ' . config_dir . '/vimplug.vim'
+let g:loaded_matchit = 1
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""""""" General settings """"""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-filetype plugin indent on
 set nrformats=    " treat all numeral as decimal
 set wildmenu
 set wildmode=longest:full,full
@@ -31,8 +27,7 @@ set wrap      " soft wrap
 set linebreak     " wrap text while respecting words
 set undofile
 set undolevels=4000
-set undodir=~/.config/nvim/undo
-
+set undodir=$HOME/.config/nvim/undo
 set noswapfile
 set complete+=k
 set fillchars+=vert:\  " fill characters of vertical splits
@@ -67,24 +62,21 @@ let g:python3_host_prog = '/usr/bin/python3'
 " Map F7 to toggle relative numbering.
 nnoremap <F7> :set relativenumber! number!<CR>
 
-" Map F5 to toggle Mundo
-nnoremap <F5> :MundoToggle<CR>
-
-" Mapping for bringing up FIXME and TODO comments
-" TODO: Add versions for project wide search (grep from project root)
-command! TodoBuffer execute "silent grep! '\\(FIXME\\)\\\\|\\(TODO\\)' %" | copen | file TODO | setlocal nospell | redraw!
-command! TodoDir execute "silent grep! -R '\\(FIXME\\)\\\\|\\(TODO\\)' ./*" | copen | file TODO | setlocal nospell | redraw!
-
-" Better Grep
-command! -nargs=1 GrepLocal execute "silent grep! <args> %" | copen | file Grep | setlocal nospell | redraw!
-command! -nargs=+ -complete=file Grep execute "silent grep! -R <args>" | copen | file Grep | setlocal nospell | redraw!
-
 function! s:format_sentence(start, end)
     silent execute a:start.','.a:end.'s/[.!?]\zs /\r/g'
 endfunction
 
-nnoremap <leader>e :Explore<CR>
-nnoremap <A-m> :MundoToggle<CR>
+" load plugin settings
+let config_dir = stdpath('config') . '/startup'
+execute 'source ' . config_dir . '/packer.vim'
+execute 'source ' . config_dir . '/lightline.vim'
+execute 'source ' . config_dir . '/textobj.vim'
+execute 'source ' . config_dir . '/vimdo.vim'
+execute 'source ' . config_dir . '/telescope.vim'
+execute 'source ' . config_dir . '/mundo.vim'
+execute 'source ' . config_dir . '/compe.vim'
+execute 'source ' . config_dir . '/floaterm.vim'
+execute 'source ' . config_dir . '/lsp.vim'
 
 " Color settings
 if has('termguicolors')
@@ -96,17 +88,5 @@ if exists('g:started_by_firenvim')
   let g:two_firewatch_italics = 1
   colorscheme two-firewatch
 else
-  set background=dark
-  let g:nord_italic = 1
-  let g:nord_italic_comments = 1
   colorscheme nord
 endif
-
-execute 'source ' . config_dir . '/lightline.vim'
-execute 'source ' . config_dir . '/textobj.vim'
-execute 'source ' . config_dir . '/vimdo.vim'
-execute 'source ' . config_dir . '/telescope.vim'
-execute 'source ' . config_dir . '/mundo.vim'
-execute 'source ' . config_dir . '/compe.vim'
-execute 'source ' . config_dir . '/floaterm.vim'
-execute 'source ' . config_dir . '/lsp.vim'

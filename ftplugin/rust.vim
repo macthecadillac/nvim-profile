@@ -13,3 +13,5 @@ nnoremap gD :lua vim.lsp.buf.declaration()<CR>
 nnoremap gd :lua vim.lsp.buf.definition()<CR>
 nnoremap [d :lua vim.lsp.diagnostic.goto_prev()<CR>
 nnoremap ]d :lua vim.lsp.diagnostic.goto_next()<CR>
+
+execute 'packadd rust.vim'

@@ -26,3 +26,5 @@ let g:python_highlight_doctests = 1
 let g:python_highlight_class_vars = 1
 let g:python_highlight_operators = 1
 let g:python_slow_sync = 0
+
+packadd 'python-syntax'

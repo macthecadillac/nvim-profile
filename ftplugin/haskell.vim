@@ -14,6 +14,7 @@ nnoremap gd :lua vim.lsp.buf.definition()<CR>
 nnoremap [d :lua vim.lsp.diagnostic.goto_prev()<CR>
 nnoremap ]d :lua vim.lsp.diagnostic.goto_next()<CR>
 
+execute 'packadd haskell-vim'
 let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
 let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
 let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
