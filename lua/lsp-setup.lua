@@ -40,6 +40,7 @@ nvim_lsp.ocamllsp.setup({})
 nvim_lsp.pyls.setup({ on_attach = signature_setup })
 nvim_lsp.rls.setup({ on_attach = signature_setup })
 nvim_lsp.texlab.setup({})
+nvim_lsp.vimls.setup{}
 
 -- disable virtual text and underline
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(

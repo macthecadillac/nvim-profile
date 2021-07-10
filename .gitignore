@@ -6,3 +6,4 @@
 /vimplug/*
 /pack/*
 /lua/load-packages.lua
+/plugin/*
