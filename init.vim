@@ -5,6 +5,8 @@ set shell=sh  " speeds up the 'system' function and a lot more things
 
 let g:loaded_matchit = 1
 
+set rtp+=/home/mac/.config/nvim/unpack
+
 set nrformats=    " treat all numeral as decimal
 set wildmenu
 set wildmode=longest:full,full
@@ -68,7 +70,6 @@ endfunction
 
 " load plugin settings
 let config_dir = stdpath('config') . '/startup'
-execute 'source ' . config_dir . '/packer.vim'
 execute 'source ' . config_dir . '/lightline.vim'
 execute 'source ' . config_dir . '/textobj.vim'
 execute 'source ' . config_dir . '/vimdo.vim'

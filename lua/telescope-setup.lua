@@ -14,7 +14,7 @@ telescope.setup{
       end,
 
       height = function(_, _, max_lines)
-        return math.max(math.min(max_lines - 20, 30), 18)
+        return math.min(math.max(math.min(max_lines - 20, 30), 18), max_lines)
       end,
 
       horizontal = {

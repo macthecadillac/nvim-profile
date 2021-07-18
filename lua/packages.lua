@@ -51,10 +51,10 @@ use {'rgrinberg/vim-ocaml', opt=true}
 use {'JuliaEditorSupport/julia-vim'}
 
 -- Language server
-use {'neovim/nvim-lspconfig', opt=true}
-use {'nvim-lua/lsp-status.nvim', opt=true}
-use {'hrsh7th/nvim-compe', opt=true}
-use {'ray-x/lsp_signature.nvim', opt=true}
+use {'neovim/nvim-lspconfig'}
+use {'nvim-lua/lsp-status.nvim'}
+use {'hrsh7th/nvim-compe'}
+use {'ray-x/lsp_signature.nvim'}
 
 -- Operators
 use {'kana/vim-operator-user'}

@@ -13,3 +13,5 @@ let g:compe.source.path = 1
 let g:compe.source.buffer = 1
 let g:compe.source.nvim_lsp = 1
 let g:compe.source.nvim_lua = 1
+
+hi link CompeDocumentation NormalFloat

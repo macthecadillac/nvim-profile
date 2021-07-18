@@ -1,18 +1,3 @@
-function! LoadTelescope()
-  execute 'packadd plenary.nvim'
-  execute 'packadd popup.nvim'
-  execute 'packadd telescope.nvim'
-  execute 'packadd sql.nvim'
-  execute 'packadd telescope-frecency.nvim'
-  lua require('telescope-setup')
-  lua require('telescope').load_extension("frecency")
-endfunction
-
-augroup Telescope
-  autocmd!
-  autocmd CmdUndefined Telescope call LoadTelescope()
-augroup END
-
 nnoremap <leader>p :Telescope<CR>
 nnoremap <leader>f :Telescope find_files theme=get_dropdown previewer=false<CR>
 nnoremap <leader>g :Telescope git_files theme=get_dropdown previewer=false<CR>
