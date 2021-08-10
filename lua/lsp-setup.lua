@@ -23,7 +23,7 @@ nvim_lsp.julials.setup({
       "-e", [[
         using Pkg;
         Pkg.instantiate()
-        using LanguageServer; using SymbolServer;
+        using LanguageServer; using SymbolServer; using StaticLint;
         depot_path = get(ENV, "JULIA_DEPOT_PATH", "")
         project_path = dirname(something(Base.current_project(pwd()), Base.load_path_expand(LOAD_PATH[2])))
         # Make sure that we only load packages from this environment specifically.
@@ -37,7 +37,7 @@ nvim_lsp.julials.setup({
   end
 })
 nvim_lsp.ocamllsp.setup({})
-nvim_lsp.pyls.setup({ on_attach = signature_setup })
+nvim_lsp.pylsp.setup({ on_attach = signature_setup })
 nvim_lsp.rls.setup({ on_attach = signature_setup })
 nvim_lsp.texlab.setup({})
 nvim_lsp.vimls.setup{}

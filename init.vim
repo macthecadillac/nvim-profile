@@ -84,10 +84,4 @@ if has('termguicolors')
   set termguicolors
 endif
 
-if exists('g:started_by_firenvim')
-  set background=light
-  let g:two_firewatch_italics = 1
-  colorscheme two-firewatch
-else
-  colorscheme nord
-endif
+colorscheme nord
