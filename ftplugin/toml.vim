@@ -1,1 +1,1 @@
-execute 'packadd vim-toml'
+set nospell

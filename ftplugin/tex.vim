@@ -3,6 +3,7 @@ set textwidth=80
 set formatoptions-=t  " so vim doesn't auto-wrap everything
 set formatoptions+=c
 set spell spelllang=en_us
+let g:tex_comment_nospell=v:true
 
 nmap <leader>co :set colorcolumn=81<CR>
 nmap <leader>nco :set colorcolumn=<CR>
