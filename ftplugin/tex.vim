@@ -1,6 +1,6 @@
 let &l:shiftwidth=2
 set textwidth=80
-set formatoptions+=t  " autowrapping
+set formatoptions-=t  " so vim doesn't auto-wrap everything
 set formatoptions+=c
 set spell spelllang=en_us
 let g:tex_comment_nospell=v:true
