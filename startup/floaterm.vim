@@ -8,3 +8,6 @@ let g:floaterm_title = '── Terminal: $1/$2 '
 nmap <A-t> :FloatermToggle<CR>
 imap <A-t> <ESC>:FloatermToggle<CR>
 tmap <A-t> <C-\><C-n>:FloatermToggle<CR>
+nmap <A-n> :FloatermNext<CR>
+imap <A-n> <ESC>:FloatermNext<CR>
+tmap <A-n> <C-\><C-n>:FloatermNext<CR>
