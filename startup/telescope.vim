@@ -7,4 +7,4 @@ nnoremap <leader>i :Telescope frecency theme=get_dropdown previewer=false<CR>
 nnoremap <leader>l :Telescope lsp_document_diagnostics<CR>
 nnoremap <leader>e :Telescope file_browser<CR>
 nnoremap <leader>r :Telescope live_grep<CR>
-nnoremap <leader>c :Telescope commands theme=get_dropdown<CR>
+nnoremap <leader>m :Telescope commands theme=get_dropdown<CR>
