@@ -16,7 +16,8 @@ call unpack#begin()
   Unpack 'itchyny/vim-gitbranch'
   Unpack '~/Documents/code/lightline-gitdiff'
   Unpack 'mengelbrecht/lightline-bufferline', { 'commit': '510c8be' }
-  Unpack 'spywhere/lightline-lsp'
+  " Unpack 'spywhere/lightline-lsp'
+  Unpack '~/Documents/code/lightline-lsp'
 
   " Language support
   Unpack 'aliva/vim-fish'
@@ -29,11 +30,10 @@ call unpack#begin()
 
   " Language server and completion
   Unpack 'neovim/nvim-lspconfig', { 'opt': v:true, 'post': ['lua require("lsp-setup")', 'LspStart'] }
-  Unpack 'nvim-lua/lsp-status.nvim', { 'event': 'InsertEnter',
-        \                              'requires': 'nvim-lspconfig',
-        \                              'ft': ['python', 'c', 'cpp', 'css', 'haskell', 'lhaskell', 'julia', 'ocaml', 'rust', 'tex', 'vim'] }
-  Unpack 'hrsh7th/nvim-compe', { 'event': 'InsertEnter', 'post': 'lua require("compe.lazy").load_deferred()' }
-  Unpack 'ray-x/lsp_signature.nvim', { 'event': 'InsertEnter',
+  Unpack 'hrsh7th/nvim-compe', { 'event': 'InsertEnter',
+        \                        'requires': 'lsp_signature.nvim',
+        \                        'post': 'lua require("compe.lazy").load_deferred()' }
+  Unpack 'ray-x/lsp_signature.nvim', { 'opt': v:true,
         \                              'requires': 'nvim-lspconfig',
         \                              'ft': ['python', 'c', 'cpp', 'css', 'haskell', 'lhaskell', 'julia', 'ocaml', 'rust', 'tex', 'vim'] }
 
