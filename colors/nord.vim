@@ -578,28 +578,75 @@ hi GitGutterChangeDelete ctermfg=1
 hi GitGutterDelete guifg=#BF616A
 hi GitGutterDelete ctermfg=1
 
-" Neovim LSP
+" Neovim LSP (0.5)
 " > neovim/nvim-lspconfig
-hi LspDiagnosticsDefaultWarning guifg=#EBCB8B
-hi LspDiagnosticsDefaultWarning ctermfg=3
-hi LspDiagnosticsDefaultError guifg=#BF616A
-hi LspDiagnosticsDefaultError ctermfg=1
-hi LspDiagnosticsDefaultInformation guifg=#88C0D0
-hi LspDiagnosticsDefaultInformation ctermfg=6
-hi LspDiagnosticsDefaultHint guifg=#5E81AC
-hi LspDiagnosticsDefaultHint ctermfg=12
-hi LspDiagnosticsUnderlineWarning guifg=#EBCB8B
-hi LspDiagnosticsUnderlineWarning ctermfg=3
-hi LspDiagnosticsUnderlineWarning gui=undercurl cterm=underline,
-hi LspDiagnosticsUnderlineError guifg=#BF616A
-hi LspDiagnosticsUnderlineError ctermfg=1
-hi LspDiagnosticsUnderlineError gui=undercurl cterm=underline,
-hi LspDiagnosticsUnderlineInformation guifg=#88C0D0
-hi LspDiagnosticsUnderlineInformation ctermfg=6
-hi LspDiagnosticsUnderlineInformation gui=undercurl cterm=underline,
-hi LspDiagnosticsUnderlineHint guifg=#5E81AC
-hi LspDiagnosticsUnderlineHint ctermfg=12
-hi LspDiagnosticsUnderlineHint gui=undercurl cterm=underline,
+" hi LspDiagnosticsDefaultWarning guifg=#EBCB8B
+" hi LspDiagnosticsDefaultWarning ctermfg=3
+" hi LspDiagnosticsDefaultError guifg=#BF616A
+" hi LspDiagnosticsDefaultError ctermfg=1
+" hi LspDiagnosticsDefaultInformation guifg=#88C0D0
+" hi LspDiagnosticsDefaultInformation ctermfg=6
+" hi LspDiagnosticsDefaultHint guifg=#5E81AC
+" hi LspDiagnosticsDefaultHint ctermfg=12
+" hi LspDiagnosticsUnderlineWarning guifg=#EBCB8B
+" hi LspDiagnosticsUnderlineWarning ctermfg=3
+" hi LspDiagnosticsUnderlineWarning gui=undercurl cterm=underline,
+" hi LspDiagnosticsUnderlineError guifg=#BF616A
+" hi LspDiagnosticsUnderlineError ctermfg=1
+" hi LspDiagnosticsUnderlineError gui=undercurl cterm=underline,
+" hi LspDiagnosticsUnderlineInformation guifg=#88C0D0
+" hi LspDiagnosticsUnderlineInformation ctermfg=6
+" hi LspDiagnosticsUnderlineInformation gui=undercurl cterm=underline,
+" hi LspDiagnosticsUnderlineHint guifg=#5E81AC
+" hi LspDiagnosticsUnderlineHint ctermfg=12
+" hi LspDiagnosticsUnderlineHint gui=undercurl cterm=underline,
+
+" Neovim LSP (0.6)
+" > neovim/nvim-lspconfig
+hi DiagnosticSignWarn guifg=#EBCB8B
+hi DiagnosticSignWarn ctermfg=3
+hi DiagnosticSignError guifg=#BF616A
+hi DiagnosticSignError ctermfg=1
+hi DiagnosticSignInfo guifg=#88C0D0
+hi DiagnosticSignInfo ctermfg=6
+hi DiagnosticSignHint guifg=#5E81AC
+hi DiagnosticSignHint ctermfg=12
+hi DiagnosticWarn guifg=#EBCB8B
+hi DiagnosticWarn ctermfg=3
+hi DiagnosticError guifg=#BF616A
+hi DiagnosticError ctermfg=1
+hi DiagnosticInfo guifg=#88C0D0
+hi DiagnosticInfo ctermfg=6
+hi DiagnosticHint guifg=#5E81AC
+hi DiagnosticHint ctermfg=12
+hi DiagnosticFloatingWarn guifg=#EBCB8B
+hi DiagnosticFloatingWarn ctermfg=3
+hi DiagnosticFloatingError guifg=#BF616A
+hi DiagnosticFloatingError ctermfg=1
+hi DiagnosticFloatingInfo guifg=#88C0D0
+hi DiagnosticFloatingInfo ctermfg=6
+hi DiagnosticFloatingHint guifg=#5E81AC
+hi DiagnosticFloatingHint ctermfg=12
+hi DiagnosticVirtualTextWarn guifg=#EBCB8B
+hi DiagnosticVirtualTextWarn ctermfg=3
+hi DiagnosticVirtualTextError guifg=#BF616A
+hi DiagnosticVirtualTextError ctermfg=1
+hi DiagnosticVirtualTextInfo guifg=#88C0D0
+hi DiagnosticVirtualTextInfo ctermfg=6
+hi DiagnosticVirtualTextHint guifg=#5E81AC
+hi DiagnosticVirtualTextHint ctermfg=12
+hi DiagnosticUnderlineWarning guifg=#EBCB8B
+hi DiagnosticUnderlineWarning ctermfg=3
+hi DiagnosticUnderlineWarning gui=undercurl cterm=underline,
+hi DiagnosticUnderlineError guifg=#BF616A
+hi DiagnosticUnderlineError ctermfg=1
+hi DiagnosticUnderlineError gui=undercurl cterm=underline,
+hi DiagnosticUnderlineInformation guifg=#88C0D0
+hi DiagnosticUnderlineInformation ctermfg=6
+hi DiagnosticUnderlineInformation gui=undercurl cterm=underline,
+hi DiagnosticUnderlineHint guifg=#5E81AC
+hi DiagnosticUnderlineHint ctermfg=12
+hi DiagnosticUnderlineHint gui=undercurl cterm=underline,
 
 " Signify
 " > mhinz/vim-signify
