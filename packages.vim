@@ -7,9 +7,17 @@ call unpack#begin()
   Unpack 'voldikss/vim-floaterm'
   Unpack 'nvim-lua/popup.nvim', { 'opt': v:true }
   Unpack 'nvim-lua/plenary.nvim', { 'opt': v:true }
-  Unpack 'nvim-telescope/telescope.nvim', { 'cmd': 'Telescope*', 'requires': ['popup.nvim', 'plenary.nvim'], 'post': 'lua require("telescope-setup")' }
+  Unpack 'nvim-telescope/telescope.nvim', {
+        \   'cmd': 'Telescope*',
+        \   'requires': ['popup.nvim', 'plenary.nvim'],
+        \   'post': 'lua require("telescope-setup")'
+        \ }
   Unpack 'tami5/sql.nvim', { 'opt': v:true }
-  Unpack 'nvim-telescope/telescope-frecency.nvim', { 'cmd': 'Telescope*', 'requires': ['telescope.nvim', 'sql.nvim'], 'post': 'lua require("telescope").load_extension("frecency")' }
+  Unpack 'nvim-telescope/telescope-frecency.nvim', {
+        \   'cmd': 'Telescope*',
+        \   'requires': ['telescope.nvim', 'sql.nvim'],
+        \   'post': 'lua require("telescope").load_extension("frecency")'
+        \ }
 
   " Customize status line
   Unpack 'itchyny/lightline.vim'
@@ -28,13 +36,36 @@ call unpack#begin()
   Unpack 'JuliaEditorSupport/julia-vim'
 
   " Language server and completion
-  Unpack 'neovim/nvim-lspconfig', { 'opt': v:true, 'post': ['lua require("lsp-setup")', 'LspStart'] }
-  Unpack 'hrsh7th/nvim-compe', { 'event': 'InsertEnter',
-        \                        'requires': 'lsp_signature.nvim',
-        \                        'post': 'lua require("compe.lazy").load_deferred()' }
-  Unpack 'ray-x/lsp_signature.nvim', { 'opt': v:true,
-        \                              'requires': 'nvim-lspconfig',
-        \                              'ft': ['python', 'c', 'cpp', 'css', 'haskell', 'lhaskell', 'julia', 'ocaml', 'rust', 'tex', 'vim'] }
+  Unpack 'neovim/nvim-lspconfig', {
+        \   'opt': v:true,
+        \   'post': [
+        \     'lua require("lsp-setup")',
+        \     'LspStart',
+        \     'lua vim.lsp.buf_attach_client(0, 1)'
+        \   ]
+        \ }
+  Unpack 'hrsh7th/nvim-compe', {
+        \   'event': 'InsertEnter',
+        \   'requires': 'lsp_signature.nvim',
+        \   'post': 'lua require("compe.lazy").load_deferred()'
+        \ }
+  Unpack 'ray-x/lsp_signature.nvim', {
+        \   'opt': v:true,
+        \   'requires': 'nvim-lspconfig',
+        \   'ft': [
+        \     'python',
+        \     'c',
+        \     'cpp',
+        \     'css',
+        \     'haskell',
+        \     'lhaskell',
+        \     'julia',
+        \     'ocaml',
+        \     'rust',
+        \     'tex',
+        \     'vim'
+        \   ]
+        \ }
 
   " Operators
   Unpack 'kana/vim-operator-user'
