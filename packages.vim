@@ -16,8 +16,7 @@ call unpack#begin()
   Unpack 'itchyny/vim-gitbranch'
   Unpack '~/Documents/code/lightline-gitdiff'
   Unpack 'mengelbrecht/lightline-bufferline', { 'commit': '510c8be' }
-  " Unpack 'spywhere/lightline-lsp'
-  Unpack '~/Documents/code/lightline-lsp'
+  Unpack 'spywhere/lightline-lsp'
 
   " Language support
   Unpack 'aliva/vim-fish'
