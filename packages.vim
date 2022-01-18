@@ -18,6 +18,11 @@ call unpack#begin()
         \   'requires': ['telescope.nvim', 'sql.nvim'],
         \   'post': 'lua require("telescope").load_extension("frecency")'
         \ }
+  Unpack 'nvim-telescope/telescope-file-browser.nvim', {
+        \   'cmd': 'Telescope*',
+        \   'requires': 'telescope.nvim',
+        \   'post': 'lua require("telescope").load_extension("file_browser")'
+        \ }
 
   " Customize status line
   Unpack 'itchyny/lightline.vim'
