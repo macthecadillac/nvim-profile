@@ -32,13 +32,13 @@ call unpack#begin()
   Unpack 'spywhere/lightline-lsp'
 
   " Language support
-  Unpack 'aliva/vim-fish'
+  Unpack 'aliva/vim-fish', { 'ft': 'fish' }
   Unpack 'vim-python/python-syntax', { 'ft': 'python' }
   Unpack 'rust-lang/rust.vim', { 'ft': 'rust' }
   Unpack 'macthecadillac/haskell-vim', { 'ft': 'haskell' }
   Unpack 'cespare/vim-toml', { 'ft': 'toml' }
   Unpack 'rgrinberg/vim-ocaml', { 'ft': 'ocaml' }
-  Unpack 'JuliaEditorSupport/julia-vim'
+  Unpack 'JuliaEditorSupport/julia-vim', { 'ft': 'julia' }
 
   " Language server and completion
   Unpack 'neovim/nvim-lspconfig', {
