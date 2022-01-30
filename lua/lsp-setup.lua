@@ -57,20 +57,29 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
   }
 )
 
--- populate quickfix
-local default_handler = vim.lsp.handlers["textDocument/publishDiagnostics"]
-vim.lsp.handlers["textDocument/publishDiagnostics"] = function(err, method, result, client_id, bufnr, config)
-  default_handler(err, method, result, client_id, bufnr, config)
-  local diagnostics = vim.lsp.diagnostic.get_all()
-  local qflist = {}
+local severity = {}
+severity[vim.diagnostic.severity.ERROR] = "E"
+severity[vim.diagnostic.severity.WARN] = "W"
+severity[vim.diagnostic.severity.INFO] = "I"
+severity[vim.diagnostic.severity.HINT] = "H"
+
+-- populate loclist with diagnostic results
+populate_loclist = function()
+  local diagnostics = vim.diagnostic.get()
+  local loclist = {}
   for bufnr, diagnostic in pairs(diagnostics) do
     for _, d in ipairs(diagnostic) do
-      d.bufnr = bufnr
-      d.lnum = d.range.start.line + 1
-      d.col = d.range.start.character + 1
-      d.text = d.message
-      table.insert(qflist, d)
+      item = {}
+      item["bufnr"] = bufnr
+      item["lnum"] = d.lnum
+      item["col"] = d.col
+      item["text"] = d.message
+      item["type"] = severity[d.severity]
+      table.insert(loclist, item)
     end
   end
-  vim.lsp.util.set_qflist(qflist)
+  loclist["open"] = false
+
+  vim.diagnostic.setloclist(loclist)
 end
+-- vim.api.nvim_command [[autocmd! LspDiagnosticsChanged lua populate_quickfix()]]

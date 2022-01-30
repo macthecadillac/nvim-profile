@@ -4,6 +4,8 @@ telescope.setup{
   defaults = {
     sort_lastused = true,
     sorting_strategy = "ascending",
+    prompt_prefix = "   ",
+    selection_caret = "  ",
     layout_config = {
       width = function(_, max_columns, _)
         if max_columns < 120 then

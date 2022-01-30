@@ -45,14 +45,18 @@ call unpack#begin()
         \   'opt': v:true,
         \   'post': [
         \     'lua require("lsp-setup")',
+        \     'execute "source " . stdpath("config") . "/startup/lsp.vim"',
         \     'LspStart',
-        \     'lua vim.lsp.buf_attach_client(0, 1)'
+        \     'lua vim.lsp.buf_attach_client(0, 1)',
         \   ]
         \ }
   Unpack 'hrsh7th/nvim-compe', {
         \   'event': 'InsertEnter',
         \   'requires': 'lsp_signature.nvim',
-        \   'post': 'lua require("compe.lazy").load_deferred()'
+        \   'post': [
+        \     'execute "source " . stdpath("config") . "/startup/compe.vim"',
+        \     'lua require("compe.lazy").load_deferred()',
+        \   ]
         \ }
   Unpack 'ray-x/lsp_signature.nvim', {
         \   'opt': v:true,
