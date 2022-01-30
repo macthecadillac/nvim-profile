@@ -82,4 +82,3 @@ populate_loclist = function()
 
   vim.diagnostic.setloclist(loclist)
 end
--- vim.api.nvim_command [[autocmd! LspDiagnosticsChanged lua populate_quickfix()]]
