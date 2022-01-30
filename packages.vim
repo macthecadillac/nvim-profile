@@ -23,6 +23,7 @@ call unpack#begin()
         \   'requires': 'telescope.nvim',
         \   'post': 'lua require("telescope").load_extension("file_browser")'
         \ }
+  " Unpack 'kyazdani42/nvim-web-devicons', { 'opt': v:true }
 
   " Customize status line
   Unpack 'itchyny/lightline.vim'
