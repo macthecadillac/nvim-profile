@@ -27,7 +27,6 @@ call unpack#begin()
         \   'opt': v:true,
         \   'post': 'lua require("nvim-web-devicons-setup")'
         \ }
-  Unpack 'ryanoasis/vim-devicons'
 
   " Customize status line
   Unpack 'itchyny/lightline.vim'
