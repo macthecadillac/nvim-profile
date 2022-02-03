@@ -6,7 +6,7 @@ for icon, cfg in pairs(icons) do
   cterm_color = 'NONE'
   icons[icon] = cfg
 end
-devicons.set_default_icon('', '#D8DEE9')
+devicons.set_default_icon('', '#D8DEE9')
 
 devicons.setup{
   override = icons;
