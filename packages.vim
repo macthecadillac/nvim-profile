@@ -9,7 +9,7 @@ call unpack#begin()
   Unpack 'nvim-lua/plenary.nvim', { 'opt': v:true }
   Unpack 'nvim-telescope/telescope.nvim', {
         \   'cmd': 'Telescope*',
-        \   'requires': ['popup.nvim', 'plenary.nvim'],
+        \   'requires': ['popup.nvim', 'plenary.nvim', 'nvim-web-devicons'],
         \   'post': 'lua require("telescope-setup")'
         \ }
   Unpack 'tami5/sql.nvim', { 'opt': v:true }
@@ -23,7 +23,11 @@ call unpack#begin()
         \   'requires': 'telescope.nvim',
         \   'post': 'lua require("telescope").load_extension("file_browser")'
         \ }
-  " Unpack 'kyazdani42/nvim-web-devicons', { 'opt': v:true }
+  Unpack 'kyazdani42/nvim-web-devicons', {
+        \   'opt': v:true,
+        \   'post': 'lua require("nvim-web-devicons-setup")'
+        \ }
+  Unpack 'ryanoasis/vim-devicons'
 
   " Customize status line
   Unpack 'itchyny/lightline.vim'

@@ -72,6 +72,7 @@ let g:lightline#bufferline#read_only = " \uf023"
 let g:lightline#bufferline#more_buffers = "\u2026"
 let g:lightline#bufferline#show_number = 1
 let g:lightline#bufferline#unnamed = '[NO NAME]'
+let g:lightline#bufferline#enable_devicons = 1
 let g:lightline#bufferline#min_buffer_count = 2
 
 function! LightlineFileFormat()
