@@ -9,7 +9,7 @@ nmap <leader>nco :set colorcolumn=<CR>
 
 nnoremap <buffer> <A-r> :Vimdo run<CR>
 nnoremap <leader>t :lua vim.lsp.buf.hover()<CR>
-nnoremap <leader>d :lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
+nnoremap <leader>d :lua vim.diagnostic.open_float(0, { scope = "line" })<CR>
 nnoremap <C-]> :lua vim.lsp.buf.definition()<CR>
 nnoremap [d :lua vim.lsp.diagnostic.goto_prev()<CR>
 nnoremap ]d :lua vim.lsp.diagnostic.goto_next()<CR>
