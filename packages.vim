@@ -1,5 +1,8 @@
 call unpack#begin()
-  Unpack '~/Documents/code/unpack', { 'cmd': 'Unpack*', 'post': 'source ' . stdpath('config') . '/packages.vim' }
+  Unpack '~/Documents/code/unpack', {
+        \ 'cmd': 'Unpack*',
+        \ 'post': 'source ' . stdpath('config') . '/packages.vim'
+        \ }
   Unpack 'brooth/far.vim'
   Unpack 'tpope/vim-commentary'
   Unpack '~/Documents/code/vimdo'

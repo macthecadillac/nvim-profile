@@ -42,7 +42,8 @@ let g:vimdo#cmds = {
   \   },
   \ 'haskell': {
   \     'build': {'cmd': ['stack', 'build', '--fast']},
-  \     'test': {'cmd': ['stack', 'test', '--fast']},
+  \     'test': {'cmd': ['stack', 'test']},
+  \     'doc': {'cmd': ['stack', 'haddock', '--open']},
   \   },
   \ 'sh': {
   \     'run': {'cmd': ['sh', 'vimdo#util#filename'], 'in_term': 1},
