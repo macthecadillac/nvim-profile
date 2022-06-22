@@ -5,7 +5,8 @@ set shell=sh  " speeds up the 'system' function and a lot more things
 
 let g:loaded_matchit = 1
 
-set rtp+=/home/mac/.config/nvim/unpack
+let unpack_path = stdpath('config') . '/unpack'
+execute 'set rtp+=' . unpack_path
 
 set nrformats=    " treat all numeral as decimal
 set wildmenu
