@@ -59,7 +59,7 @@ augroup bufwrite
   autocmd BufEnter * silent! lcd %:p:h
 augroup END
 
-let g:python3_host_prog = '/usr/bin/python3'
+let g:python3_host_prog = 'python3'
 
 
 " Map F7 to toggle relative numbering.

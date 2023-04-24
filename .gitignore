@@ -7,3 +7,4 @@
 /pack/*
 /lua/load-packages.lua
 /unpack/*
+.DS_Store

@@ -38,7 +38,7 @@ nvim_lsp.julials.setup({
 })
 nvim_lsp.ocamllsp.setup({})
 nvim_lsp.pylsp.setup({ on_attach = signature_setup })
-nvim_lsp.rls.setup({ on_attach = signature_setup })
+nvim_lsp.rust_analyzer.setup({ on_attach = signature_setup })
 nvim_lsp.texlab.setup({})
 nvim_lsp.vimls.setup{}
 
