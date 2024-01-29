@@ -46,6 +46,7 @@ call unpack#begin()
   Unpack 'cespare/vim-toml', { 'ft': 'toml' }
   Unpack 'rgrinberg/vim-ocaml', { 'ft': 'ocaml' }
   Unpack 'JuliaEditorSupport/julia-vim', { 'ft': 'julia' }
+  Unpack 'ledger/vim-ledger'
 
   " Language server and completion
   Unpack 'neovim/nvim-lspconfig', {

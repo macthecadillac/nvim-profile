@@ -4,7 +4,7 @@ telescope.setup{
   defaults = {
     sort_lastused = true,
     sorting_strategy = "ascending",
-    prompt_prefix = " " .. "\u{f848}" .. " ",
+    prompt_prefix = " " .. "\u{f0c7c}" .. " ",
     selection_caret = "  ",
     layout_config = {
       width = function(_, max_columns, _)
