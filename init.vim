@@ -76,7 +76,6 @@ execute 'source ' . config_dir . '/textobj.vim'
 execute 'source ' . config_dir . '/vimdo.vim'
 execute 'source ' . config_dir . '/telescope.vim'
 execute 'source ' . config_dir . '/mundo.vim'
-execute 'source ' . config_dir . '/compe.vim'
 execute 'source ' . config_dir . '/floaterm.vim'
 execute 'source ' . config_dir . '/lsp.vim'
 

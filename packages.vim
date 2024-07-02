@@ -50,35 +50,17 @@ call unpack#begin()
 
   " Language server and completion
   Unpack 'neovim/nvim-lspconfig', {
-        \   'opt': v:true,
         \   'post': [
         \     'lua require("lsp-setup")',
-        \     'LspStart',
         \     'lua vim.lsp.buf_attach_client(0, 1)',
         \   ]
         \ }
-  Unpack 'hrsh7th/nvim-compe', {
-        \   'event': 'InsertEnter',
-        \   'requires': 'lsp_signature.nvim',
-        \   'post': 'lua require("compe.lazy").load_deferred()',
-        \ }
-  Unpack 'ray-x/lsp_signature.nvim', {
-        \   'opt': v:true,
-        \   'requires': 'nvim-lspconfig',
-        \   'ft': [
-        \     'python',
-        \     'c',
-        \     'cpp',
-        \     'css',
-        \     'haskell',
-        \     'lhaskell',
-        \     'julia',
-        \     'ocaml',
-        \     'rust',
-        \     'tex',
-        \     'vim'
-        \   ]
-        \ }
+  Unpack 'hrsh7th/cmp-nvim-lsp'
+  Unpack 'hrsh7th/cmp-buffer'
+  Unpack 'hrsh7th/cmp-path'
+  Unpack 'hrsh7th/cmp-cmdline'
+  Unpack 'hrsh7th/nvim-cmp', { 'post': 'lua require("nvim-cmp-setup")' }
+  Unpack 'ray-x/lsp_signature.nvim'
 
   " Operators
   Unpack 'kana/vim-operator-user'
