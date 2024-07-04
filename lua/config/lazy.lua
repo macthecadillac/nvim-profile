@@ -20,23 +20,23 @@ local lazy = require("lazy")
 lazy.setup({
   spec = {
     -- Utilities
-    {
-      'voldikss/vim-floaterm',
-      cmd = {
-        "FloatermFirst",
-        "FloatermHide",
-        "FloatermKill",
-        "FloatermLast",
-        "FloatermNew",
-        "FloatermNext",
-        "FloatermPrev",
-        "FloatermSend",
-        "FloatermShow",
-        "FloatermToggle",
-        "FloatermUpdate",
-      }
-    },
-    'nvim-lua/popup.nvim',
+    -- {
+    --   'voldikss/vim-floaterm',
+    --   cmd = {
+    --     "FloatermFirst",
+    --     "FloatermHide",
+    --     "FloatermKill",
+    --     "FloatermLast",
+    --     "FloatermNew",
+    --     "FloatermNext",
+    --     "FloatermPrev",
+    --     "FloatermSend",
+    --     "FloatermShow",
+    --     "FloatermToggle",
+    --     "FloatermUpdate",
+    --   }
+    -- },
+    { 'nvim-lua/popup.nvim', event = "VeryLazy" },
     { 
       dir = os.getenv("HOME") .. "/Documents/Code/vimdo",
       cmd = {
@@ -76,12 +76,12 @@ lazy.setup({
         {
           "kyazdani42/nvim-web-devicons",
           config = function()
-            require("nvim-web-devicons-setup")
+            require("config.nvim-web-devicons")
           end
         },
       },
       config = function()
-        require("telescope-setup")
+        require("config.telescope")
       end
     },
 
@@ -110,22 +110,23 @@ lazy.setup({
     -- Language server and completion
     {
       'hrsh7th/nvim-cmp',
-      event = "InsertEnter",
+      event = { "InsertEnter", "CmdlineEnter" },
       dependencies = {
         {
           'neovim/nvim-lspconfig',
           config = function()
-            require("lsp-setup")
+            require("config.lsp")
           end
         },
         'hrsh7th/cmp-nvim-lsp',
         'hrsh7th/cmp-buffer',
         'hrsh7th/cmp-path',
         'hrsh7th/cmp-cmdline',
+        'onsails/lspkind.nvim'
       },
       ft = { "c", "cpp", "css", "haskell", "julia", "ocaml", "python", "rust", "tex", "plaintex", "vim" },
       config = function()
-        require("nvim-cmp-setup")
+        require("config.nvim-cmp")
       end
     },
     {
@@ -140,9 +141,28 @@ lazy.setup({
       version = "*", -- Use for stability; omit to use `main` branch for the latest features
       event = "VeryLazy",
       config = function()
-          require("nvim-surround").setup({
-              -- Configuration here, or leave empty to use defaults
-          })
+        require("config.nvim-surround")
+      end
+    },
+
+    -- Text objects
+    { 'thinca/vim-textobj-between', event = "VeryLazy", dependencies = 'kana/vim-textobj-user' },
+    { 'glts/vim-textobj-comment', event = "VeryLazy", dependencies = 'kana/vim-textobj-user' },
+    {
+      'gibiansky/vim-latex-objects',
+      event = "VeryLazy",
+      dependencies = 'kana/vim-textobj-user',
+      ft = 'tex'
+    },
+
+    -- Colorscheme
+    {
+      "gbprod/nord.nvim",
+      lazy = false,
+      priority = 1000,
+      config = function()
+        require("nord").load()
+        vim.cmd.colorscheme("nord")
       end
     },
   },

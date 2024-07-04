@@ -1,4 +1,5 @@
 local cmp = require("cmp")
+local lspkind = require("lspkind")
 
 cmp.setup({
   -- snippet = {
@@ -11,10 +12,12 @@ cmp.setup({
   --     vim.snippet.expand(args.body) -- For native neovim snippets (Neovim v0.10+)
   --   end,
   -- },
-  -- window = {
+  window = {
   --   -- completion = cmp.config.window.bordered(),
-  --   -- documentation = cmp.config.window.bordered(),
-  -- },
+    documentation = {
+      winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+    }
+  },
   mapping = cmp.mapping.preset.insert({
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -32,7 +35,30 @@ cmp.setup({
     -- { name = 'snippy' }, -- For snippy users.
   }, {
     { name = 'buffer' },
-  })
+  }),
+  enabled = function()
+    -- disable completion in comments
+    local context = require("cmp.config.context")
+    -- keep command mode completion enabled when cursor is in a comment
+    if vim.api.nvim_get_mode().mode == "c" then
+      return true
+    else
+      return not context.in_treesitter_capture("comment")
+        and not context.in_syntax_group("Comment")
+    end
+  end,
+  formatting = {
+    format = lspkind.cmp_format({
+      mode = "symbol_text",
+      menu = ({
+        buffer = "[Buffer]",
+        nvim_lsp = "[LSP]",
+        nvim_lua = "[Lua]",
+        cmdline = "[Cmd]",
+        path = "[Path]"
+      })
+    }),
+  }
 })
 
   -- -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
@@ -66,3 +92,13 @@ nvim_lsp.pylsp.setup({ capabilities = capabilities })
 nvim_lsp.rust_analyzer.setup({ capabilities = capabilities })
 nvim_lsp.texlab.setup({ capabilities = capabilities })
 nvim_lsp.vimls.setup({ capabilities = capabilities })
+nvim_lsp.lua_ls.setup({ capabilities = capabilities })
+
+-- Disable keymap in Telescope prompt
+local cmp_telescope = vim.api.nvim_create_augroup("CmpTelescope", { clear = true })
+vim.api.nvim_create_autocmd({"FileType"}, {
+  pattern = {"TelescopePrompt"},
+  command = "lua require('cmp').setup.buffer({ enabled = false })",
+  group = cmp_telescope
+})
+

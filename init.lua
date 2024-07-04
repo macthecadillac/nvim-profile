@@ -16,6 +16,7 @@ vim.opt.smartcase = true    -- Smart case matching when search
 vim.opt.incsearch = true    -- Incremental search
 vim.opt.tabstop = 4         -- Show existing tab with 4 space width
 vim.opt.shiftwidth = 4      -- when indenting with '>', use 4 spaces width
+vim.opt.pumheight = 15      -- number of items shown in completion menu
 
 -- vim.opt.foldmethod = "syntax"
 -- vim.opt.foldnestmax = 1
@@ -51,9 +52,11 @@ vim.g.maplocalleader = "\\"
 vim.g.python3_host_prog = "python3"
 
 -- Automatically switch directory to the directory of the current file.
+local switchdir = vim.api.nvim_create_augroup("SwitchDir", { clear = true })
 vim.api.nvim_create_autocmd({"BufEnter"}, {
   pattern = {"*"},
-  command = "silent! lcd %:p:h"
+  command = "silent! lcd %:p:h",
+  group = switchdir
 })
 
 -- map <leader>n to toggle relative numbering
@@ -71,10 +74,9 @@ vim.cmd([[
 ]])
 
 -- load plugin settings
-require("telescope-keymap")
+require("config.telescope-keymap")
 local config_dir = vim.fn.stdpath('config')
 vim.cmd.source(config_dir .. "/startup/mundo.vim")
 vim.cmd.source(config_dir .. "/startup/floaterm.vim")
 
-vim.cmd.colorscheme('nord')
 require("config.lazy")

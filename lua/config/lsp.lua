@@ -11,7 +11,7 @@ vim.diagnostic.config({
   }
 })
 
-function signature_setup(_, _)
+local function signature_setup(_, _)
   require('lsp_signature').on_attach({
     bind = true, -- This is mandatory, otherwise border config won't get registered.
     hint_enable = false,
@@ -28,8 +28,8 @@ nvim_lsp.cssls.setup({ on_attach = signature_setup })
 nvim_lsp.hls.setup({})
 nvim_lsp.julials.setup({
   on_attach = signature_setup,
-  on_new_config = function(new_config,new_root_dir)
-    cmd = {
+  on_new_config = function(new_config, _)
+    local cmd = {
       "julia",
       "--startup-file=no",
       "--history-file=no",
@@ -53,7 +53,38 @@ nvim_lsp.ocamllsp.setup({})
 nvim_lsp.pylsp.setup({ on_attach = signature_setup })
 nvim_lsp.rust_analyzer.setup({ on_attach = signature_setup })
 nvim_lsp.texlab.setup({})
-nvim_lsp.vimls.setup{}
+nvim_lsp.vimls.setup({})
+nvim_lsp.lua_ls.setup({
+  on_init = function(client)
+    local path = client.workspace_folders[1].name
+    if vim.loop.fs_stat(path..'/.luarc.json') or vim.loop.fs_stat(path..'/.luarc.jsonc') then
+      return
+    end
+
+    client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+      runtime = {
+        -- Tell the language server which version of Lua you're using
+        -- (most likely LuaJIT in the case of Neovim)
+        version = 'LuaJIT'
+      },
+      -- Make the server aware of Neovim runtime files
+      workspace = {
+        checkThirdParty = false,
+        library = {
+          vim.env.VIMRUNTIME
+          -- Depending on the usage, you might want to add additional paths here.
+          -- "${3rd}/luv/library"
+          -- "${3rd}/busted/library",
+        }
+        -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
+        -- library = vim.api.nvim_get_runtime_file("", true)
+      }
+    })
+  end,
+  settings = {
+    Lua = {}
+  }
+})
 
 -- disable virtual text and underline
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -66,7 +97,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 -- remove separator in hover pop-ups
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
   vim.lsp.handlers.hover, {
-    separator = false
+    separator = false,
   }
 )
 
@@ -77,12 +108,12 @@ severity[vim.diagnostic.severity.INFO] = "I"
 severity[vim.diagnostic.severity.HINT] = "H"
 
 -- populate loclist with diagnostic results
-populate_loclist = function()
+PopulateLocList = function()
   local diagnostics = vim.diagnostic.get()
   local loclist = {}
   for bufnr, diagnostic in pairs(diagnostics) do
     for _, d in ipairs(diagnostic) do
-      item = {}
+      local item = {}
       item["bufnr"] = bufnr
       item["lnum"] = d.lnum
       item["col"] = d.col
@@ -95,3 +126,10 @@ populate_loclist = function()
 
   vim.diagnostic.setloclist(loclist)
 end
+
+local quickfix = vim.api.nvim_create_augroup("QuickFix", { clear = true })
+vim.api.nvim_create_autocmd({"DiagnosticChanged"}, {
+  pattern = {"*"},
+  command = "lua PopulateLocList()",
+  group = quickfix
+})

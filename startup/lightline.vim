@@ -70,7 +70,7 @@ let g:lightline#bufferline#modified = " \uf040"
 " let g:lightline#bufferline#filename_modifier = ':t'
 let g:lightline#bufferline#read_only = " \uf023"
 let g:lightline#bufferline#more_buffers = "\u2026"
-let g:lightline#bufferline#show_number = 1
+let g:lightline#bufferline#show_number = v:true
 let g:lightline#bufferline#unnamed = '[NO NAME]'
 let g:lightline#bufferline#min_buffer_count = 2
 
@@ -92,7 +92,6 @@ function! LightlineFormat()
   return &filetype =~# '^Mundo\|MundoDiff' ? '' : &filetype
 endfunction
 
-" TODO: make the length truly adapt to window width
 function! LightlineFilename()
   let l:readonly = &readonly ? "\uf023" . ' ' : ''
 
@@ -102,7 +101,24 @@ function! LightlineFilename()
   elseif &filetype =~# '^Mundo\|MundoDiff'
     let l:filename = &filetype
   else
-    let l:filename = l:fname
+    let l:fname_len = strcharlen(l:fname)
+    let l:gitbranch_len = strcharlen(DisplayGitBranchName())
+    let l:ft_len = strcharlen(LightlineFileType())
+    let l:file_format_len = strcharlen(LightlineFileFormat())
+    let l:other_len = 42   " a rough estimate of everything else
+    let l:lsp_hints = lightline#lsp#hints()
+    let l:lsp_hints_len = strcharlen(l:lsp_hints) + (strcharlen(l:lsp_hints) > 0) * 3
+    let l:lsp_infos = lightline#lsp#infos()
+    let l:lsp_infos_len = strcharlen(l:lsp_infos) + (strcharlen(l:lsp_infos) > 0) * 3
+    let l:lsp_warn = lightline#lsp#warnings()
+    let l:lsp_warn_len = strcharlen(l:lsp_warn) + (strcharlen(l:lsp_warn) > 0) * 3
+    let l:lsp_errs = lightline#lsp#errors()
+    let l:lsp_errs_len = strcharlen(l:lsp_errs) + (strcharlen(l:lsp_errs) > 0) * 3
+    let l:lsp_len = l:lsp_hints_len + l:lsp_infos_len + l:lsp_warn_len + l:lsp_errs_len
+    let l:used = l:gitbranch_len + l:ft_len + l:file_format_len + l:other_len + l:lsp_len
+    let l:max_width = winwidth(0) - l:used
+    let l:fn = strcharlen(l:fname) < l:max_width ? l:fname : (l:fname[:(l:max_width - 2)] . "\u2026")
+    let l:filename = l:fn
   endif
 
   let l:modified = &modified ? ' ' . "\uf040" : ''
