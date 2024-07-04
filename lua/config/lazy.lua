@@ -20,22 +20,22 @@ local lazy = require("lazy")
 lazy.setup({
   spec = {
     -- Utilities
-    -- {
-    --   'voldikss/vim-floaterm',
-    --   cmd = {
-    --     "FloatermFirst",
-    --     "FloatermHide",
-    --     "FloatermKill",
-    --     "FloatermLast",
-    --     "FloatermNew",
-    --     "FloatermNext",
-    --     "FloatermPrev",
-    --     "FloatermSend",
-    --     "FloatermShow",
-    --     "FloatermToggle",
-    --     "FloatermUpdate",
-    --   }
-    -- },
+    {
+      'voldikss/vim-floaterm',
+      cmd = {
+        "FloatermFirst",
+        "FloatermHide",
+        "FloatermKill",
+        "FloatermLast",
+        "FloatermNew",
+        "FloatermNext",
+        "FloatermPrev",
+        "FloatermSend",
+        "FloatermShow",
+        "FloatermToggle",
+        "FloatermUpdate",
+      }
+    },
     { 'nvim-lua/popup.nvim', event = "VeryLazy" },
     { 
       dir = os.getenv("HOME") .. "/Documents/Code/vimdo",
@@ -132,7 +132,13 @@ lazy.setup({
     {
       'ray-x/lsp_signature.nvim',
       event = "InsertEnter",
-      ft = { "c", "cpp", "css", "haskell", "julia", "ocaml", "python", "rust", "tex", "plaintex", "vim" }
+      ft = { "c", "cpp", "css", "haskell", "julia", "ocaml", "python", "rust", "tex", "plaintex", "vim" },
+      config = function(_, opts) require("lsp_signature").setup({
+        bind = true,
+        floating_window_above_cur_line = true,
+        hint_enable = false,
+        handler_opts = { border = "double" }
+      }) end
     },
 
     -- Operators
