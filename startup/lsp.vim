@@ -1,11 +1,11 @@
-let g:default_julia_version = '1.6'
+"let g:default_julia_version = '1.6'
 
-sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl=
-sign define DiagnosticSignWarn text= texthl=DiagnosticSignWarn linehl= numhl=
-sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl= numhl=
-sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=
+"sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl=
+"sign define DiagnosticSignWarn text= texthl=DiagnosticSignWarn linehl= numhl=
+"sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl= numhl=
+"sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=
 
-augroup QuickFix
-  autocmd!
-  autocmd DiagnosticChanged * lua populate_loclist()
-augroup END
+"augroup QuickFix
+"  autocmd!
+"  autocmd DiagnosticChanged * lua populate_loclist()
+"augroup END
