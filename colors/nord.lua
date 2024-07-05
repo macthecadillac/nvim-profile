@@ -21,8 +21,8 @@ local polar_night_2 = "#434C5E"
 local polar_night_3 = "#4C566A"
 local polar_night_4 = "#616E88"
 local snow_storm_0 = "#D8DEE9"
-local snow_storm_0 = "#E5E9F0"
-local snow_storm_0 = "#ECEFF4"
+local snow_storm_1 = "#E5E9F0"
+local snow_storm_2 = "#ECEFF4"
 local frost_0 = "#8FBCBB"
 local frost_1 = "#88C0D0"
 local frost_2 = "#81A1C1"
@@ -546,9 +546,10 @@ vim.api.nvim_set_hl(0, "LspSignatureActiveParameter", { bg = aurora_2, fg = pola
 -- telescope
 vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = polar_night_1, bg = polar_night_1, ctermfg = 0 })
 vim.api.nvim_set_hl(0, "TelescopeMatching", { fg = frost_1, ctermfg = 0 })
-vim.api.nvim_set_hl(0, "TelescopePathSeparator", { fg = snow_storm_0, ctermfg = 0 })
+vim.api.nvim_set_hl(0, "TelescopePathSeparator", { fg = snow_storm_2, ctermfg = 0 })
 vim.api.nvim_set_hl(0, "TelescopeNormal", { fg = snow_storm_0, bg = polar_night_1, ctermfg = 0 })
 vim.api.nvim_set_hl(0, "TelescopePromptCounter", { fg = snow_storm_3, bg = polar_night_1, ctermfg = 0 })
+vim.api.nvim_set_hl(0, "TelescopeBufferLoaded", { fg = aurora_2, ctermfg = 0 })
 
 -- floaterm
 vim.api.nvim_set_hl(0, "Floatermborder", { fg = polar_night_3, ctermfg = 0 })

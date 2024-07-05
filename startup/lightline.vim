@@ -3,17 +3,16 @@ let g:lightline = {
   \   'colorscheme': 'nord',
   \   'active': {
   \     'left': [['mode', 'paste'],
-  \              ['filename'],
-  \              ['gitbranch', 'gitstatus']],
+  \              ['gitbranch', 'gitstatus', 'filename']],
   \     'right': [
   \       [ 'linter_errors',
   \         'linter_warnings',
   \         'linter_ok',
   \         'linter_infos',
-  \         'linter_hints',
-  \         'lineinfo'],
-  \       ['fileformat'],
-  \       ['filetype']
+  \         'linter_hints' ],
+  \       [ 'filetype',
+  \         'fileformat',
+  \         'lineinfo']
   \     ],
   \   },
   \   'inactive': {
@@ -54,18 +53,21 @@ let g:lightline = {
   \     'gitstatus': 'lightline_gitdiff#get_status() !=# ""',
   \   },
   \   'separator': {'left': "\uE0B0", 'right': "\uE0B2"},
-  \   'subseparator': {'left': '', 'right': ''},
+  \   'subseparator': { 'left': '', 'right': ''},
   \ }
+  "\   'subseparator': { 'left': '', 'right': '' },
 
 let g:lightline#lsp#indicator_ok = ''
 let g:lightline#lsp#indicator_errors = "\uf05e "
 let g:lightline#lsp#indicator_warnings = "\uf071 "
 let g:lightline#lsp#indicator_hints = "\uf129 "
 let g:lightline#lsp#indicator_infos = "\uf129 "
-let g:lightline_gitdiff#indicator_added = "\uf067"
-let g:lightline_gitdiff#indicator_deleted = "\uf068"
-let g:lightline_gitdiff#indicator_modified = "\uf12a"
-let g:lightline_gitdiff#min_winwidth = 90
+"let g:lightline_gitdiff#indicator_added = "\uf067"
+"let g:lightline_gitdiff#indicator_deleted = "\uf068"
+"let g:lightline_gitdiff#indicator_modified = "\uf12a"
+let g:lightline_gitdiff#indicator_pad = v:false
+let g:lightline_gitdiff#indicator_hide_zero = v:true
+"let g:lightline_gitdiff#min_winwidth = 80
 let g:lightline#bufferline#modified = " \uf040" 
 " let g:lightline#bufferline#filename_modifier = ':t'
 let g:lightline#bufferline#read_only = " \uf023"
@@ -84,7 +86,7 @@ endfunction
 
 function! DisplayGitBranchName()
   let l:gitbranch = gitbranch#name()
-  let l:displaytext = winwidth(0) > 70 ? "\uf126" . ' ' . l:gitbranch : "\uf126"
+  let l:displaytext = winwidth(0) > 70 ? "\ue0a0" . ' ' . l:gitbranch : "\ue0a0"
   return l:gitbranch ==# '' ? '' : l:displaytext
 endfunction
 
@@ -143,6 +145,7 @@ function! LightlineFilename()
   else
     let l:fname_len = strcharlen(l:fname)
     let l:gitbranch_len = strcharlen(DisplayGitBranchName())
+    let l:gitdiff_len = strcharlen(lightline_gitdiff#get_status())
     let l:ft_len = strcharlen(LightlineFileType())
     let l:file_format_len = strcharlen(LightlineFileFormat())
     let l:other_len = 42   " a rough estimate of everything else
@@ -159,7 +162,7 @@ function! LightlineFilename()
     else
       let l:lsp_len = 0
     endif
-    let l:used = l:gitbranch_len + l:ft_len + l:file_format_len + l:other_len + l:lsp_len
+    let l:used = l:gitbranch_len + l:gitdiff_len + l:ft_len + l:file_format_len + l:other_len + l:lsp_len
     let l:max_width = winwidth(0) - l:used
     let l:fn = strcharlen(l:fname) < l:max_width ? l:fname : (l:fname[:(l:max_width - 2)] . "\u2026")
     let l:filename = l:fn

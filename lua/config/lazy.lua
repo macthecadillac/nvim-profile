@@ -22,7 +22,7 @@ lazy.setup({
     -- Utilities
     { 'voldikss/vim-floaterm', event = "VeryLazy" },
     { 'nvim-lua/popup.nvim', event = "VeryLazy" },
-    { 
+    {
       dir = os.getenv("HOME") .. "/Documents/Code/vimdo",
       event = "VeryLazy",
       config = function()
@@ -34,6 +34,12 @@ lazy.setup({
       'nvim-telescope/telescope.nvim',
       cmd = "Telescope",
       dependencies = {
+        {
+          "nvim-tree/nvim-web-devicons",
+          config = function()
+            require("config.nvim-web-devicons")
+          end
+        },
         "nvim-lua/plenary.nvim",
         {
           "nvim-telescope/telescope-frecency.nvim",
@@ -46,12 +52,6 @@ lazy.setup({
           "nvim-telescope/telescope-file-browser.nvim",
           config = function()
             require("telescope").load_extension("file_browser")
-          end
-        },
-        {
-          "kyazdani42/nvim-web-devicons",
-          config = function()
-            require("config.nvim-web-devicons")
           end
         },
       },
@@ -68,7 +68,7 @@ lazy.setup({
       end
     },
     'itchyny/vim-gitbranch',
-    'macthecadillac/lightline-gitdiff',
+    { dir = os.getenv("HOME") .. '/Documents/Code/lightline-gitdiff' },
     'mengelbrecht/lightline-bufferline',
     {
       'spywhere/lightline-lsp',
@@ -78,16 +78,21 @@ lazy.setup({
       end
     },
 
+    -- {
+    --   'nvim-lualine/lualine.nvim',
+    --   dependencies = {
+    --     "nvim-tree/nvim-web-devicons",
+    --     config = function()
+    --       require("config.nvim-web-devicons")
+    --     end
+    --   },
+    --   config = function()
+    --     require("config.lualine")
+    --   end
+    -- },
+
     -- Language support
-    { 'aliva/vim-fish', event = "VeryLazy" },
-    { 'vim-python/python-syntax', event = "VeryLazy" },
-    { 'rust-lang/rust.vim', event = "VeryLazy" },
-    { 'macthecadillac/haskell-vim', event = "VeryLazy" },
-    { 'cespare/vim-toml', event = "VeryLazy" },
-    { 'pangloss/vim-javascript', event = "VeryLazy" },
-    { 'plasticboy/vim-markdown', event = "VeryLazy" },
-    { 'stephpy/vim-yaml', event = "VeryLazy" },
-    { 'rgrinberg/vim-ocaml', event = "VeryLazy" },
+    { 'macthecadillac/haskell-vim', ft = "haskell" },
     -- { 'JuliaEditorSupport/julia-vim', ft = "julia" },
 
     -- Language server and completion
