@@ -81,57 +81,38 @@ function! LightlineFileFormat()
 endfunction
 
 function! LightlineFileType()
-  return &filetype
+  let l:fname = expand('%:t')
+  if l:fname ==# ''
+    return ''
+  endif
+  let l:icon = v:lua.require("nvim-web-devicons").get_icon(l:fname)
+  return &filetype =~# '^Mundo\|MundoDiff' ? '' : l:icon . ' ' . &filetype
 endfunction
 
 function! DisplayGitBranchName()
   let l:gitbranch = gitbranch#name()
   let l:displaytext = winwidth(0) > 70 ? "\ue0a0" . ' ' . l:gitbranch : "\ue0a0"
-  return l:gitbranch ==# '' ? '' : l:displaytext
-endfunction
-
-function! LightlineFormat()
-  return &filetype =~# '^Mundo\|MundoDiff' ? '' : &filetype
+  return (l:gitbranch ==# '' || &filetype =~# '^Mundo\|MundoDiff') ? '' : l:displaytext
 endfunction
 
 function! LightLineLspHints()
-  if get(g:, 'lightline_lsp_loaded', v:false)
-    return lightline#lsp#hints()
-  else
-    return ''
-  endif
+  return get(g:, 'lightline_lsp_loaded', v:false) ? lightline#lsp#hints() : ''
 endfunction
 
 function! LightLineLspInfos()
-  if get(g:, 'lightline_lsp_loaded', v:false)
-    return lightline#lsp#infos()
-  else
-    return ''
-  endif
+  return get(g:, 'lightline_lsp_loaded', v:false) ? lightline#lsp#infos() : ''
 endfunction
 
 function! LightLineLspWarnings()
-  if get(g:, 'lightline_lsp_loaded', v:false)
-    return lightline#lsp#warnings()
-  else
-    return ''
-  endif
+  return get(g:, 'lightline_lsp_loaded', v:false) ? lightline#lsp#warnings() : ''
 endfunction
 
 function! LightLineLspError()
-  if get(g:, 'lightline_lsp_loaded', v:false)
-    return lightline#lsp#errors()
-  else
-    return ''
-  endif
+  return get(g:, 'lightline_lsp_loaded', v:false) ? lightline#lsp#errors() : ''
 endfunction
 
 function! LightLineLspOk()
-  if get(g:, 'lightline_lsp_loaded', v:false)
-    return lightline#lsp#ok()
-  else
-    return ''
-  endif
+  return get(g:, 'lightline_lsp_loaded', v:false) ? lightline#lsp#ok() : ''
 endfunction
 
 function! LightlineFilename()

@@ -72,28 +72,14 @@ lazy.setup({
     'mengelbrecht/lightline-bufferline',
     {
       'spywhere/lightline-lsp',
-      event = { "InsertEnter", "CmdlineEnter" }, 
+      event = { "InsertEnter", "CmdlineEnter" },
       config = function()
         vim.g.lightline_lsp_loaded = true
       end
     },
 
-    -- {
-    --   'nvim-lualine/lualine.nvim',
-    --   dependencies = {
-    --     "nvim-tree/nvim-web-devicons",
-    --     config = function()
-    --       require("config.nvim-web-devicons")
-    --     end
-    --   },
-    --   config = function()
-    --     require("config.lualine")
-    --   end
-    -- },
-
     -- Language support
     { 'macthecadillac/haskell-vim', ft = "haskell" },
-    -- { 'JuliaEditorSupport/julia-vim', ft = "julia" },
 
     -- Language server and completion
     {
@@ -119,7 +105,7 @@ lazy.setup({
     {
       'ray-x/lsp_signature.nvim',
       event = "InsertEnter",
-      config = function(_, opts) require("lsp_signature").setup({
+      config = function(_, _) require("lsp_signature").setup({
         bind = true,
         floating_window_above_cur_line = true,
         hint_enable = false,
