@@ -11,7 +11,6 @@
   "lightline.vim": { "branch": "master", "commit": "58c97bc21c6f657d3babdd4eefce7593e30e75ce" },
   "lsp_signature.nvim": { "branch": "master", "commit": "a38da0a61c172bb59e34befc12efe48359884793" },
   "lspkind.nvim": { "branch": "master", "commit": "1735dd5a5054c1fb7feaf8e8658dbab925f4f0cf" },
-  "nord.nvim": { "branch": "main", "commit": "f3e3ba2b47b57fc501b096a38b37bfc12f22f298" },
   "nvim-cmp": { "branch": "main", "commit": "a110e12d0b58eefcf5b771f533fc2cf3050680ac" },
   "nvim-lspconfig": { "branch": "master", "commit": "cf97d2485fc3f6d4df1b79a3ea183e24c272215e" },
   "nvim-surround": { "branch": "main", "commit": "ec2dc7671067e0086cdf29c2f5df2dd909d5f71f" },
@@ -27,12 +26,14 @@
   "vim-fish": { "branch": "master", "commit": "f631e6a57a0bfe5f8445398825ce7683c22fab5c" },
   "vim-floaterm": { "branch": "master", "commit": "4e28c8dd0271e10a5f55142fb6fe9b1599ee6160" },
   "vim-gitbranch": { "branch": "master", "commit": "1a8ba866f3eaf0194783b9f8573339d6ede8f1ed" },
+  "vim-javascript": { "branch": "master", "commit": "c470ce1399a544fe587eab950f571c83cccfbbdc" },
   "vim-latex-objects": { "branch": "master", "commit": "7f5fbb2f5a6286085cb78bf71613f0dad2cbe2cd" },
-  "vim-ledger": { "branch": "master", "commit": "7b97c8765bf920e92fd950a7a5bc37cb2b13a494" },
+  "vim-markdown": { "branch": "master", "commit": "a657e697376909c41475a686eeef7fc7a4972d94" },
   "vim-mundo": { "branch": "master", "commit": "2ceda8c65f7b3f9066820729fc02003a09df91f9" },
   "vim-ocaml": { "branch": "master", "commit": "81be9d05d4ce84be7e118754d0b777006f9c85fb" },
   "vim-textobj-between": { "branch": "master", "commit": "fa7723c08b1f2d55e1a30ba720d2fd4db27cb1e8" },
   "vim-textobj-comment": { "branch": "master", "commit": "58ae4571b76a5bf74850698f23d235eef991dd4b" },
   "vim-textobj-user": { "branch": "master", "commit": "41a675ddbeefd6a93664a4dc52f302fe3086a933" },
-  "vim-toml": { "branch": "main", "commit": "d36caa6b1cf508a4df1c691f915572fc02143258" }
+  "vim-toml": { "branch": "main", "commit": "d36caa6b1cf508a4df1c691f915572fc02143258" },
+  "vim-yaml": { "branch": "master", "commit": "dce19542d5ec1663183b0f6844ec663b5d1f3d24" }
 }

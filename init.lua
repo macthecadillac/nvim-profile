@@ -67,11 +67,11 @@ if vim.fn.has('termguicolors') then
   vim.opt.termguicolors = true
 end
 
-vim.cmd([[
-  function! s:format_sentence(start, end)
-      silent execute a:start.','.a:end.'s/[.!?]\zs /\r/g'
-  endfunction
-]])
+-- vim.cmd([[
+--   function! s:format_sentence(start, end)
+--       silent execute a:start.','.a:end.'s/[.!?]\zs /\r/g'
+--   endfunction
+-- ]])
 
 -- load plugin settings
 require("config.telescope-keymap")
@@ -80,3 +80,4 @@ vim.cmd.source(config_dir .. "/startup/mundo.vim")
 vim.cmd.source(config_dir .. "/startup/floaterm.vim")
 
 require("config.lazy")
+vim.cmd.colorscheme('nord')

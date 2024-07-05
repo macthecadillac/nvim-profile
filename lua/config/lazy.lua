@@ -95,7 +95,13 @@ lazy.setup({
     'itchyny/vim-gitbranch',
     'macthecadillac/lightline-gitdiff',
     'mengelbrecht/lightline-bufferline',
-    'spywhere/lightline-lsp',
+    {
+      'spywhere/lightline-lsp',
+      event = { "InsertEnter", "CmdlineEnter" }, 
+      config = function()
+        vim.g.lightline_lsp_loaded = true
+      end
+    },
 
     -- Language support
     { 'aliva/vim-fish', ft = "fish" },
@@ -103,9 +109,11 @@ lazy.setup({
     { 'rust-lang/rust.vim', ft = "rust" },
     { 'macthecadillac/haskell-vim', ft = "haskell" },
     { 'cespare/vim-toml', ft = "toml" },
+    { 'pangloss/vim-javascript', ft = "javascript" },
+    { 'plasticboy/vim-markdown', ft = "markdown" },
+    { 'stephpy/vim-yaml', ft = "yaml" },
     { 'rgrinberg/vim-ocaml', ft = "ocaml" },
     -- { 'JuliaEditorSupport/julia-vim', ft = "julia" },
-    'ledger/vim-ledger',
 
     -- Language server and completion
     {
@@ -124,7 +132,6 @@ lazy.setup({
         'hrsh7th/cmp-cmdline',
         'onsails/lspkind.nvim'
       },
-      ft = { "c", "cpp", "css", "haskell", "julia", "ocaml", "python", "rust", "tex", "plaintex", "vim" },
       config = function()
         require("config.nvim-cmp")
       end
@@ -137,7 +144,9 @@ lazy.setup({
         bind = true,
         floating_window_above_cur_line = true,
         hint_enable = false,
-        handler_opts = { border = "double" }
+        handler_opts = {
+          border = "none"
+        }
       }) end
     },
 
@@ -159,17 +168,6 @@ lazy.setup({
       event = "VeryLazy",
       dependencies = 'kana/vim-textobj-user',
       ft = 'tex'
-    },
-
-    -- Colorscheme
-    {
-      "gbprod/nord.nvim",
-      lazy = false,
-      priority = 1000,
-      config = function()
-        require("nord").load()
-        vim.cmd.colorscheme("nord")
-      end
     },
   },
   -- Configure any other settings here. See the documentation for more details.

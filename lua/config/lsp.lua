@@ -14,6 +14,7 @@ vim.diagnostic.config({
 local function signature_setup(_, _)
   require('lsp_signature').on_attach({
     bind = true, -- This is mandatory, otherwise border config won't get registered.
+    floating_window_above_cur_line = true,
     hint_enable = false,
     max_width = 77,
     handler_opts = {

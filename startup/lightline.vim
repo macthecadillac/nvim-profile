@@ -30,11 +30,11 @@ let g:lightline = {
   \     'close': ' ' . "\uf00d" . ' ',
   \   },
   \   'component_expand': {
-  \     'linter_hints': 'lightline#lsp#hints',
-  \     'linter_infos': 'lightline#lsp#infos',
-  \     'linter_warnings': 'lightline#lsp#warnings',
-  \     'linter_errors': 'lightline#lsp#errors',
-  \     'linter_ok': 'lightline#lsp#ok',
+  \     'linter_hints': 'LightLineLspHints',
+  \     'linter_infos': 'LightLineLspInfos',
+  \     'linter_warnings': 'LightLineLspWarnings',
+  \     'linter_errors': 'LightLineLspError',
+  \     'linter_ok': 'LightLineLspOk',
   \     'buffers': 'lightline#bufferline#buffers',
   \   },
   \   'component_function': {
@@ -92,6 +92,46 @@ function! LightlineFormat()
   return &filetype =~# '^Mundo\|MundoDiff' ? '' : &filetype
 endfunction
 
+function! LightLineLspHints()
+  if get(g:, 'lightline_lsp_loaded', v:false)
+    return lightline#lsp#hints()
+  else
+    return ''
+  endif
+endfunction
+
+function! LightLineLspInfos()
+  if get(g:, 'lightline_lsp_loaded', v:false)
+    return lightline#lsp#infos()
+  else
+    return ''
+  endif
+endfunction
+
+function! LightLineLspWarnings()
+  if get(g:, 'lightline_lsp_loaded', v:false)
+    return lightline#lsp#warnings()
+  else
+    return ''
+  endif
+endfunction
+
+function! LightLineLspError()
+  if get(g:, 'lightline_lsp_loaded', v:false)
+    return lightline#lsp#errors()
+  else
+    return ''
+  endif
+endfunction
+
+function! LightLineLspOk()
+  if get(g:, 'lightline_lsp_loaded', v:false)
+    return lightline#lsp#ok()
+  else
+    return ''
+  endif
+endfunction
+
 function! LightlineFilename()
   let l:readonly = &readonly ? "\uf023" . ' ' : ''
 
@@ -106,15 +146,19 @@ function! LightlineFilename()
     let l:ft_len = strcharlen(LightlineFileType())
     let l:file_format_len = strcharlen(LightlineFileFormat())
     let l:other_len = 42   " a rough estimate of everything else
-    let l:lsp_hints = lightline#lsp#hints()
-    let l:lsp_hints_len = strcharlen(l:lsp_hints) + (strcharlen(l:lsp_hints) > 0) * 3
-    let l:lsp_infos = lightline#lsp#infos()
-    let l:lsp_infos_len = strcharlen(l:lsp_infos) + (strcharlen(l:lsp_infos) > 0) * 3
-    let l:lsp_warn = lightline#lsp#warnings()
-    let l:lsp_warn_len = strcharlen(l:lsp_warn) + (strcharlen(l:lsp_warn) > 0) * 3
-    let l:lsp_errs = lightline#lsp#errors()
-    let l:lsp_errs_len = strcharlen(l:lsp_errs) + (strcharlen(l:lsp_errs) > 0) * 3
-    let l:lsp_len = l:lsp_hints_len + l:lsp_infos_len + l:lsp_warn_len + l:lsp_errs_len
+    if get(g:, 'lightline_lsp_loaded', v:false)
+      let l:lsp_hints = lightline#lsp#hints()
+      let l:lsp_hints_len = strcharlen(l:lsp_hints) + (strcharlen(l:lsp_hints) > 0) * 3
+      let l:lsp_infos = lightline#lsp#infos()
+      let l:lsp_infos_len = strcharlen(l:lsp_infos) + (strcharlen(l:lsp_infos) > 0) * 3
+      let l:lsp_warn = lightline#lsp#warnings()
+      let l:lsp_warn_len = strcharlen(l:lsp_warn) + (strcharlen(l:lsp_warn) > 0) * 3
+      let l:lsp_errs = lightline#lsp#errors()
+      let l:lsp_errs_len = strcharlen(l:lsp_errs) + (strcharlen(l:lsp_errs) > 0) * 3
+      let l:lsp_len = l:lsp_hints_len + l:lsp_infos_len + l:lsp_warn_len + l:lsp_errs_len
+    else
+      let l:lsp_len = 0
+    endif
     let l:used = l:gitbranch_len + l:ft_len + l:file_format_len + l:other_len + l:lsp_len
     let l:max_width = winwidth(0) - l:used
     let l:fn = strcharlen(l:fname) < l:max_width ? l:fname : (l:fname[:(l:max_width - 2)] . "\u2026")
