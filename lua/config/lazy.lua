@@ -20,41 +20,16 @@ local lazy = require("lazy")
 lazy.setup({
   spec = {
     -- Utilities
-    {
-      'voldikss/vim-floaterm',
-      cmd = {
-        "FloatermFirst",
-        "FloatermHide",
-        "FloatermKill",
-        "FloatermLast",
-        "FloatermNew",
-        "FloatermNext",
-        "FloatermPrev",
-        "FloatermSend",
-        "FloatermShow",
-        "FloatermToggle",
-        "FloatermUpdate",
-      }
-    },
+    { 'voldikss/vim-floaterm', event = "VeryLazy" },
     { 'nvim-lua/popup.nvim', event = "VeryLazy" },
     { 
       dir = os.getenv("HOME") .. "/Documents/Code/vimdo",
-      cmd = {
-        "Vimdo",
-        "VimdoBang",
-        "VimdoBangS",
-        "VimdoBangT",
-        "VimdoCloseFloat",
-        "VimdoFloats",
-        "VimdoList",
-        "VimdoProcs",
-        "VimdoStop"
-      },
+      event = "VeryLazy",
       config = function()
         vim.cmd.source(vim.fn.stdpath('config') .. "/startup/vimdo.vim")
       end
     },
-    { 'simnalamburt/vim-mundo', cmd = { "MundoToggle", "MundoShow", "MundoHide" } },
+    { 'simnalamburt/vim-mundo', event = "VeryLazy" },
     {
       'nvim-telescope/telescope.nvim',
       cmd = "Telescope",
@@ -104,15 +79,15 @@ lazy.setup({
     },
 
     -- Language support
-    { 'aliva/vim-fish', ft = "fish" },
-    { 'vim-python/python-syntax', ft = "python" },
-    { 'rust-lang/rust.vim', ft = "rust" },
-    { 'macthecadillac/haskell-vim', ft = "haskell" },
-    { 'cespare/vim-toml', ft = "toml" },
-    { 'pangloss/vim-javascript', ft = "javascript" },
-    { 'plasticboy/vim-markdown', ft = "markdown" },
-    { 'stephpy/vim-yaml', ft = "yaml" },
-    { 'rgrinberg/vim-ocaml', ft = "ocaml" },
+    { 'aliva/vim-fish', event = "VeryLazy" },
+    { 'vim-python/python-syntax', event = "VeryLazy" },
+    { 'rust-lang/rust.vim', event = "VeryLazy" },
+    { 'macthecadillac/haskell-vim', event = "VeryLazy" },
+    { 'cespare/vim-toml', event = "VeryLazy" },
+    { 'pangloss/vim-javascript', event = "VeryLazy" },
+    { 'plasticboy/vim-markdown', event = "VeryLazy" },
+    { 'stephpy/vim-yaml', event = "VeryLazy" },
+    { 'rgrinberg/vim-ocaml', event = "VeryLazy" },
     -- { 'JuliaEditorSupport/julia-vim', ft = "julia" },
 
     -- Language server and completion
@@ -139,7 +114,6 @@ lazy.setup({
     {
       'ray-x/lsp_signature.nvim',
       event = "InsertEnter",
-      ft = { "c", "cpp", "css", "haskell", "julia", "ocaml", "python", "rust", "tex", "plaintex", "vim" },
       config = function(_, opts) require("lsp_signature").setup({
         bind = true,
         floating_window_above_cur_line = true,
@@ -166,8 +140,7 @@ lazy.setup({
     {
       'gibiansky/vim-latex-objects',
       event = "VeryLazy",
-      dependencies = 'kana/vim-textobj-user',
-      ft = 'tex'
+      dependencies = 'kana/vim-textobj-user'
     },
   },
   -- Configure any other settings here. See the documentation for more details.
