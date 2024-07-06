@@ -52,11 +52,10 @@ vim.g.maplocalleader = "\\"
 vim.g.python3_host_prog = "python3"
 
 -- Automatically switch directory to the directory of the current file.
-local switchdir = vim.api.nvim_create_augroup("SwitchDir", { clear = true })
 vim.api.nvim_create_autocmd({"BufEnter"}, {
+  group = vim.api.nvim_create_augroup("SwitchDir", { clear = true }),
   pattern = {"*"},
-  command = "silent! lcd %:p:h",
-  group = switchdir
+  command = "silent! lcd %:p:h"
 })
 
 -- map <leader>n to toggle relative numbering
@@ -66,12 +65,6 @@ vim.api.nvim_set_keymap("n", "<leader>n", ":set relativenumber! number!<CR>", { 
 if vim.fn.has('termguicolors') then
   vim.opt.termguicolors = true
 end
-
--- vim.cmd([[
---   function! s:format_sentence(start, end)
---       silent execute a:start.','.a:end.'s/[.!?]\zs /\r/g'
---   endfunction
--- ]])
 
 -- load plugin settings
 require("config.telescope-keymap")
