@@ -58,6 +58,16 @@ vim.api.nvim_create_autocmd({"BufEnter"}, {
   command = "silent! lcd %:p:h"
 })
 
+ToggleColorColumn = function()
+  if vim.o.colorcolumn == '' then
+    if vim.b.colorcolumn ~= nil then
+      vim.opt.colorcolumn = tostring(vim.b.colorcolumn)
+    end
+  else
+    vim.opt.colorcolumn = ''
+  end
+end
+
 -- Color settings
 if vim.fn.has('termguicolors') then
   vim.opt.termguicolors = true
