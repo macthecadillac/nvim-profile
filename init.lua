@@ -58,19 +58,14 @@ vim.api.nvim_create_autocmd({"BufEnter"}, {
   command = "silent! lcd %:p:h"
 })
 
--- map <leader>n to toggle relative numbering
-vim.api.nvim_set_keymap("n", "<leader>n", ":set relativenumber! number!<CR>", { noremap = true })
-
 -- Color settings
 if vim.fn.has('termguicolors') then
   vim.opt.termguicolors = true
 end
+vim.cmd.colorscheme('nord')
+
+-- load keymaps
+require("config.global-keymap")
 
 -- load plugin settings
-require("config.telescope-keymap")
-local config_dir = vim.fn.stdpath('config')
-vim.cmd.source(config_dir .. "/startup/mundo.vim")
-vim.cmd.source(config_dir .. "/startup/floaterm.vim")
-
 require("config.lazy")
-vim.cmd.colorscheme('nord')
