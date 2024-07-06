@@ -3,7 +3,8 @@ return {
   event = "VeryLazy",
   dependencies = {
     'itchyny/vim-gitbranch',
-    'mengelbrecht/lightline-bufferline',
+    -- 'mengelbrecht/lightline-bufferline',
+    { dir = os.getenv("HOME") .. '/Documents/Code/lightline-bufferline' },
     { dir = os.getenv("HOME") .. '/Documents/Code/lightline-gitdiff' },
     {
       "nvim-tree/nvim-web-devicons",
@@ -15,6 +16,8 @@ return {
   },
   config = function()
     vim.cmd.source(vim.fn.stdpath('config') .. "/startup/lightline.vim")
+    -- this is needed for lazy loading to force redraw
     vim.cmd("call lightline#update()")
+    vim.cmd("call lightline#bufferline#reload()")
   end
 }
