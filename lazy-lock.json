@@ -5,7 +5,7 @@
   "cmp-path": { "branch": "main", "commit": "91ff86cd9c29299a64f968ebb45846c485725f23" },
   "fzf-lua": { "branch": "main", "commit": "30e8e962405c274d7766dda207e1761a0105929c" },
   "haskell-vim": { "branch": "master", "commit": "b1ac46807835423c4a4dd063df6d5b613d89c731" },
-  "lazy.nvim": { "branch": "main", "commit": "0ff7e83c17c6eef181116954761ee8ed84db88a7" },
+  "lazy.nvim": { "branch": "main", "commit": "933f0b596c7372daf534373ae9a11e98744b8636" },
   "lightline-lsp": { "branch": "master", "commit": "4f5d42a7320cd2444a444df4b57529c4f921e4a2" },
   "lightline.vim": { "branch": "master", "commit": "58c97bc21c6f657d3babdd4eefce7593e30e75ce" },
   "lsp_signature.nvim": { "branch": "master", "commit": "a38da0a61c172bb59e34befc12efe48359884793" },
