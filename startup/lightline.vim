@@ -86,7 +86,12 @@ function! LightlineFileType()
     return ''
   endif
   let l:icon = v:lua.require("nvim-web-devicons").get_icon(l:fname)
-  return &filetype =~# '^Mundo\|MundoDiff' ? '' : l:icon . ' ' . &filetype
+  let l:ft = &filetype =~# '^Mundo\|MundoDiff' ? '' : l:icon . ' ' . &filetype
+  if winwidth(0) > 50
+    return l:ft
+  else
+    return l:icon
+  endif
 endfunction
 
 function! DisplayGitBranchName()
@@ -115,6 +120,14 @@ function! LightLineLspOk()
   return get(g:, 'lightline_lsp_loaded', v:false) ? lightline#lsp#ok() : ''
 endfunction
 
+function! StrCharLenPadOpt(string)
+  if a:string ==# ''
+    return ''
+  else
+    return strcharlen(a:string) + 2
+  endif
+endfunction
+
 function! LightlineFilename()
   let l:readonly = &readonly ? "\uf023" . ' ' : ''
 
@@ -124,28 +137,29 @@ function! LightlineFilename()
   elseif &filetype =~# '^Mundo\|MundoDiff'
     let l:filename = &filetype
   else
-    let l:fname_len = strcharlen(l:fname)
-    let l:gitbranch_len = strcharlen(DisplayGitBranchName())
-    let l:gitdiff_len = strcharlen(lightline_gitdiff#get_status())
-    let l:ft_len = strcharlen(LightlineFileType())
-    let l:file_format_len = strcharlen(LightlineFileFormat())
-    let l:other_len = 42   " a rough estimate of everything else
+    let l:fname_len = StrCharLenPadOpt(l:fname)
+    let l:gitbranch_len = StrCharLenPadOpt(DisplayGitBranchName())
+    let l:gitdiff_len = StrCharLenPadOpt(lightline_gitdiff#get_status())
+    let l:ft_len = StrCharLenPadOpt(LightlineFileType())
+    let l:file_format_len = StrCharLenPadOpt(LightlineFileFormat())
+    let maxline = line('$')
+    let curline = line('.')
+    let col = col('.')
+    let percent = line('.') * 100 / line('$')
+    let lineinfo_len = 7 + strcharlen(curline) + strcharlen(maxline) + strcharlen(col) + strcharlen(percent) + 2
+    let l:other_len = 20   " a rough estimate of mode + separators
     if get(g:, 'lightline_lsp_loaded', v:false)
-      let l:lsp_hints = lightline#lsp#hints()
-      let l:lsp_hints_len = strcharlen(l:lsp_hints) + (strcharlen(l:lsp_hints) > 0) * 3
-      let l:lsp_infos = lightline#lsp#infos()
-      let l:lsp_infos_len = strcharlen(l:lsp_infos) + (strcharlen(l:lsp_infos) > 0) * 3
-      let l:lsp_warn = lightline#lsp#warnings()
-      let l:lsp_warn_len = strcharlen(l:lsp_warn) + (strcharlen(l:lsp_warn) > 0) * 3
-      let l:lsp_errs = lightline#lsp#errors()
-      let l:lsp_errs_len = strcharlen(l:lsp_errs) + (strcharlen(l:lsp_errs) > 0) * 3
+      let l:lsp_hints_len = StrCharLenPadOpt(lightline#lsp#hints())
+      let l:lsp_infos_len = StrCharLenPadOpt(lightline#lsp#infos())
+      let l:lsp_warn_len = StrCharLenPadOpt(lightline#lsp#warnings())
+      let l:lsp_errs_len = StrCharLenPadOpt(lightline#lsp#warnings())
       let l:lsp_len = l:lsp_hints_len + l:lsp_infos_len + l:lsp_warn_len + l:lsp_errs_len
     else
       let l:lsp_len = 0
     endif
-    let l:used = l:gitbranch_len + l:gitdiff_len + l:ft_len + l:file_format_len + l:other_len + l:lsp_len
+    let l:used = l:gitbranch_len + l:gitdiff_len + l:ft_len + l:file_format_len + l:other_len + l:lsp_len + l:lineinfo_len
     let l:max_width = winwidth(0) - l:used
-    let l:fn = strcharlen(l:fname) < l:max_width ? l:fname : (l:fname[:(l:max_width - 2)] . "\u2026")
+    let l:fn = fname_len < l:max_width ? l:fname : (l:fname[:(l:max_width - 2)] . "\u2026")
     let l:filename = l:fn
   endif
 
