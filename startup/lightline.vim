@@ -65,10 +65,13 @@ let g:lightline#lsp#indicator_infos = "\uf129 "
 "let g:lightline_gitdiff#indicator_added = "\uf067"
 "let g:lightline_gitdiff#indicator_deleted = "\uf068"
 "let g:lightline_gitdiff#indicator_modified = "\uf12a"
+let g:lightline_gitdiff#indicator_added = "\uff0b"
+let g:lightline_gitdiff#indicator_deleted = "\uff0d"
+let g:lightline_gitdiff#indicator_modified = "\uff5e"
 let g:lightline_gitdiff#indicator_pad = v:false
 let g:lightline_gitdiff#indicator_hide_zero = v:true
-"let g:lightline_gitdiff#min_winwidth = 80
-let g:lightline#bufferline#modified = " \uf040" 
+"let g:lightline#bufferline#modified = " \uf040" 
+let g:lightline#bufferline#modified = " \u25cf" 
 " let g:lightline#bufferline#filename_modifier = ':t'
 let g:lightline#bufferline#read_only = " \uf023"
 let g:lightline#bufferline#more_buffers = "\u2026"
@@ -77,7 +80,7 @@ let g:lightline#bufferline#unnamed = '[NO NAME]'
 let g:lightline#bufferline#min_buffer_count = 2
 
 function! LightlineFileFormat()
-  return winwidth(0) > 70 ? &fileformat : ''
+  return winwidth(0) < 71 || &filetype ==# 'help' ? '' : &fileformat
 endfunction
 
 function! LightlineFileType()
@@ -86,7 +89,13 @@ function! LightlineFileType()
     return ''
   endif
   let l:icon = v:lua.require("nvim-web-devicons").get_icon(l:fname)
-  let l:ft = &filetype =~# '^Mundo\|MundoDiff' ? '' : l:icon . ' ' . &filetype
+  if &filetype =~# '^Mundo\|MundoDiff'
+    let l:ft = ''
+  elseif &filetype ==# 'help'
+    let l:ft = &filetype
+  else
+    let l:ft = l:icon . ' ' . &filetype
+  endif
   if winwidth(0) > 50
     return l:ft
   else
@@ -97,7 +106,7 @@ endfunction
 function! DisplayGitBranchName()
   let l:gitbranch = gitbranch#name()
   let l:displaytext = winwidth(0) > 70 ? "\ue0a0" . ' ' . l:gitbranch : "\ue0a0"
-  return (l:gitbranch ==# '' || &filetype =~# '^Mundo\|MundoDiff') ? '' : l:displaytext
+  return (l:gitbranch ==# '' || &filetype =~# '^Mundo\|MundoDiff\|help') ? '' : l:displaytext
 endfunction
 
 function! LightLineLspHints()
@@ -163,6 +172,7 @@ function! LightlineFilename()
     let l:filename = l:fn
   endif
 
-  let l:modified = &modified ? ' ' . "\uf040" : ''
+  "let l:modified = &modified ? ' ' . "\uf040" : ''
+  let l:modified = &modified ? ' ' . "\u25cf" : ''
   return l:readonly . l:filename . l:modified
 endfunction

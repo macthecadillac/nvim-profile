@@ -4,17 +4,29 @@ vim.keymap.set("n", "<leader>n", ":set relativenumber! number!<CR>", { noremap =
 -- map <leader>c to toggle colorcolumn
 vim.keymap.set("n", "<leader>c", ToggleColorColumn, { noremap = true })
 
--- Telescope
-vim.keymap.set("n", "<leader>p", ":Telescope<CR>", { noremap = true })
-vim.keymap.set("n", "<leader>f", ":Telescope find_files theme=get_dropdown previewer=false<CR>", { noremap = true })
-vim.keymap.set("n", "<leader>g", ":Telescope git_files theme=get_dropdown previewer=false<CR>", { noremap = true })
-vim.keymap.set("n", "<leader>b", ":Telescope buffers theme=get_dropdown previewer=false<CR>", { noremap = true })
-vim.keymap.set("n", "<leader>h", ":Telescope help_tags<CR>", { noremap = true })
-vim.keymap.set("n", "<leader>i", ":Telescope frecency theme=get_dropdown previewer=false<CR>", { noremap = true })
-vim.keymap.set("n", "<leader>l", ":Telescope diagnostics bufnr=0 theme=get_dropdown<CR>", { noremap = true })
-vim.keymap.set("n", "<leader>e", ":Telescope file_browser<CR>", { noremap = true })
-vim.keymap.set("n", "<leader>r", ":Telescope live_grep<CR>", { noremap = true })
-vim.keymap.set("n", "<leader>m", ":Telescope commands theme=get_dropdown<CR>", { noremap = true })
+-- FzfLua
+local hide_preview = { winopts = { preview = { hidden = "hidden" } } }
+vim.keymap.set("n", "<leader>p", ":FzfLua<CR>", { noremap = true })
+vim.keymap.set("n", "<leader>h", ":FzfLua helptags<CR>", { noremap = true })
+vim.keymap.set("n", "<leader>l", ":FzfLua diagnostics_document<CR>", { noremap = true })
+vim.keymap.set("n", "<leader>r", ":FzfLua live_grep_native<CR>", { noremap = true })
+vim.keymap.set("n", "<leader>m", ":FzfLua commands<CR>", { noremap = true })
+vim.keymap.set("n", "<leader>f",
+  function() require("fzf-lua").files(hide_preview) end,
+  { noremap = true }
+)
+vim.keymap.set("n", "<leader>g",
+  function() require("fzf-lua").git_files(hide_preview) end,
+  { noremap = true }
+)
+vim.keymap.set("n", "<leader>b",
+  function() require("fzf-lua").buffers(hide_preview) end,
+  { noremap = true }
+)
+vim.keymap.set("n", "<leader>i",
+  function() require("fzf-lua").oldfiles(hide_preview) end,
+  { noremap = true }
+)
 
 -- Mundo
 vim.keymap.set("n", "<A-m>",  ":MundoToggle<CR>", { noremap = true })

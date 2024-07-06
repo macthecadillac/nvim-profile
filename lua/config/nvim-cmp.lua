@@ -81,12 +81,3 @@ nvim_lsp.rust_analyzer.setup({ capabilities = capabilities })
 nvim_lsp.texlab.setup({ capabilities = capabilities })
 nvim_lsp.vimls.setup({ capabilities = capabilities })
 nvim_lsp.lua_ls.setup({ capabilities = capabilities })
-
--- Disable keymap in Telescope prompt
-local cmp_telescope = vim.api.nvim_create_augroup("CmpTelescope", { clear = true })
-vim.api.nvim_create_autocmd({"FileType"}, {
-  pattern = {"TelescopePrompt"},
-  command = "lua require('cmp').setup.buffer({ enabled = false })",
-  group = cmp_telescope
-})
-

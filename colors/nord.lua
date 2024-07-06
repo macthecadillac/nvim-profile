@@ -543,15 +543,54 @@ vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", {
 })
 vim.api.nvim_set_hl(0, "LspSignatureActiveParameter", { bg = aurora_2, fg = polar_night_0 })
 
--- telescope
+-- Telescope
 vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = polar_night_1, bg = polar_night_1, ctermfg = 0 })
 vim.api.nvim_set_hl(0, "TelescopeMatching", { fg = frost_1, ctermfg = 0 })
 vim.api.nvim_set_hl(0, "TelescopePathSeparator", { fg = snow_storm_2, ctermfg = 0 })
 vim.api.nvim_set_hl(0, "TelescopeNormal", { fg = snow_storm_0, bg = polar_night_1, ctermfg = 0 })
-vim.api.nvim_set_hl(0, "TelescopePromptCounter", { fg = snow_storm_3, bg = polar_night_1, ctermfg = 0 })
+vim.api.nvim_set_hl(0, "TelescopePromptCounter", { fg = snow_storm_2, bg = polar_night_1, ctermfg = 0 })
 vim.api.nvim_set_hl(0, "TelescopeBufferLoaded", { fg = aurora_2, ctermfg = 0 })
 
--- floaterm
+-- FzfLua
+vim.api.nvim_set_hl(0, "FzfLuaNormal", { link = "NormalFloat"})
+vim.api.nvim_set_hl(0, "FzfLuaBorder", { link = "NormalFloat"})
+vim.api.nvim_set_hl(0, "FzfLuaTitle", { link = "NormalFloat"})
+vim.api.nvim_set_hl(0, "FzfLuaPreviewNormal", { link = "Normal"})
+vim.api.nvim_set_hl(0, "FzfLuaPreviewBorder", { link = "NormalFloat"})
+vim.api.nvim_set_hl(0, "FzfLuaPreviewTitle", { link = "NormalFloat"})
+vim.api.nvim_set_hl(0, "FzfLuaFzfNormal", { link = "NormalFloat"})
+vim.api.nvim_set_hl(0, "FzfLuaFzfCursorLine", { fg = "NONE", bg = polar_night_3 })
+vim.api.nvim_set_hl(0, "FzfLuaFzfCursorLineNr", { link = "NormalFloat" })
+vim.api.nvim_set_hl(0, "FzfLuaFzfMatch", { fg = aurora_3, bg = "NONE" })
+vim.api.nvim_set_hl(0, "FzfLuaHeaderBind", { link = "NormalFloat" })
+vim.api.nvim_set_hl(0, "FzfLuaHeaderText", { fg = aurora_1, bg = "NONE" })
+vim.api.nvim_set_hl(0, "FzfLuaSearch", { fg = frost_1, bg = "NONE" })
+vim.api.nvim_set_hl(0, "FzfLuaScrollBorderEmpty", { link = "NormalFloat" })
+vim.api.nvim_set_hl(0, "FzfLuaScrollBorderEmpty", { link = "NormalFloat" })
+vim.api.nvim_set_hl(0, "FzfLuaHelpNormal", { link = "NormalFloat" })
+vim.api.nvim_set_hl(0, "FzfLuaHelpBorder", { link = "NormalFloat" })
+vim.api.nvim_set_hl(0, "FzfLuaPathColNr", { fg = frost_0, bg = "NONE" })
+vim.api.nvim_set_hl(0, "FzfLuaPathLineNr", { fg = aurora_3, bg = "NONE" })
+vim.api.nvim_set_hl(0, "FzfLuaBufName", { fg = aurora_4, bg = "NONE" })
+vim.api.nvim_set_hl(0, "FzfLuaBufNr", { link = "NormalFloat" })
+vim.api.nvim_set_hl(0, "FzfLuaBufFlagCur", { fg = aurora_3, bg = "NONE" })
+vim.api.nvim_set_hl(0, "FzfLuaBufFlagAlt", { fg = aurora_2, bg = "NONE" })
+vim.api.nvim_set_hl(0, "FzfLuaTabTitle", { link = "NormalFloat" })
+vim.api.nvim_set_hl(0, "FzfLuaTabMarker", { link = "NormalFloat" })
+vim.api.nvim_set_hl(0, "FzfLuaLiveSym", { link = "FzfLuaHeaderText" })
+vim.api.nvim_set_hl(0, "FzfLuaFzfBorder", { link = "NormalFloat" })
+vim.api.nvim_set_hl(0, "FzfLuaFzfScrollbar", { link = "NormalFloat" })
+vim.api.nvim_set_hl(0, "FzfLuaFzfSeparator", { link = "NormalFloat" })
+vim.api.nvim_set_hl(0, "FzfLuaFzfGutter", { link = "NormalFloat" })
+vim.api.nvim_set_hl(0, "FzfLuaFzfHeader", { link = "NormalFloat" })
+vim.api.nvim_set_hl(0, "FzfLuaFzfInfo", { link = "Comment" })
+vim.api.nvim_set_hl(0, "FzfLuaFzfPointer", { fg = frost_1, bg = "NONE" })
+vim.api.nvim_set_hl(0, "FzfLuaFzfMarker", { link = "FzfLuaFzfPointer" })
+vim.api.nvim_set_hl(0, "FzfLuaFzfSpinner", { fg = aurora_2, bg = "NONE" })
+vim.api.nvim_set_hl(0, "FzfLuaFzfPrompt", { link = "NormalFloat" })
+-- vim.api.nvim_set_hl(0, "FzfLuaFzfQuery"
+
+-- Floaterm
 vim.api.nvim_set_hl(0, "Floatermborder", { fg = polar_night_3, ctermfg = 0 })
 
 -- +--- Languages ---+
