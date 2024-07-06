@@ -5,28 +5,15 @@ vim.keymap.set("n", "<leader>n", ":set relativenumber! number!<CR>", { noremap =
 vim.keymap.set("n", "<leader>c", ToggleColorColumn, { noremap = true })
 
 -- FzfLua
-local hide_preview = { winopts = { preview = { hidden = "hidden" } } }
 vim.keymap.set("n", "<leader>p", ":FzfLua<CR>", { noremap = true })
 vim.keymap.set("n", "<leader>h", ":FzfLua helptags<CR>", { noremap = true })
 vim.keymap.set("n", "<leader>l", ":FzfLua diagnostics_document<CR>", { noremap = true })
 vim.keymap.set("n", "<leader>r", ":FzfLua live_grep_native<CR>", { noremap = true })
 vim.keymap.set("n", "<leader>m", ":FzfLua commands<CR>", { noremap = true })
-vim.keymap.set("n", "<leader>f",
-  function() require("fzf-lua").files(hide_preview) end,
-  { noremap = true }
-)
-vim.keymap.set("n", "<leader>g",
-  function() require("fzf-lua").git_files(hide_preview) end,
-  { noremap = true }
-)
-vim.keymap.set("n", "<leader>b",
-  function() require("fzf-lua").buffers(hide_preview) end,
-  { noremap = true }
-)
-vim.keymap.set("n", "<leader>i",
-  function() require("fzf-lua").oldfiles(hide_preview) end,
-  { noremap = true }
-)
+vim.keymap.set("n", "<leader>f", ":FzfLua files<CR>", { noremap = true })
+vim.keymap.set("n", "<leader>g", ":FzfLua git_files<CR>", { noremap = true })
+vim.keymap.set("n", "<leader>b", ":FzfLua buffers<CR>", { noremap = true })
+vim.keymap.set("n", "<leader>i", ":FzfLua oldfiles<CR>", { noremap = true })
 
 -- Mundo
 vim.keymap.set("n", "<A-m>",  ":MundoToggle<CR>", { noremap = true })
