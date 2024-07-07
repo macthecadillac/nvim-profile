@@ -133,7 +133,7 @@ function! StrCharLenPadOpt(string)
   if a:string ==# ''
     return ''
   else
-    return strcharlen(a:string) + 2
+    return strcharlen(a:string) + 3
   endif
 endfunction
 
@@ -155,18 +155,17 @@ function! LightlineFilename()
     let curline = line('.')
     let col = col('.')
     let percent = line('.') * 100 / line('$')
-    let lineinfo_len = 7 + strcharlen(curline) + strcharlen(maxline) + strcharlen(col) + strcharlen(percent) + 2
-    let l:other_len = 20   " a rough estimate of mode + separators
-    if get(g:, 'lightline_lsp_loaded', v:false)
-      let l:lsp_hints_len = StrCharLenPadOpt(lightline#lsp#hints())
-      let l:lsp_infos_len = StrCharLenPadOpt(lightline#lsp#infos())
-      let l:lsp_warn_len = StrCharLenPadOpt(lightline#lsp#warnings())
-      let l:lsp_errs_len = StrCharLenPadOpt(lightline#lsp#warnings())
-      let l:lsp_len = l:lsp_hints_len + l:lsp_infos_len + l:lsp_warn_len + l:lsp_errs_len
-    else
-      let l:lsp_len = 0
-    endif
-    let l:used = l:gitbranch_len + l:gitdiff_len + l:ft_len + l:file_format_len + l:other_len + l:lsp_len + l:lineinfo_len
+    let lineinfo_len = 7 + strcharlen(curline) + strcharlen(maxline)
+          \ + max([strcharlen(col), 3]) + strcharlen(percent) + 2
+    let l:other_len = 18   " a rough estimate of mode + separators
+    let l:lsp_hints_len = StrCharLenPadOpt(LightLineLspHints())
+    let l:lsp_infos_len = StrCharLenPadOpt(LightLineLspInfos())
+    let l:lsp_warn_len = StrCharLenPadOpt(LightLineLspWarnings())
+    let l:lsp_errs_len = StrCharLenPadOpt(LightLineLspError())
+    let l:lsp_len = l:lsp_hints_len + l:lsp_infos_len + l:lsp_warn_len + l:lsp_errs_len
+    let l:readonly_len = strcharlen(l:readonly)
+    let l:used = l:gitbranch_len + l:gitdiff_len + l:ft_len + l:file_format_len 
+          \ + l:other_len + l:lsp_len + l:lineinfo_len + l:readonly_len + (&modified ? 2 : 0)
     let l:max_width = winwidth(0) - l:used
     let l:fn = fname_len < l:max_width ? l:fname : (l:fname[:(l:max_width - 2)] . "\u2026")
     let l:filename = l:fn
