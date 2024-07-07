@@ -91,7 +91,7 @@ function! LightlineFileType()
   let l:icon = v:lua.require("nvim-web-devicons").get_icon(l:fname)
   if &filetype =~# '^Mundo\|MundoDiff'
     let l:ft = ''
-  elseif &filetype ==# 'help'
+  elseif &filetype ==# 'help' || &filetype ==# 'man'
     let l:ft = &filetype
   else
     let l:ft = l:icon . ' ' . &filetype
