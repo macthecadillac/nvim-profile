@@ -18,7 +18,8 @@ return {
   fzf_colors = true,
   winopts = {
     height = 0.7,
-    width = 0.7
+    width = 0.7,
+    row = 0.45
   },
   files = {
     winopts = alt_winopts,
