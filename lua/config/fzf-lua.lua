@@ -3,8 +3,8 @@ local core = require("fzf-lua.core")
 local alt_winopts = { preview = { hidden = "hidden" } }
 
 local cd_parent = function(_, opts)
-  vim.cmd.cd("..")
-  opts.__call_fn({ resume = true })
+  vim.fn.chdir('..')
+  opts.__call_fn({ resume = true, cwd = vim.fn.getcwd() })
 end
 
 core.ACTION_DEFINITIONS[cd_parent] = {

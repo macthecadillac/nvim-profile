@@ -591,7 +591,8 @@ vim.api.nvim_set_hl(0, "FzfLuaFzfPrompt", { link = "NormalFloat" })
 -- vim.api.nvim_set_hl(0, "FzfLuaFzfQuery"
 
 -- Floaterm
-vim.api.nvim_set_hl(0, "Floatermborder", { fg = polar_night_3, ctermfg = 0 })
+vim.api.nvim_set_hl(0, "Floaterm", { link = "NormalFloat" })
+vim.api.nvim_set_hl(0, "FloatermBorder", { link = "NormalFloat" })
 
 -- +--- Languages ---+
 -- JavaScript
