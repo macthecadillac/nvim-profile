@@ -17,7 +17,7 @@ return {
   config = function()
     vim.cmd.source(vim.fn.stdpath('config') .. "/startup/lightline.vim")
     -- this is needed for lazy loading to force redraw
-    vim.cmd("call lightline#update()")
-    vim.cmd("call lightline#bufferline#reload()")
+    vim.cmd.call("lightline#update()")
+    vim.cmd.call("lightline#bufferline#reload()")
   end
 }
