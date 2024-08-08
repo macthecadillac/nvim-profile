@@ -56,6 +56,7 @@ nvim_lsp.rust_analyzer.setup({ on_attach = signature_setup })
 nvim_lsp.texlab.setup({})
 nvim_lsp.vimls.setup({})
 nvim_lsp.lua_ls.setup({})
+nvim_lsp.slint_lsp.setup({})
 
 -- disable virtual text and underline
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
