@@ -33,6 +33,7 @@ return {
     title = "NormalFloat",
     border = "NormalFloat",
     preview_title = "NormalFloat",
-    preview_border = "NormalFloat"
+    preview_border = "NormalFloat",
+    backdrop = "Normal"
   }
 }

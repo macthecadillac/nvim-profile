@@ -33,7 +33,7 @@ vim.opt.fillchars = {
   vert = " ", -- set vsplit chars
 }
 -- vim.opt.lazyredraw = true
-vim.opt.mouse = "a"
+vim.opt.mousemodel = "extend"
 vim.opt.hidden = true      -- no force save bufer when going to definition
 vim.opt.scrolloff = 0      -- starts scrolling when cursor is 0 lines away from screen edge
 -- vim.opt.showtabline = 2
