@@ -1,6 +1,5 @@
 local core = require("fzf-lua.core")
-
-local alt_winopts = { preview = { hidden = "hidden" } }
+local actions = require("fzf-lua.actions")
 
 local cd_parent = function(_, opts)
   vim.fn.chdir('..')
@@ -13,6 +12,16 @@ core.ACTION_DEFINITIONS[cd_parent] = {
   end
 }
 
+local alt_winopts = {
+  preview = { hidden = "hidden" },
+  title_flags = false
+}
+
+local alt_actions = {
+  ['ctrl-u'] = { cd_parent },
+  ['ctrl-h'] = { actions.toggle_ignore },
+}
+
 return {
   'borderless_full',
   fzf_colors = true,
@@ -23,9 +32,9 @@ return {
   },
   files = {
     winopts = alt_winopts,
-    actions = { ['ctrl-u'] = { cd_parent } },
+    actions = alt_actions,
   },
-  grep = { actions = { ['ctrl-u'] = { cd_parent } } },
+  grep = { actions = alt_actions },
   git_files = { winopts = alt_winopts },
   buffers = { winopts = alt_winopts },
   oldfiles = { winopts = alt_winopts },
