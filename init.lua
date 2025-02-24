@@ -49,6 +49,10 @@ vim.g.loaded_matchit = 1
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+-- provider settings
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_ruby_provider = 0
 vim.g.python3_host_prog = "python3"
 
 -- Automatically switch directory to the directory of the current file.
