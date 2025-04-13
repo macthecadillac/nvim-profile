@@ -43,8 +43,6 @@ vim.opt.inccommand = "nosplit"  -- provides live preview of substitute as you ty
 vim.opt.expandtab = true
 vim.opt.laststatus = 2
 
-vim.g.loaded_matchit = 1
-
 -- set <space> to be the leader key. Much easier to reach than the default '\'
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
