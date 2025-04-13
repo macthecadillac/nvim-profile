@@ -4,9 +4,13 @@ vim.diagnostic.config({
   signs = {
     text = {
       [vim.diagnostic.severity.ERROR] = '',
-      [vim.diagnostic.severity.WARN] = '',
+      [vim.diagnostic.severity.WARN] = '󱈸',
       [vim.diagnostic.severity.INFO] = '',
       [vim.diagnostic.severity.HINT] = '',
+      -- [vim.diagnostic.severity.ERROR] = '\u{f05e}',
+      -- [vim.diagnostic.severity.WARN] = '\u{f071}',
+      -- [vim.diagnostic.severity.HINT] = '\u{f129}',
+      -- [vim.diagnostic.severity.INFO] = '\u{f129}'
     }
   }
 })
@@ -59,6 +63,11 @@ nvim_lsp.lua_ls.setup({})
 nvim_lsp.slint_lsp.setup({})
 
 -- disable virtual text and underline
+-- neovim 0.11
+vim.diagnostic.config({ underline = false })
+
+-- disable virtual text and underline
+-- neovim < 0.10
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
     virtual_text = false,
