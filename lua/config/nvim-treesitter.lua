@@ -1,0 +1,57 @@
+return {
+  ensure_installed = {
+    "bash",
+    "c",
+    "cpp",
+    "css",
+    "csv",
+    "desktop",
+    "diff",
+    "fish",
+    "git_rebase",
+    "gitignore",
+    "haskell",
+    "html",
+    "json",
+    "julia",
+    "latex",
+    "lua",
+    "markdown_inline",
+    "matlab",
+    "ocaml",
+    "ocaml_interface",
+    "python",
+    "regex",
+    "rust",
+    "ssh_config",
+    "toml",
+    "typescript",
+    "vim",
+    "vimdoc",
+    "xml",
+    "yaml"
+  },
+  sync_install = false,
+  highlight = { enable = true },
+  indent = { enable = true },
+  textobjects = {
+    select = {
+      enable = true,
+      lookahead = true,
+      keymaps = {
+        ["aa"] = "@assignment.outer",
+        ["ia"] = "@assignment.inner",
+        ["ak"] = "@block.outer",
+        ["ik"] = "@block.inner",
+        ["al"] = "@call.outer",
+        ["il"] = "@call.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ar"] = "@return.outer",
+        ["ir"] = "@return.inner",
+      }
+    }
+  }
+}
