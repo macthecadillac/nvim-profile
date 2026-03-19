@@ -73,11 +73,10 @@ cmp.setup.cmdline(':', {
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = false
 
-local nvim_lsp = require('lspconfig')
-nvim_lsp.julials.setup({ capabilities = capabilities })
-nvim_lsp.ocamllsp.setup({ capabilities = capabilities })
-nvim_lsp.pylsp.setup({ capabilities = capabilities })
-nvim_lsp.rust_analyzer.setup({ capabilities = capabilities })
-nvim_lsp.texlab.setup({ capabilities = capabilities })
-nvim_lsp.vimls.setup({ capabilities = capabilities })
-nvim_lsp.lua_ls.setup({ capabilities = capabilities })
+vim.lsp.config('julials', { capabilities = capabilities })
+vim.lsp.config('ocamllsp', { capabilities = capabilities })
+vim.lsp.config('pylsp', { capabilities = capabilities })
+vim.lsp.config('rust_analyzer', { capabilities = capabilities })
+vim.lsp.config('texlab', { capabilities = capabilities })
+vim.lsp.config('vimls', { capabilities = capabilities })
+vim.lsp.config('lua_ls', { capabilities = capabilities })

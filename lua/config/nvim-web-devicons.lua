@@ -3,15 +3,11 @@ local icons = devicons.get_icons()
 
 for icon, cfg in pairs(icons) do
   cfg.color = '#D8DEE9'
-  cterm_color = 'NONE'
+  cfg.cterm_color = 'NONE'
   icons[icon] = cfg
 end
 
-devicons.set_default_icon('\u{f0214}', '#D8DEE9')
-
-devicons.setup{
-  override = icons;
- -- globally enable default icons (default to false)
- -- will get overriden by `get_icons` option
- default = true;
-}
+devicons.setup({
+  override = icons,
+  default = true,
+})

@@ -2,6 +2,7 @@ return {
   -- recommended if you do not have global installation of Lua 5.1.
   "3rd/image.nvim",
   build = false,
+  event = "VeryLazy",
   config = function()
     local config = require("config.image")
     require("image").setup(config)

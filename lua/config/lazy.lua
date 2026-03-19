@@ -19,6 +19,7 @@ vim.opt.rtp:prepend(lazypath)
 local lazy = require("lazy")
 lazy.setup({
   import = "plugins",
+  rocks = { hererocks = true },
   defaults = { version = "11.x.x" },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.

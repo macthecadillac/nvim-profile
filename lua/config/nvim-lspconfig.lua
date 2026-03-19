@@ -27,11 +27,41 @@ local function signature_setup(_, _)
   })
 end
 
-local nvim_lsp = require('lspconfig')
-nvim_lsp.clangd.setup({ on_attach = signature_setup })
-nvim_lsp.cssls.setup({ on_attach = signature_setup })
-nvim_lsp.hls.setup({})
-nvim_lsp.julials.setup({
+vim.lsp.enable('ansiblels')
+vim.lsp.enable('clangd')
+vim.lsp.enable('cssls')
+vim.lsp.enable('hls')
+vim.lsp.enable('julials')
+vim.lsp.enable('ocamllsp')
+vim.lsp.enable('pylsp')
+vim.lsp.enable('rust_analyzer')
+vim.lsp.enable('texlab')
+vim.lsp.enable('vimls')
+vim.lsp.enable('lua_ls')
+vim.lsp.enable('slint_lsp')
+vim.lsp.enable('bashls')
+vim.lsp.enable('fish_lsp')
+vim.lsp.enable('yamlls')
+
+vim.lsp.config('ansiblels', {
+  filetypes = { "yaml.ansible" },
+  root_markers = { "ansible.cfg", ".ansible-lint" },
+  settings = {
+    ansible = {
+      validation = {
+        enabled = true,
+        lint = {
+          enabled = true,
+          path = "ansible-lint"
+        }
+      }
+    }
+  }
+})
+
+vim.lsp.config('bashls', { settings = { filetype = { "bash", "sh" } } })
+
+vim.lsp.config('julials', {
   on_attach = signature_setup,
   on_new_config = function(new_config, _)
     local cmd = {
@@ -54,13 +84,10 @@ nvim_lsp.julials.setup({
     new_config.cmd = cmd
   end
 })
-nvim_lsp.ocamllsp.setup({})
-nvim_lsp.pylsp.setup({ on_attach = signature_setup })
-nvim_lsp.rust_analyzer.setup({ on_attach = signature_setup })
-nvim_lsp.texlab.setup({})
-nvim_lsp.vimls.setup({})
-nvim_lsp.lua_ls.setup({})
-nvim_lsp.slint_lsp.setup({})
+
+vim.lsp.config('pylsp', { on_attach = signature_setup })
+vim.lsp.config('rust_analyzer', { on_attach = signature_setup })
+vim.lsp.config('lua_ls', { on_attach = signature_setup })
 
 -- disable virtual text and underline
 -- neovim 0.11
