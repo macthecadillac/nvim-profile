@@ -18,6 +18,9 @@ vim.keymap.set("n", "<leader>i", ":FzfLua oldfiles<CR>", { noremap = true })
 -- Mundo
 vim.keymap.set("n", "<A-m>",  ":MundoToggle<CR>", { noremap = true })
 
+-- outline.nvim
+vim.keymap.set("n", "<leader>o", ":Outline<CR>", { noremap = true })
+
 -- Floaterm
 vim.keymap.set("n", "<A-t>", ":FloatermToggle<CR>", {})
 vim.keymap.set("i", "<A-t>", "<ESC>:FloatermToggle<CR>", {})
