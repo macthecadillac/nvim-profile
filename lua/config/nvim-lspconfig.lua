@@ -15,18 +15,6 @@ vim.diagnostic.config({
   }
 })
 
-local function signature_setup(_, _)
-  require('lsp_signature').on_attach({
-    bind = true, -- This is mandatory, otherwise border config won't get registered.
-    floating_window_above_cur_line = true,
-    hint_enable = false,
-    max_width = 77,
-    handler_opts = {
-      border = "none"
-    }
-  })
-end
-
 vim.lsp.enable('ansiblels')
 vim.lsp.enable('clangd')
 vim.lsp.enable('cssls')
@@ -62,7 +50,6 @@ vim.lsp.config('ansiblels', {
 vim.lsp.config('bashls', { settings = { filetype = { "bash", "sh" } } })
 
 vim.lsp.config('julials', {
-  on_attach = signature_setup,
   on_new_config = function(new_config, _)
     local cmd = {
       "julia",
@@ -84,10 +71,6 @@ vim.lsp.config('julials', {
     new_config.cmd = cmd
   end
 })
-
-vim.lsp.config('pylsp', { on_attach = signature_setup })
-vim.lsp.config('rust_analyzer', { on_attach = signature_setup })
-vim.lsp.config('lua_ls', { on_attach = signature_setup })
 
 -- disable virtual text and underline
 -- neovim 0.11
