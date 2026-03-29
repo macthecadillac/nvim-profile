@@ -8,9 +8,9 @@ require("outline").setup({
       -- Dynamically resize window width to fit content
       enabled = true,
       -- Maximum width (columns or percent if relative_width)
-      max_width = 40,
+      max_width = 30,
       -- Include symbol details in width calculation
-      include_symbol_details = true,
+      include_symbol_details = false,
     },
   },
   symbol_folding = {
