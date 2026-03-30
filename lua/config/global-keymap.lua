@@ -26,7 +26,7 @@ vim.keymap.set("n", "<A-t>", ":FloatermToggle<CR>", {})
 vim.keymap.set("i", "<A-t>", "<ESC>:FloatermToggle<CR>", {})
 vim.keymap.set("t", "<A-t>", "<C-\\><C-n>:FloatermToggle<CR>", {})
 
-vim.keymap.set("n", "<A-c>", ":FloatermNew --position=right --width=45 --wintype=vsplit claude<CR>", {})
+vim.keymap.set("n", "<A-c>", ":FloatermNew --position=right --width=45 --wintype=vsplit --cwd=<root> claude<CR>", {})
 
 vim.keymap.set("n", "<A-w>", ":FloatermNew<CR>", {})
 vim.keymap.set("i", "<A-w>", "<ESC>:FloatermNew<CR>", {})
