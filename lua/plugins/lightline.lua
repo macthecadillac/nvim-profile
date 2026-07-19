@@ -5,8 +5,10 @@ return {
     'itchyny/vim-gitbranch',
     -- "nvim-tree/nvim-web-devicons",
     -- 'mengelbrecht/lightline-bufferline',
-    { dir = os.getenv("HOME") .. '/Documents/Code/lightline-bufferline' },
-    { dir = os.getenv("HOME") .. '/Documents/Code/lightline-gitdiff' },
+    -- { dir = os.getenv("HOME") .. '/Documents/Code/lightline-bufferline' },
+    -- { dir = os.getenv("HOME") .. '/Documents/Code/lightline-gitdiff' },
+    "macthecadillac/lightline-bufferline",
+    "macthecadillac/lightline-gitdiff",
     -- {
     --   "nvim-tree/nvim-web-devicons",
     --   event = "VeryLazy",
