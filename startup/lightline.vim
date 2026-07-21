@@ -24,8 +24,6 @@ let g:lightline = {
   \     'right': [[]],
   \   },
   \   'component': {
-  \     'lineinfo': ' %l/%L:%-2c %p%%',
-  \     'gitstatus': '%<%{lightline_gitdiff#get_status()}',
   \     'close': ' ' . "\uf00d" . ' ',
   \   },
   \   'component_expand': {
@@ -41,6 +39,8 @@ let g:lightline = {
   \     'fileformat': 'LightlineFileFormat',
   \     'filetype': 'LightlineFileType',
   \     'filename': 'LightlineFilename',
+  \     'lineinfo': 'LightlineLineInfo',
+  \     'gitstatus': 'LightlineGitStatus',
   \   },
   \   'component_type': {
   \     'linter_warnings': 'warning',
@@ -50,7 +50,7 @@ let g:lightline = {
   \     'buffers': 'tabsel',
   \   },
   \   'component_visible_condition': {
-  \     'gitstatus': 'lightline_gitdiff#get_status() !=# ""',
+  \     'gitstatus': 'LightlineGitStatus() !=# ""',
   \   },
   \   'separator': {'left': "\uE0CC ", 'right': "\uE0C2 "},
   \   'subseparator': { 'left': '', 'right': ''},
@@ -80,7 +80,7 @@ let g:lightline#bufferline#unnamed = '[NO NAME]'
 let g:lightline#bufferline#min_buffer_count = 2
 
 function! LightlineFileFormat()
-  return winwidth(0) < 71 || &filetype ==# 'help' ? '' : &fileformat
+  return winwidth(0) < 85 || &filetype ==# 'help' ? '' : &fileformat
 endfunction
 
 function! LightlineFileType()
@@ -96,7 +96,7 @@ function! LightlineFileType()
   else
     let l:ft = l:icon . ' ' . &filetype
   endif
-  if winwidth(0) > 50
+  if winwidth(0) > 70
     return l:ft
   else
     return l:icon
@@ -105,24 +105,37 @@ endfunction
 
 function! DisplayGitBranchName()
   let l:gitbranch = gitbranch#name()
-  let l:displaytext = winwidth(0) > 70 ? "\ue0a0" . ' ' . l:gitbranch : "\ue0a0"
+  let l:displaytext = winwidth(0) < 85 ? "\ue0a0" : "\ue0a0" . ' ' . l:gitbranch
   return (l:gitbranch ==# '' || &filetype =~# '^Mundo\|MundoDiff\|help') ? '' : l:displaytext
 endfunction
 
+function! LightlineLineInfo() abort
+  let l:info = " " . line('.') . '/' . line('$') . ':' . printf('%-2d', col('.'))
+  return winwidth(0) < 80 ? l:info : l:info . ' ' . (line('.') * 100 / line('$')) . '%'
+endfunction
+
+function! LightlineGitStatus() abort
+  return winwidth(0) < 90 ? '' : lightline_gitdiff#get_status()
+endfunction
+
+function! s:LightLineLspCollapse(text) abort
+  return winwidth(0) < 80 ? substitute(a:text, '\s*\d\+$', '', '') : a:text
+endfunction
+
 function! LightLineLspHints()
-  return get(g:, 'lightline_lsp_loaded', v:false) ? lightline#lsp#hints() : ''
+  return get(g:, 'lightline_lsp_loaded', v:false) ? s:LightLineLspCollapse(lightline#lsp#hints()) : ''
 endfunction
 
 function! LightLineLspInfos()
-  return get(g:, 'lightline_lsp_loaded', v:false) ? lightline#lsp#infos() : ''
+  return get(g:, 'lightline_lsp_loaded', v:false) ? s:LightLineLspCollapse(lightline#lsp#infos()) : ''
 endfunction
 
 function! LightLineLspWarnings()
-  return get(g:, 'lightline_lsp_loaded', v:false) ? lightline#lsp#warnings() : ''
+  return get(g:, 'lightline_lsp_loaded', v:false) ? s:LightLineLspCollapse(lightline#lsp#warnings()) : ''
 endfunction
 
 function! LightLineLspError()
-  return get(g:, 'lightline_lsp_loaded', v:false) ? lightline#lsp#errors() : ''
+  return get(g:, 'lightline_lsp_loaded', v:false) ? s:LightLineLspCollapse(lightline#lsp#errors()) : ''
 endfunction
 
 function! LightLineLspOk()
@@ -148,16 +161,11 @@ function! LightlineFilename()
   else
     let l:mode_len = StrCharLenPadOpt(lightline#mode())
     let l:gitbranch_len = StrCharLenPadOpt(DisplayGitBranchName())
-    let l:gitdiff_len = StrCharLenPadOpt(lightline_gitdiff#get_status())
+    let l:gitdiff_len = StrCharLenPadOpt(LightlineGitStatus())
     let l:fname_len = StrCharLenPadOpt(l:fname)
     let l:ft_len = StrCharLenPadOpt(LightlineFileType())
     let l:file_format_len = StrCharLenPadOpt(LightlineFileFormat())
-    let maxline = line('$')
-    let curline = line('.')
-    let col = col('.')
-    let percent = line('.') * 100 / line('$')
-    let lineinfo_len = StrCharLenPadOpt('  ' . curline . '/' . maxline . ':' . ' ' . percent . '%') 
-          \ + max([strcharlen(col), 3])
+    let lineinfo_len = StrCharLenPadOpt(LightlineLineInfo())
     let l:lsp_hints_len = StrCharLenPadOpt(LightLineLspHints())
     let l:lsp_infos_len = StrCharLenPadOpt(LightLineLspInfos())
     let l:lsp_warn_len = StrCharLenPadOpt(LightLineLspWarnings())
