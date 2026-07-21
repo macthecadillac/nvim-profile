@@ -52,7 +52,7 @@ let g:lightline = {
   \   'component_visible_condition': {
   \     'gitstatus': 'lightline_gitdiff#get_status() !=# ""',
   \   },
-  \   'separator': {'left': "\uE0B0", 'right': "\uE0B2"},
+  \   'separator': {'left': "\uE0CC ", 'right': "\uE0C2 "},
   \   'subseparator': { 'left': '', 'right': ''},
   \ }
   "\   'subseparator': { 'left': '', 'right': '' },
@@ -62,12 +62,12 @@ let g:lightline#lsp#indicator_errors = "\uf05e "
 let g:lightline#lsp#indicator_warnings = "\uf071 "
 let g:lightline#lsp#indicator_hints = "\uf129 "
 let g:lightline#lsp#indicator_infos = "\uf129 "
-"let g:lightline_gitdiff#indicator_added = "\uf067"
-"let g:lightline_gitdiff#indicator_deleted = "\uf068"
-"let g:lightline_gitdiff#indicator_modified = "\uf12a"
-let g:lightline_gitdiff#indicator_added = "\uff0b"
-let g:lightline_gitdiff#indicator_deleted = "\uff0d"
-let g:lightline_gitdiff#indicator_modified = "\uff5e"
+let g:lightline_gitdiff#indicator_added = "\uf067"
+let g:lightline_gitdiff#indicator_deleted = "\uf068"
+let g:lightline_gitdiff#indicator_modified = "\uf12a"
+"let g:lightline_gitdiff#indicator_added = "\uff0b"
+"let g:lightline_gitdiff#indicator_deleted = "\uff0d"
+"let g:lightline_gitdiff#indicator_modified = "\uff5e"
 let g:lightline_gitdiff#indicator_pad = v:false
 let g:lightline_gitdiff#indicator_hide_zero = v:true
 "let g:lightline#bufferline#modified = " \uf040" 
