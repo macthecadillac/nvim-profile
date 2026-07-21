@@ -1,8 +1,10 @@
 return {
-  'itchyny/lightline.vim',
+  -- 'itchyny/lightline.vim',
+  'perrin4869/lightline.vim',
+  branch = 'fix/neovim/floating-windows',
   event = "VeryLazy",
   dependencies = {
-    'itchyny/vim-gitbranch',
+    {'itchyny/vim-gitbranch'},
     -- "nvim-tree/nvim-web-devicons",
     -- 'mengelbrecht/lightline-bufferline',
     -- { dir = os.getenv("HOME") .. '/Documents/Code/lightline-bufferline' },
