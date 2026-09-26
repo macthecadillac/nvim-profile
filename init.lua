@@ -76,6 +76,22 @@ if vim.fn.has('termguicolors') then
 end
 vim.cmd.colorscheme('nord')
 
+-- detect ansible files so ansible-language-server attaches
+vim.filetype.add({
+  pattern = {
+    [".*/playbooks/.*%.ya?ml"] = "yaml.ansible",
+    [".*/roles/.*%.ya?ml"] = "yaml.ansible",
+    [".*/tasks/.*%.ya?ml"] = "yaml.ansible",
+    [".*/handlers/.*%.ya?ml"] = "yaml.ansible",
+  },
+  filename = {
+    ["playbook.yml"] = "yaml.ansible",
+    ["playbook.yaml"] = "yaml.ansible",
+    ["site.yml"] = "yaml.ansible",
+    ["site.yaml"] = "yaml.ansible",
+  },
+})
+
 -- load keymaps
 require("config.global-keymap")
 

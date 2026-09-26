@@ -1,6 +1,7 @@
 vim.g.default_julia_version = "1.6"
 
 vim.diagnostic.config({
+  underline = false,
   signs = {
     text = {
       [vim.diagnostic.severity.ERROR] = '',
@@ -20,7 +21,7 @@ vim.lsp.enable('clangd')
 vim.lsp.enable('cssls')
 vim.lsp.enable('hls')
 vim.lsp.enable('julials')
-vim.lsp.enable('ocamllsp')
+-- enable after installing ocaml-lsp-server: vim.lsp.enable('ocamllsp')
 vim.lsp.enable('pylsp')
 vim.lsp.enable('rust_analyzer')
 vim.lsp.enable('texlab')
@@ -49,6 +50,16 @@ vim.lsp.config('ansiblels', {
 
 vim.lsp.config('bashls', { settings = { filetype = { "bash", "sh" } } })
 
+-- drop unused doxygen filetype variants from nvim-lspconfig defaults
+vim.lsp.config('clangd', {
+  filetypes = { "c", "cpp", "objc", "objcpp", "cuda" }
+})
+
+-- drop yaml.* sub-filetypes from nvim-lspconfig defaults (no provider installed)
+vim.lsp.config('yamlls', {
+  filetypes = { "yaml" }
+})
+
 vim.lsp.config('julials', {
   on_new_config = function(new_config, _)
     local cmd = {
@@ -71,26 +82,6 @@ vim.lsp.config('julials', {
     new_config.cmd = cmd
   end
 })
-
--- disable virtual text and underline
--- neovim 0.11
-vim.diagnostic.config({ underline = false })
-
--- disable virtual text and underline
--- neovim < 0.10
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    virtual_text = false,
-    underline = false
-  }
-)
-
--- remove separator in hover pop-ups
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-  vim.lsp.handlers.hover, {
-    separator = false,
-  }
-)
 
 local severity = {}
 severity[vim.diagnostic.severity.ERROR] = "E"
